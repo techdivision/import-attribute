@@ -24,7 +24,7 @@ use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 
 /**
- * The attribute update processor implementation.
+ * The EAV attribute update processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -49,7 +49,7 @@ class AttributeUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_CATEGORY => $utilityClassName::UPDATE_CATEGORY
+            $utilityClassName::UPDATE_ATTRIBUTE => $utilityClassName::UPDATE_ATTRIBUTE
         );
     }
 
@@ -64,6 +64,6 @@ class AttributeUpdateProcessor extends AbstractUpdateProcessor
     public function execute($row, $name = null)
     {
         parent::execute($row, $name);
-        return $row[MemberNames::ENTITY_ID];
+        return $row[MemberNames::ATTRIBUTE_ID];
     }
 }

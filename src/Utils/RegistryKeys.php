@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\Processors\AttributeDeleteProcessor
+ * TechDivision\Import\Attribute\Utils\RegistryKeys
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,10 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Actions\Processors;
-
-use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
+namespace TechDivision\Import\Attribute\Utils;
 
 /**
- * The EAV attribute delete processor implementation.
+ * Utility class containing the unique registry keys.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,24 +29,13 @@ use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeDeleteProcessor extends AbstractDeleteProcessor
+class RegistryKeys extends \TechDivision\Import\Utils\RegistryKeys
 {
 
     /**
-     * Return's the array with the SQL statements that has to be prepared.
+     * Key for the registry entry containing the pre-loaded attribute code => ID mapping.
      *
-     * @return array The SQL statements to be prepared
-     * @see \TechDivision\Import\Actions\Processors\AbstractBaseProcessor::getStatements()
+     * @var string
      */
-    protected function getStatements()
-    {
-
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
-        // return the array with the SQL statements that has to be prepared
-        return array(
-            $utilityClassName::DELETE_ATTRIBUTE => $utilityClassName::DELETE_ATTRIBUTE
-        );
-    }
+    const PRE_LOADED_ATTRIBUTE_IDS = 'preLoadedAttributeIds';
 }

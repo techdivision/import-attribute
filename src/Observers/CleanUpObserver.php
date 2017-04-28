@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\Processors\AttributeDeleteProcessor
+ * TechDivision\Import\Attribute\Observers\CleanUpObserver
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Actions\Processors;
+namespace TechDivision\Import\Attribute\Observers;
 
-use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
- * The EAV attribute delete processor implementation.
+ * Clean-Up after importing the row.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,24 +31,16 @@ use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeDeleteProcessor extends AbstractDeleteProcessor
+class CleanUpObserver extends AbstractAttributeImportObserver
 {
 
     /**
-     * Return's the array with the SQL statements that has to be prepared.
+     * Process the observer's business logic.
      *
-     * @return array The SQL statements to be prepared
-     * @see \TechDivision\Import\Actions\Processors\AbstractBaseProcessor::getStatements()
+     * @return array The processed row
      */
-    protected function getStatements()
+    protected function process()
     {
-
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
-        // return the array with the SQL statements that has to be prepared
-        return array(
-            $utilityClassName::DELETE_ATTRIBUTE => $utilityClassName::DELETE_ATTRIBUTE
-        );
+        $this->addAttributeCodeIdMapping($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
     }
 }

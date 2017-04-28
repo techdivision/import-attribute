@@ -18,7 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Category\Services;
+namespace TechDivision\Import\Attribute\Services;
+
+use TechDivision\Import\Attribute\Actions\AttributeAction;
+use TechDivision\Import\Attribute\Actions\CatalogAttributeAction;
+use TechDivision\Import\Attribute\Repositories\AttributeRepository;
+use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository;
 
 /**
  * The attribute bunch processor implementation.
@@ -29,7 +34,7 @@ namespace TechDivision\Import\Category\Services;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeBunchProcessor implements CategoryBunchProcessorInterface
+class AttributeBunchProcessor implements AttributeBunchProcessorInterface
 {
 
     /**
@@ -40,14 +45,54 @@ class AttributeBunchProcessor implements CategoryBunchProcessorInterface
     protected $connection;
 
     /**
+     * The attribute repository instance.
+     *
+     * @var \TechDivision\Import\Attribute\Repositories\AttributeRepository
+     */
+    protected $attributeRepository;
+
+    /**
+     * The catalog attribute repository instance.
+     *
+     * @var \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository
+     */
+    protected $catalogAttributeRepository;
+
+    /**
+     * The attribute action instance.
+     *
+     * @var \TechDivision\Import\Attribute\Actions\AttributeAction
+     */
+    protected $attributeAction;
+
+    /**
+     * The attribute action instance.
+     *
+     * @var \TechDivision\Import\Attribute\Actions\CatalogAttributeAction
+     */
+    protected $catalogAttributeAction;
+
+    /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
-     * @param \PDO $connection The PDO connection to use
+     * @param \PDO                                                                   $connection                 The PDO connection to use
+     * @param \TechDivision\Import\Attribute\Repositories\AttributeRepository        $attributeRepository        The attribute repository instance
+     * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository $catalogAttributeRepository The catalog attribute repository instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeAction                 $attributeAction            The attribute action instance
+     * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction          $catalogAttributeAction     The catalog attribute action instance
      */
     public function __construct(
-        \PDO $connection
+        \PDO $connection,
+        AttributeRepository $attributeRepository,
+        CatalogAttributeRepository $catalogAttributeRepository,
+        AttributeAction $attributeAction,
+        CatalogAttributeAction $catalogAttributeAction
     ) {
         $this->setConnection($connection);
+        $this->setAttributeRepository($attributeRepository);
+        $this->setCatalogAttributeRepository($catalogAttributeRepository);
+        $this->setAttributeAction($attributeAction);
+        $this->setCatalogAttributeAction($catalogAttributeAction);
     }
 
     /**
@@ -114,5 +159,156 @@ class AttributeBunchProcessor implements CategoryBunchProcessorInterface
     public function rollBack()
     {
         return $this->connection->rollBack();
+    }
+
+    /**
+     * Set's the attribute repository instance.
+     *
+     * @param \TechDivision\Import\Attribute\Repositories\AttributeRepository $attributeRepository The attribute repository instance
+     *
+     * @return void
+     */
+    public function setAttributeRepository(AttributeRepository $attributeRepository)
+    {
+        $this->attributeRepository = $attributeRepository;
+    }
+
+    /**
+     * Return's the attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\AttributeRepository The attribute repository instance
+     */
+    public function getAttributeRepository()
+    {
+        return $this->attributeRepository;
+    }
+
+    /**
+     * Set's the catalog attribute repository instance.
+     *
+     * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository $catalogAttributeRepository The catalog attribute repository instance
+     *
+     * @return void
+     */
+    public function setCatalogAttributeRepository(CatalogAttributeRepository $catalogAttributeRepository)
+    {
+        $this->catalogAttributeRepository = $catalogAttributeRepository;
+    }
+
+    /**
+     * Return's the catalog attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository The catalog attribute repository instance
+     */
+    public function getCatalogAttributeRepository()
+    {
+        return $this->catalogAttributeRepository;
+    }
+
+    /**
+     * Set's the attribute action instance.
+     *
+     * @param \TechDivision\Import\Attribute\Actions\AttributeAction $attributeAction The attribute action instance
+     *
+     * @return void
+     */
+    public function setAttributeAction(AttributeAction $attributeAction)
+    {
+        $this->attributeAction = $attributeAction;
+    }
+
+    /**
+     * Return's the attribute action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeAction The attribute action instance
+     */
+    public function getAttributeAction()
+    {
+        return $this->attributeAction;
+    }
+
+    /**
+     * Set's the catalog attribute action instance.
+     *
+     * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction $catalogAttributeAction The catalog attribute action instance
+     *
+     * @return void
+     */
+    public function setCatalogAttributeAction(CatalogAttributeAction $catalogAttributeAction)
+    {
+        $this->catalogAttributeAction = $catalogAttributeAction;
+    }
+
+    /**
+     * Return's the catalog attribute action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\CatalogAttributeAction The catalog attribute action instance
+     */
+    public function getCatalogAttributeAction()
+    {
+        return $this->catalogAttributeAction;
+    }
+
+    /**
+     * Load's and return's the EAV attribute with the passed code.
+     *
+     * @param string $attributeCode The code of the EAV attribute to load
+     *
+     * @return array The EAV attribute
+     */
+    public function loadAttributeByAttributeCode($attributeCode)
+    {
+        return $this->getAttributeRepository()->findOneByAttributeCode($attributeCode);
+    }
+
+    /**
+     * Load's and retur's the EAV catalog attribute with the passed ID.
+     *
+     * @param string $attributeId The ID of the EAV catalog attribute to return
+     *
+     * @return array The EAV catalog attribute
+     */
+    public function loadCatalogAttribute($attributeId)
+    {
+        return $this->getCatalogAttributeRepository()->load($attributeId);
+    }
+
+    /**
+     * Persist's the passed EAV attribute data and return's the ID.
+     *
+     * @param array       $attribute The attribute data to persist
+     * @param string|null $name      The name of the prepared statement that has to be executed
+     *
+     * @return string The ID of the persisted attribute
+     */
+    public function persistAttribute(array $attribute, $name = null)
+    {
+        return $this->getAttributeAction()->persist($attribute, $name);
+    }
+
+    /**
+     * Persist's the passed EAV catalog attribute data and return's the ID.
+     *
+     * @param array       $catalogAttribute The catalog attribute data to persist
+     * @param string|null $name             The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistCatalogAttribute(array $catalogAttribute, $name = null)
+    {
+        $this->getCatalogAttributeAction()->persist($catalogAttribute, $name);
+    }
+
+    /**
+     * Delete's the EAV attribute with the passed attributes.
+     *
+     * @param array       $row  The attributes of the EAV attribute to delete
+     * @param string|null $name The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function deleteAttribute($row, $name = null)
+    {
+        $this->getAttributeAction()->delete($row, $name);
     }
 }

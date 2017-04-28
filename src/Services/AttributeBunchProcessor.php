@@ -41,6 +41,8 @@ class AttributeBunchProcessor implements CategoryBunchProcessorInterface
 
     /**
      * Initialize the processor with the necessary assembler and repository instances.
+     *
+     * @param \PDO $connection The PDO connection to use
      */
     public function __construct(
         \PDO $connection

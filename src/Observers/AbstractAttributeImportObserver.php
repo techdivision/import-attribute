@@ -56,6 +56,52 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
     }
 
     /**
+     * Return's the ID of the attribute that has been created recently.
+     *
+     * @return integer The attribute ID
+     */
+    protected function getLastAttributeId()
+    {
+        return $this->getSubject()->getLastAttributeId();
+    }
+
+    /**
+     * Set's the ID of the attribute that has been created recently.
+     *
+     * @param integer $lastAttributeId The attribute ID
+     *
+     * @return void
+     */
+    protected function setLastAttributeId($lastAttributeId)
+    {
+        $this->getSubject()->setLastAttributeId($lastAttributeId);
+    }
+
+    /**
+     * Map's the passed attribute code to the attribute ID that has been created recently.
+     *
+     * @param string $attributeCode The attribute code that has to be mapped
+     *
+     * @return void
+     */
+    protected function addAttributeCodeIdMapping($attributeCode)
+    {
+        $this->getSubject()->addAttributeCodeIdMapping($attributeCode);
+    }
+
+    /**
+     * Queries whether or not the attribute with the passed code has already been processed.
+     *
+     * @param string $attributeCode The attribute code to check
+     *
+     * @return boolean TRUE if the path has been processed, else FALSE
+     */
+    protected function hasBeenProcessed($attributeCode)
+    {
+        return $this->getSubject()->hasBeenProcessed($attributeCode);
+    }
+
+    /**
      * Process the observer's business logic.
      *
      * @return void

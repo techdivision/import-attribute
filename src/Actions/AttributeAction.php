@@ -24,7 +24,7 @@ use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Actions\AbstractAction;
 
 /**
- * An action implementation that provides CRUD functionality for attributes.
+ * An action implementation that provides CRUD functionality for EAV attributes.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>

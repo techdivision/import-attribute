@@ -29,23 +29,30 @@ The CSV file with the attributes for the Magento 2 CE/EE consists of the followi
 
 | Column Name                   | Type     | Mandatory | Description                                                                           | Example |
 |:------------------------------|:---------|:----------| :-------------------------------------------------------------------------------------|:--------|
+| store_view_code               | varchar  | yes       |                                                                                       |         |
+| attribute_set_code            | varchar  | yes       |                                                                                       |         |
+| attribute_group_code          | varchar  | yes       |                                                                                       |         |
 | entity_type_code              | varchar  | yes       |                                                                                       |         |
 | attribute_code                | varchar  | yes       |                                                                                       |         |
 | attribute_model               | varchar  | yes       |                                                                                       |         |
+| attribute_options             | text     | yes       |                                                                                       |         |
 | backend_model                 | varchar  | yes       |                                                                                       |         |
-| backend_type                  | varchar  | no        |                                                                                       |         |
 | backend_table                 | varchar  | yes       |                                                                                       |         |
 | frontend_model                | varchar  | yes       |                                                                                       |         |
 | frontend_input                | varchar  | yes       |                                                                                       |         |
 | frontend_label                | varchar  | yes       |                                                                                       |         |
 | frontend_class                | varchar  | yes       |                                                                                       |         |
 | source_model                  | varchar  | yes       |                                                                                       |         |
+| frontend_input_renderer       | varchar  | yes       |                                                                                       |         |
+| apply_to                      | varchar  | yes       |                                                                                       |         |
+| display_pattern               | varchar  | yes       |                                                                                       |         |
+| backend_type                  | varchar  | no        |                                                                                       |         |
+| position                      | int      | no        |                                                                                       |         |
 | is_required                   | int      | no        |                                                                                       |         |
 | is_user_defined               | int      | no        |                                                                                       |         |
 | default_value                 | text     | no        |                                                                                       |         |
 | is_unique                     | int      | no        |                                                                                       |         |
 | note                          | varchar  | no        |                                                                                       |         |
-| frontend_input_renderer       | varchar  | yes       |                                                                                       |         |
 | is_global                     | int      | no        |                                                                                       |         |
 | is_visible                    | int      | no        |                                                                                       |         |
 | is_searchable                 | int      | no        |                                                                                       |         |
@@ -57,7 +64,6 @@ The CSV file with the attributes for the Magento 2 CE/EE consists of the followi
 | is_filterable_in_search       | int      | no        |                                                                                       |         |
 | used_in_product_listing       | int      | no        |                                                                                       |         |
 | used_for_sort_by              | int      | no        |                                                                                       |         |
-| apply_to                      | varchar  | yes       |                                                                                       |         |
 | is_visible_in_advanced_search | int      | no        |                                                                                       |         |
 | position                      | int      | no        |                                                                                       |         |
 | is_wysiwyg_enabled            | int      | no        |                                                                                       |         |
@@ -74,5 +80,4 @@ The CSV file with the attributes for the Magento 2 CE/EE consists of the followi
 | facet_min_coverage_rate       | int      | no        |                                                                                       |         |
 | facet_max_size                | int      | no        |                                                                                       |         |
 | facet_sort_order              | varchar  | no        |                                                                                       |         |
-| display_pattern               | varchar  | yes       |                                                                                       |         |
 | display_precision             | int      | no        |                                                                                       |         |

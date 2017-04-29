@@ -198,82 +198,82 @@ class MemberNames extends \TechDivision\Import\Utils\MemberNames
      *
      * @var string
      */
-    CONST USED_FOR_SORT_BY = 'used_for_sort_by';
+    const USED_FOR_SORT_BY = 'used_for_sort_by';
 
     /**
      * Name for the member 'apply_to'.
      *
      * @var string
      */
-    CONST APPLY_TO = 'apply_to';
+    const APPLY_TO = 'apply_to';
 
     /**
      * Name for the member 'is_visible_in_advanced_search'.
      *
      * @var string
      */
-    CONST IS_VISIBLE_IN_ADVANCED_SEARCH = 'is_visible_in_advanced_search';
+    const IS_VISIBLE_IN_ADVANCED_SEARCH = 'is_visible_in_advanced_search';
 
     /**
      * Name for the member 'position'.
      *
      * @var string
      */
-    CONST POSITION = 'position';
+    const POSITION = 'position';
 
     /**
      * Name for the member 'is_wysiwyg_enabled'.
      *
      * @var string
      */
-    CONST IS_WYSIWYG_ENABLED = 'is_wysiwyg_enabled';
+    const IS_WYSIWYG_ENABLED = 'is_wysiwyg_enabled';
 
     /**
      * Name for the member 'is_used_for_promo_rules'.
      *
      * @var string
      */
-    CONST IS_USED_FOR_PROMO_RULES = 'is_used_for_promo_rules';
+    const IS_USED_FOR_PROMO_RULES = 'is_used_for_promo_rules';
 
     /**
      * Name for the member 'is_required_in_admin_store'.
      *
      * @var string
      */
-    CONST IS_REQUIRED_IN_ADMIN_STORE = 'is_required_in_admin_store';
+    const IS_REQUIRED_IN_ADMIN_STORE = 'is_required_in_admin_store';
 
     /**
      * Name for the member 'is_used_in_grid'.
      *
      * @var string
      */
-    CONST IS_USED_IN_GRID = 'is_used_in_grid';
+    const IS_USED_IN_GRID = 'is_used_in_grid';
 
     /**
      * Name for the member 'is_visible_in_grid'.
      *
      * @var string
      */
-    CONST IS_VISIBLE_IN_GRID = 'is_visible_in_grid';
+    const IS_VISIBLE_IN_GRID = 'is_visible_in_grid';
 
     /**
      * Name for the member 'is_filterable_in_grid'.
      *
      * @var string
      */
-    CONST IS_FILTERABLE_IN_GRID = 'is_filterable_in_grid';
+    const IS_FILTERABLE_IN_GRID = 'is_filterable_in_grid';
 
     /**
      * Name for the member 'search_weight'.
      *
      * @var string
      */
-    CONST SEARCH_WEIGHT = 'search_weight';
+    const SEARCH_WEIGHT = 'search_weight';
 
     /**
      * Name for the member 'additional_data'.
      *
      * @var string
      */
-    CONST ADDITIONAL_DATA = 'additional_data';
+    const ADDITIONAL_DATA = 'additional_data';
 }

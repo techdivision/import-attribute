@@ -47,6 +47,20 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function getAttributeAction();
 
     /**
+     * Return's the attribute option action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionAction The attribute option action instance
+     */
+    public function getAttributeOptionAction();
+
+    /**
+     * Return's the attribute option value action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction The attribute option value action instance
+     */
+    public function getAttributeOptionValueAction();
+
+    /**
      * Return's the catalog attribute action instance.
      *
      * @return \TechDivision\Import\Attribute\Actions\CatalogAttributeAction The catalog attribute action instance
@@ -80,6 +94,26 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return string The ID of the persisted attribute
      */
     public function persistAttribute(array $attribute, $name = null);
+
+    /**
+     * Persist's the passed EAV attribute option data and return's the ID.
+     *
+     * @param array       $attributeOption The attribute option data to persist
+     * @param string|null $name            The name of the prepared statement that has to be executed
+     *
+     * @return string The ID of the persisted attribute
+     */
+    public function persistAttributeOption(array $attributeOption, $name = null);
+
+    /**
+     * Persist's the passed EAV attribute option value data and return's the ID.
+     *
+     * @param array       $attributeOptionValue The attribute option value data to persist
+     * @param string|null $name                 The name of the prepared statement that has to be executed
+     *
+     * @return string The ID of the persisted attribute
+     */
+    public function persistAttributeOptionValue(array $attributeOptionValue, $name = null);
 
     /**
      * Persist's the passed EAV catalog attribute data and return's the ID.

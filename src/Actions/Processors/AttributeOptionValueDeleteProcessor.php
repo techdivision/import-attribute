@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\Processors\AttributeUpdateProcessor
+ * TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueDeleteProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -20,11 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
-use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
+use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
 
 /**
- * The EAV attribute update processor implementation.
+ * The EAV attribute option value delete processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -32,7 +31,7 @@ use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeUpdateProcessor extends AbstractUpdateProcessor
+class AttributeOptionValueDeleteProcessor extends AbstractDeleteProcessor
 {
 
     /**
@@ -49,21 +48,7 @@ class AttributeUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_ATTRIBUTE => $utilityClassName::UPDATE_ATTRIBUTE
+            $utilityClassName::DELETE_ATTRIBUTE_OPTION_VALUE => $utilityClassName::DELETE_ATTRIBUTE_OPTION_VALUE
         );
-    }
-
-    /**
-     * Update's the passed row.
-     *
-     * @param array       $row  The row to update
-     * @param string|null $name The name of the prepared statement that has to be executed
-     *
-     * @return string The ID of the updated attribute
-     */
-    public function execute($row, $name = null)
-    {
-        parent::execute($row, $name);
-        return $row[MemberNames::ATTRIBUTE_ID];
     }
 }

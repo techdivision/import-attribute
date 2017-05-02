@@ -20,8 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
+use TechDivision\Import\Subjects\ExportableTrait;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\RegistryKeys;
+use TechDivision\Import\Subjects\ExportableSubjectInterface;
 use TechDivision\Import\Utils\Generators\GeneratorInterface;
 use TechDivision\Import\Services\RegistryProcessorInterface;
 use TechDivision\Import\Configuration\SubjectConfigurationInterface;
@@ -36,8 +38,15 @@ use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class BunchSubject extends AbstractAttributeSubject
+class BunchSubject extends AbstractAttributeSubject implements ExportableSubjectInterface
 {
+
+    /**
+     * The trait that implements the export functionality.
+     *
+     * @var \TechDivision\Import\Subjects\ExportableTrait;
+     */
+    use ExportableTrait;
 
     /**
      * The attribute processor instance.
@@ -47,11 +56,25 @@ class BunchSubject extends AbstractAttributeSubject
     protected $attributeBunchProcessor;
 
     /**
+     * The ID of the attribute that has been created recently.
+     *
+     * @var integer
+     */
+    protected $lastAttributeId;
+
+    /**
      * The array with the pre-loaded attribute IDs.
      *
      * @var array
      */
     protected $preLoadedAttributeIds = array();
+
+    /**
+     * The attribute code => attribute ID mapping.
+     *
+     * @var array
+     */
+    protected $attributeCodeIdMapping = array();
 
     /**
      * Initialize the subject instance.
@@ -117,6 +140,38 @@ class BunchSubject extends AbstractAttributeSubject
 
         // temporary persist the pre-loaded attribute code => ID mapping
         $this->preLoadedAttributeIds[$attributeCode]= $attribute[MemberNames::ATTRIBUTE_ID];
+    }
+
+    /**
+     * Return's the ID of the attribute that has been created recently.
+     *
+     * @return integer The attribute ID
+     */
+    public function getLastEntityId()
+    {
+        return $this->getLastAttributeId();
+    }
+
+    /**
+     * Set's the ID of the attribute that has been created recently.
+     *
+     * @param integer $lastAttributeId The attribute ID
+     *
+     * @return void
+     */
+    public function setLastAttributeId($lastAttributeId)
+    {
+        $this->lastAttributeId = $lastAttributeId;
+    }
+
+    /**
+     * Return's the ID of the attribute that has been created recently.
+     *
+     * @return integer The attribute ID
+     */
+    public function getLastAttributeId()
+    {
+        return $this->lastAttributeId;
     }
 
     /**

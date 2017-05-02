@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Observers\AbstractAttributeImportObserver
+ * TechDivision\Import\Attribute\Subjects\AttributeSubjectInterface
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,11 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Observers;
-
-use TechDivision\Import\Observers\AbstractObserver;
+namespace TechDivision\Import\Attribute\Subjects;
 
 /**
- * Abstract attribute observer that handles the process to import attribute bunches.
+ * The abstract product subject implementation that provides basic attribute
+ * handling business logic.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,29 +30,15 @@ use TechDivision\Import\Observers\AbstractObserver;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-abstract class AbstractAttributeImportObserver extends AbstractObserver implements AttributeImportObserverInterface
+interface AttributeSubjectInterface
 {
 
     /**
-     * Will be invoked by the action on the events the listener has been registered for.
+     * Return's the ID of the attribute that has been created recently.
      *
-     * @param array $row The row to handle
-     *
-     * @return array The modified row
-     * @see \TechDivision\Import\Product\Observers\ImportObserverInterface::handle()
+     * @return integer The attribute ID
      */
-    public function handle(array $row)
-    {
-
-        // initialize the row
-        $this->setRow($row);
-
-        // process the functionality and return the row
-        $this->process();
-
-        // return the processed row
-        return $this->getRow();
-    }
+    public function getLastEntityId();
 
     /**
      * Map's the passed attribute code to the attribute ID that has been created recently.
@@ -62,10 +47,7 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
      *
      * @return void
      */
-    protected function addAttributeCodeIdMapping($attributeCode)
-    {
-        $this->getSubject()->addAttributeCodeIdMapping($attributeCode);
-    }
+    public function addAttributeCodeIdMapping($attributeCode);
 
     /**
      * Queries whether or not the attribute with the passed code has already been processed.
@@ -74,15 +56,15 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
      *
      * @return boolean TRUE if the path has been processed, else FALSE
      */
-    protected function hasBeenProcessed($attributeCode)
-    {
-        return $this->getSubject()->hasBeenProcessed($attributeCode);
-    }
+    public function hasBeenProcessed($attributeCode);
 
     /**
-     * Process the observer's business logic.
+     * Return's the entity type for the passed code.
      *
-     * @return void
+     * @param string $entityTypeCode The entity type code
+     *
+     * @return array The requested entity type
+     * @throws \Exception Is thrown, if the entity type with the passed code is not available
      */
-    abstract protected function process();
+    public function getEntityType($entityTypeCode);
 }

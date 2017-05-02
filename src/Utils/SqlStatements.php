@@ -106,6 +106,32 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                       :note)';
 
     /**
+     * The SQL statement to create a new EAV attribute option.
+     *
+     * @var string
+     */
+    const CREATE_ATTRIBUTE_OPTION = 'INSERT
+                                       INTO eav_attribute_option (attribute_id,
+                                                                  sort_order
+                                          )
+                                     VALUES (:attribute_id,
+                                             :sort_order)';
+
+    /**
+     * The SQL statement to create a new EAV attribute option value.
+     *
+     * @var string
+     */
+    const CREATE_ATTRIBUTE_OPTION_VALUE = 'INSERT
+                                             INTO eav_attribute_option_value (option_id,
+                                                                              store_id,
+                                                                              value
+                                                )
+                                           VALUES (:option_id,
+                                                   :store_id,
+                                                   :value)';
+
+    /**
      * The SQL statement to create a new EAV catalog attribute.
      *
      * @var string
@@ -217,11 +243,46 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                        WHERE attribute_id = :attribute_id';
 
     /**
+     * The SQL statement to update an existing EAV attribute option.
+     *
+     * @var string
+     */
+    const UPDATE_ATTRIBUTE_OPTION = 'UPDATE eav_attribute_option
+                                        SET attribute_id = :attribute_id,
+                                            sort_order = :sort_order
+                                      WHERE option_id = :option_id';
+
+    /**
+     * The SQL statement to update an existing EAV attribute option value.
+     *
+     * @var string
+     */
+    const UPDATE_ATTRIBUTE_OPTION_VALUE = 'UPDATE eav_attribute_option_value
+                                              SET option_id = :option_id,
+                                                  store_id = :store_id,
+                                                     value = :value
+                                            WHERE value_id = :value_id';
+
+    /**
      * The SQL statement to remove a existing EAV attribute.
      *
      * @var string
      */
     const DELETE_ATTRIBUTE = 'DELETE FROM eav_attribute WHERE attribute_id = :attribute_id';
+
+    /**
+     * The SQL statement to remove a existing EAV attribute option.
+     *
+     * @var string
+     */
+    const DELETE_ATTRIBUTE_OPTION = 'DELETE FROM eav_attribute_option WHERE option_id = :option_id';
+
+    /**
+     * The SQL statement to remove a existing EAV attribute option value.
+     *
+     * @var string
+     */
+    const DELETE_ATTRIBUTE_OPTION_VALUE = 'DELETE FROM eav_attribute_option_value WHERE value_id = :value_id';
 
     /**
      * The SQL statement to remove a existing EAV catalog attribute.

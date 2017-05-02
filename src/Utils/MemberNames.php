@@ -276,4 +276,11 @@ class MemberNames extends \TechDivision\Import\Utils\MemberNames
      * @var string
      */
     const ADDITIONAL_DATA = 'additional_data';
+
+    /**
+     * Name for the member 'sort_order'.
+     *
+     * @var string
+     */
+    const SORT_ORDER = 'sort_order';
 }

@@ -33,15 +33,8 @@ use TechDivision\Import\Subjects\AbstractSubject;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-abstract class AbstractAttributeSubject extends AbstractSubject
+abstract class AbstractAttributeSubject extends AbstractSubject implements AttributeSubjectInterface
 {
-
-    /**
-     * The ID of the attribute that has been created recently.
-     *
-     * @var integer
-     */
-    protected $lastAttributeId;
 
     /**
      * The array with the available entity types.
@@ -56,13 +49,6 @@ abstract class AbstractAttributeSubject extends AbstractSubject
      * @var array
      */
     protected $headerMappings = array();
-
-    /**
-     * The attribute code => attribute ID mapping.
-     *
-     * @var array
-     */
-    protected $attributeCodeIdMapping = array();
 
     /**
      * Intializes the previously loaded global data for exactly one bunch.
@@ -118,28 +104,6 @@ abstract class AbstractAttributeSubject extends AbstractSubject
     }
 
     /**
-     * Set's the ID of the attribute that has been created recently.
-     *
-     * @param integer $lastAttributeId The attribute ID
-     *
-     * @return void
-     */
-    public function setLastAttributeId($lastAttributeId)
-    {
-        $this->lastAttributeId = $lastAttributeId;
-    }
-
-    /**
-     * Return's the ID of the attribute that has been created recently.
-     *
-     * @return integer The attribute ID
-     */
-    public function getLastAttributeId()
-    {
-        return $this->lastAttributeId;
-    }
-
-    /**
      * Map's the passed attribute code to the attribute ID that has been created recently.
      *
      * @param string $attributeCode The attribute code that has to be mapped
@@ -148,7 +112,7 @@ abstract class AbstractAttributeSubject extends AbstractSubject
      */
     public function addAttributeCodeIdMapping($attributeCode)
     {
-        $this->attributeCodeIdMapping[$attributeCode] = $this->getLastAttributeId();
+        $this->attributeCodeIdMapping[$attributeCode] = $this->getLastEntityId();
     }
 
     /**

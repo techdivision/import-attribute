@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Observers\ClearAttributeObserver
+ * TechDivision\Import\Attribute\Observers\AttributeOptionObserver
  *
  * NOTICE OF LICENSE
  *
@@ -20,13 +20,13 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
-use TechDivision\Import\Subjects\SubjectInterface;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Subjects\SubjectInterface;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
- * Observer that removes the EAV attribute with the code found in the CSV file.
+ * Observer that create's the attribute options found in the additional CSV file.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -34,7 +34,7 @@ use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class ClearAttributeObserver extends AbstractAttributeImportObserver
+class AttributeOptionObserver extends AbstractAttributeImportObserver
 {
 
     /**
@@ -58,31 +58,64 @@ class ClearAttributeObserver extends AbstractAttributeImportObserver
         // pass the subject through to the parend observer
         parent::__construct($subject);
 
-        // initialize the attribute processor
+        // initialize the attribute bunch processor
         $this->attributeBunchProcessor = $attributeBunchProcessor;
     }
 
     /**
      * Process the observer's business logic.
      *
-     * @return array The processed row
+     * @return void
      */
     protected function process()
     {
 
-        // query whether or not, we've found a new EAV attribute code => means we've found a new attribute
-        if ($this->hasBeenProcessed($attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE))) {
+        // query whether or not, we've found a new attribute code => means we've found a new attribute
+        if ($this->hasBeenProcessed($this->getValue(ColumnKeys::ATTRIBUTE_CODE))) {
             return;
         }
 
-        // try to load the EAV attribute with the code found in the CSV file
-        $attribute = $this->loadAttributeByAttributeCode($attributeCode);
+        // prepare the attribue values
+        $attributeOption = $this->initializeAttribute($this->prepareAttributes());
 
-        // delete the EAV attribute with the code found in the CSV file
-        $this->deleteAttribute(array(MemberNames::ATTRIBUTE_ID => $attribute[MemberNames::ATTRIBUTE_ID]));
+        // insert the attribute option and set the option ID
+        $this->setLastOptionId($this->persistAttributeOption($attributeOption));
+    }
 
-        // temporary persist the ID of the deleted attribute
-        $this->setLastAttributeId($attribute[MemberNames::ATTRIBUTE_ID]);
+    /**
+     * Prepare the attributes of the entity that has to be persisted.
+     *
+     * @return array The prepared attributes
+     */
+    protected function prepareAttributes()
+    {
+
+        // load the attribute ID
+        $attribute = $this->loadAttributeByAttributeCode($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
+        $attributeId = $attribute[MemberNames::ATTRIBUTE_ID];
+
+        // load the sort order
+        $sortOrder = $this->getValue(ColumnKeys::POSITION);
+
+        // return the prepared attribute option
+        return $this->initializeEntity(
+            array(
+                MemberNames::ATTRIBUTE_ID  => $attributeId,
+                MemberNames::SORT_ORDER    => $sortOrder
+            )
+        );
+    }
+
+    /**
+     * Initialize the attribute with the passed attributes and returns an instance.
+     *
+     * @param array $attr The attribute attributes
+     *
+     * @return array The initialized attribute
+     */
+    protected function initializeAttribute(array $attr)
+    {
+        return $attr;
     }
 
     /**
@@ -96,15 +129,15 @@ class ClearAttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Set's the ID of the attribute that has been created recently.
+     * Set's the ID of the option that has been created recently.
      *
-     * @param integer $lastAttributeId The attribute ID
+     * @param integer $lastOptionId The option ID
      *
      * @return void
      */
-    protected function setLastAttributeId($lastAttributeId)
+    protected function setLastOptionId($lastOptionId)
     {
-        $this->getSubject()->setLastAttributeId($lastAttributeId);
+        $this->getSubject()->setLastOptionId($lastOptionId);
     }
 
     /**
@@ -120,15 +153,14 @@ class ClearAttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Delete's the EAV attribute with the passed attributes.
+     * Persist the passed attribute option.
      *
-     * @param array       $row  The attributes of the EAV attribute to delete
-     * @param string|null $name The name of the prepared statement that has to be executed
+     * @param array $attributeOption The attribute option to persist
      *
      * @return void
      */
-    protected function deleteAttribute($row, $name = null)
+    protected function persistAttributeOption(array $attributeOption)
     {
-        $this->getAttributeBunchProcessor()->deleteAttribute($row, $name);
+        return $this->getAttributeBunchProcessor()->persistAttributeOption($attributeOption);
     }
 }

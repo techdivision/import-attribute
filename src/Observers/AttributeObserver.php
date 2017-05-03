@@ -158,6 +158,18 @@ class AttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
+     * Set's the ID of the attribute that has been created recently.
+     *
+     * @param integer $lastAttributeId The attribute ID
+     *
+     * @return void
+     */
+    protected function setLastAttributeId($lastAttributeId)
+    {
+        $this->getSubject()->setLastAttributeId($lastAttributeId);
+    }
+
+    /**
      * Persist the passed attribute.
      *
      * @param array $attribute The attribute to persist

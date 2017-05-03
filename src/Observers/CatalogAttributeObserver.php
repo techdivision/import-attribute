@@ -169,6 +169,16 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
+     * Return's the ID of the attribute that has been created recently.
+     *
+     * @return integer The attribute ID
+     */
+    protected function getLastAttributeId()
+    {
+        return $this->getSubject()->getLastAttributeId();
+    }
+
+    /**
      * Persist the passed EAV catalog attribute.
      *
      * @param array $catalogAttribute The EAV catalog attribute to persist

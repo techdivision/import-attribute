@@ -21,6 +21,8 @@
 namespace TechDivision\Import\Attribute\Services;
 
 use TechDivision\Import\Attribute\Actions\AttributeAction;
+use TechDivision\Import\Attribute\Actions\AttributeOptionAction;
+use TechDivision\Import\Attribute\Actions\AttributeOptionValueAction;
 use TechDivision\Import\Attribute\Actions\CatalogAttributeAction;
 use TechDivision\Import\Attribute\Repositories\AttributeRepository;
 use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository;
@@ -66,6 +68,20 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     protected $attributeAction;
 
     /**
+     * The attribute option action instance.
+     *
+     * @var \TechDivision\Import\Attribute\Actions\AttributeOptionAction
+     */
+    protected $attributeOptionAction;
+
+    /**
+     * The attribute option action instance.
+     *
+     * @var \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction
+     */
+    protected $attributeOptionValueAction;
+
+    /**
      * The attribute action instance.
      *
      * @var \TechDivision\Import\Attribute\Actions\CatalogAttributeAction
@@ -79,6 +95,8 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Attribute\Repositories\AttributeRepository        $attributeRepository        The attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository $catalogAttributeRepository The catalog attribute repository instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeAction                 $attributeAction            The attribute action instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionAction           $attributeOptionAction      The attribute option action instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction      $attributeOptionValueAction The attribute option value action instance
      * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction          $catalogAttributeAction     The catalog attribute action instance
      */
     public function __construct(
@@ -86,12 +104,16 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         AttributeRepository $attributeRepository,
         CatalogAttributeRepository $catalogAttributeRepository,
         AttributeAction $attributeAction,
+        AttributeOptionAction $attributeOptionAction,
+        AttributeOptionValueAction $attributeOptionValueAction,
         CatalogAttributeAction $catalogAttributeAction
     ) {
         $this->setConnection($connection);
         $this->setAttributeRepository($attributeRepository);
         $this->setCatalogAttributeRepository($catalogAttributeRepository);
         $this->setAttributeAction($attributeAction);
+        $this->setAttributeOptionAction($attributeOptionAction);
+        $this->setAttributeOptionValueAction($attributeOptionValueAction);
         $this->setCatalogAttributeAction($catalogAttributeAction);
     }
 
@@ -228,6 +250,50 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
+     * Set's the attribute option action instance.
+     *
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionAction $attributeOptionAction The attribute option action instance
+     *
+     * @return void
+     */
+    public function setAttributeOptionAction(AttributeOptionAction $attributeOptionAction)
+    {
+        $this->attributeOptionAction = $attributeOptionAction;
+    }
+
+    /**
+     * Return's the attribute option action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionAction The attribute option action instance
+     */
+    public function getAttributeOptionAction()
+    {
+        return $this->attributeOptionAction;
+    }
+
+    /**
+     * Set's the attribute option value action instance.
+     *
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction $attributeOptionValueAction The attribute option value action instance
+     *
+     * @return void
+     */
+    public function setAttributeOptionValueAction(AttributeOptionValueAction $attributeOptionValueAction)
+    {
+        $this->attributeOptionValueAction = $attributeOptionValueAction;
+    }
+
+    /**
+     * Return's the attribute option value action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction The attribute option value action instance
+     */
+    public function getAttributeOptionValueAction()
+    {
+        return $this->attributeOptionValueAction;
+    }
+
+    /**
      * Set's the catalog attribute action instance.
      *
      * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction $catalogAttributeAction The catalog attribute action instance
@@ -284,6 +350,32 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     public function persistAttribute(array $attribute, $name = null)
     {
         return $this->getAttributeAction()->persist($attribute, $name);
+    }
+
+    /**
+     * Persist's the passed EAV attribute option data and return's the ID.
+     *
+     * @param array       $attributeOption The attribute option data to persist
+     * @param string|null $name            The name of the prepared statement that has to be executed
+     *
+     * @return string The ID of the persisted attribute
+     */
+    public function persistAttributeOption(array $attributeOption, $name = null)
+    {
+        return $this->getAttributeOptionAction()->persist($attributeOption, $name);
+    }
+
+    /**
+     * Persist's the passed EAV attribute option value data and return's the ID.
+     *
+     * @param array       $attributeOptionValue The attribute option value data to persist
+     * @param string|null $name                 The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistAttributeOptionValue(array $attributeOptionValue, $name = null)
+    {
+        $this->getAttributeOptionValueAction()->persist($attributeOptionValue, $name);
     }
 
     /**

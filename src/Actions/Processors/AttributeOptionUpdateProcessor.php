@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\Processors\AttributeUpdateProcessor
+ * TechDivision\Import\Attribute\Actions\Processors\AttributeOptionUpdateProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -24,7 +24,7 @@ use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 
 /**
- * The EAV attribute update processor implementation.
+ * The EAV attribute option update processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -32,7 +32,7 @@ use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeUpdateProcessor extends AbstractUpdateProcessor
+class AttributeOptionUpdateProcessor extends AbstractUpdateProcessor
 {
 
     /**
@@ -49,7 +49,7 @@ class AttributeUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_ATTRIBUTE => $utilityClassName::UPDATE_ATTRIBUTE
+            $utilityClassName::UPDATE_ATTRIBUTE_OPTION => $utilityClassName::UPDATE_ATTRIBUTE_OPTION
         );
     }
 
@@ -64,6 +64,6 @@ class AttributeUpdateProcessor extends AbstractUpdateProcessor
     public function execute($row, $name = null)
     {
         parent::execute($row, $name);
-        return $row[MemberNames::ATTRIBUTE_ID];
+        return $row[MemberNames::OPTION_ID];
     }
 }

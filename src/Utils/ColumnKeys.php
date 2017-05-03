@@ -33,6 +33,27 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
 {
 
     /**
+     * Name for the column 'attribute_option_values'.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_VALUES = 'attribute_option_values';
+
+    /**
+     * Name for the column 'attribute_option_positions'.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_POSITIONS = 'attribute_option_positions';
+
+    /**
+     * Name for the column 'attribute_option_swatch'.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_SWATCH = 'attribute_option_swatch';
+
+    /**
      * Name for the column 'attribute_group_code'.
      *
      * @var string

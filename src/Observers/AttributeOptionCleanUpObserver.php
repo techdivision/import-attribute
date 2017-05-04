@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Observers\AbstractAttributeImportObserver
+ * TechDivision\Import\Attribute\Observers\AttributeOptionCleanUpObserver
  *
  * NOTICE OF LICENSE
  *
@@ -20,10 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
-use TechDivision\Import\Observers\AbstractObserver;
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
- * Abstract attribute observer that handles the process to import attribute bunches.
+ * Clean-Up after importing the EAV attribute option row.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,34 +31,29 @@ use TechDivision\Import\Observers\AbstractObserver;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-abstract class AbstractAttributeImportObserver extends AbstractObserver implements AttributeImportObserverInterface
+class AttributeOptionCleanUpObserver extends AbstractAttributeImportObserver
 {
-
-    /**
-     * Will be invoked by the action on the events the listener has been registered for.
-     *
-     * @param array $row The row to handle
-     *
-     * @return array The modified row
-     * @see \TechDivision\Import\Product\Observers\ImportObserverInterface::handle()
-     */
-    public function handle(array $row)
-    {
-
-        // initialize the row
-        $this->setRow($row);
-
-        // process the functionality and return the row
-        $this->process();
-
-        // return the processed row
-        return $this->getRow();
-    }
 
     /**
      * Process the observer's business logic.
      *
+     * @return array The processed row
+     */
+    protected function process()
+    {
+        $this->addAddtributeCodeValueOptionIdMapping($this->getValue(ColumnKeys::ATTRIBUTE_CODE), $this->getValue(ColumnKeys::VALUE));
+    }
+
+    /**
+     * Map's the passed attribue code and value to the option ID that has been created recently.
+     *
+     * @param string $attributeCode The attriburte code that has to be mapped
+     * @param string $value         The value that has to be mapped
+     *
      * @return void
      */
-    abstract protected function process();
+    protected function addAddtributeCodeValueOptionIdMapping($attributeCode, $value)
+    {
+        $this->getSubject()->addAddtributeCodeValueOptionIdMapping($attributeCode, $value);
+    }
 }

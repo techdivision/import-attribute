@@ -61,6 +61,13 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function getAttributeOptionValueAction();
 
     /**
+     * Return's the attribute option swatch action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction The attribute option swatch action instance
+     */
+    public function getAttributeOptionSwatchAction();
+
+    /**
      * Return's the catalog attribute action instance.
      *
      * @return \TechDivision\Import\Attribute\Actions\CatalogAttributeAction The catalog attribute action instance
@@ -75,6 +82,40 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return array The EAV attribute
      */
     public function loadAttributeByAttributeCode($attributeCode);
+
+    /**
+     * Load's and return's the EAV attribute option with the passed code, store ID and value.
+     *
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+
+    /**
+     * Load's and return's the EAV attribute option value with the passed code, store ID and value.
+     *
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option value
+     */
+    public function loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+
+    /**
+     * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
+     *
+     * @param string  $attributeCode The code of the EAV attribute option swatch to load
+     * @param integer $storeId       The store ID of the attribute option swatch to load
+     * @param string  $value         The value of the attribute option swatch to load
+     * @param string  $type          The type of the attribute option swatch to load
+     *
+     * @return array The EAV attribute option swatch
+     */
+    public function loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type);
 
     /**
      * Load's and retur's the EAV catalog attribute with the passed ID.
@@ -114,6 +155,16 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return string The ID of the persisted attribute
      */
     public function persistAttributeOptionValue(array $attributeOptionValue, $name = null);
+
+    /**
+     * Persist the passed attribute option swatch.
+     *
+     * @param array       $attributeOptionSwatch The attribute option swatch to persist
+     * @param string|null $name                  The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistAttributeOptionSwatch(array $attributeOptionSwatch, $name = null);
 
     /**
      * Persist's the passed EAV catalog attribute data and return's the ID.

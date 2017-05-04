@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Subjects\AttributeSubjectInterface
+ * TechDivision\Import\Attribute\Observers\AttributeCleanUpObserver
  *
  * NOTICE OF LICENSE
  *
@@ -18,11 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Subjects;
+namespace TechDivision\Import\Attribute\Observers;
+
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
- * The abstract product subject implementation that provides basic attribute
- * handling business logic.
+ * Clean-Up after importing the EAV attribute row.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -30,23 +31,28 @@ namespace TechDivision\Import\Attribute\Subjects;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-interface AttributeSubjectInterface
+class AttributeCleanUpObserver extends AbstractAttributeImportObserver
 {
 
     /**
-     * Return's the ID of the attribute that has been created recently.
+     * Process the observer's business logic.
      *
-     * @return integer The attribute ID
+     * @return array The processed row
      */
-    public function getLastEntityId();
+    protected function process()
+    {
+        $this->addAttributeCodeIdMapping($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
+    }
 
     /**
-     * Return's the entity type for the passed code.
+     * Map's the passed attribute code to the attribute ID that has been created recently.
      *
-     * @param string $entityTypeCode The entity type code
+     * @param string $attributeCode The attribute code that has to be mapped
      *
-     * @return array The requested entity type
-     * @throws \Exception Is thrown, if the entity type with the passed code is not available
+     * @return void
      */
-    public function getEntityType($entityTypeCode);
+    protected function addAttributeCodeIdMapping($attributeCode)
+    {
+        $this->getSubject()->addAttributeCodeIdMapping($attributeCode);
+    }
 }

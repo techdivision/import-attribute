@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Observers\CleanUpObserver
+ * TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Observers;
+namespace TechDivision\Import\Attribute\Actions;
 
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Actions\AbstractAction;
 
 /**
- * Clean-Up after importing the row.
+ * An action implementation that provides CRUD functionality for EAV attribute option swatch values.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,16 +31,6 @@ use TechDivision\Import\Attribute\Utils\ColumnKeys;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CleanUpObserver extends AbstractAttributeImportObserver
+class AttributeOptionSwatchAction extends AbstractAction
 {
-
-    /**
-     * Process the observer's business logic.
-     *
-     * @return array The processed row
-     */
-    protected function process()
-    {
-        $this->addAttributeCodeIdMapping($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
-    }
 }

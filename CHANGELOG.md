@@ -1,3 +1,13 @@
+# Version 1.0.0-alpha4
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Implement EAV attribute option swatch delete/add-update + replace functionality
+
 # Version 1.0.0-alpha3
 
 ## Bugfixes

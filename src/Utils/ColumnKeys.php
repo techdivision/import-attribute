@@ -325,4 +325,39 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
      * @var string
      */
     const ADDITIONAL_DATA = 'additional_data';
+
+    /**
+     * Name for the column 'swatch_type'.
+     *
+     * @var string
+     */
+    const SWATCH_TYPE = 'swatch_type';
+
+    /**
+     * Name for the column 'swatch_value'.
+     *
+     * @var string
+     */
+    const SWATCH_VALUE = 'swatch_value';
+
+    /**
+     * Name for the column 'type'.
+     *
+     * @var string
+     */
+    const TYPE = 'type';
+
+    /**
+     * Name for the column 'admin_store_value'.
+     *
+     * @var string
+     */
+    const ADMIN_STORE_VALUE = 'admin_store_value';
+
+    /**
+     * Name for the column 'value'.
+     *
+     * @var string
+     */
+    const VALUE = 'value';
 }

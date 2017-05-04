@@ -13,6 +13,18 @@
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
         </service>
+        <service id="import_attribute.repository.attribute.option" class="TechDivision\Import\Attribute\Repositories\AttributeOptionRepository">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.repository.attribute.option.value" class="TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.repository.attribute.option.swatch" class="TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
         <service id="import_attribute.repository.catalog.attribute" class="TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository">
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
@@ -54,6 +66,18 @@
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
         </service>
+        <service id="import_attribute.action.processor.attribute.option.swatch.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchCreateProcessor">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.swatch.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchUpdateProcessor">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.swatch.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchDeleteProcessor">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
         <service id="import_attribute.action.processor.catalog.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeCreateProcessor">
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
@@ -82,6 +106,11 @@
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.delete"/>
         </service>
+        <service id="import_attribute.action.attribute.option.swatch" class="TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction">
+            <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.create"/>
+            <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.update"/>
+            <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.delete"/>
+        </service>
         <service id="import_attribute.action.catalog.attribute" class="TechDivision\Import\Attribute\Actions\CatalogAttributeAction">
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.update"/>
@@ -94,7 +123,13 @@
         <service id="import_attribute.observer.pre.load.attribute.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeIdObserver">
             <argument type="service" id="import_attribute.subject.bunch"/>
         </service>
-        <service id="import_attribute.observer.clean.up" class="TechDivision\Import\Attribute\Observers\CleanUpObserver">
+        <service id="import_attribute.observer.pre.load.attribute.option.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeOptionIdObserver">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeCleanUpObserver">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.option.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeOptionCleanUpObserver">
             <argument type="service" id="import_attribute.subject.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute" class="TechDivision\Import\Attribute\Observers\AttributeObserver">
@@ -120,7 +155,17 @@
         <service id="import_attribute.observer.attribute.option.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionExportObserver">
             <argument type="service" id="import_attribute.subject.bunch"/>
         </service>
+        <service id="import_attribute.observer.attribute.option.value.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueExportObserver">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.option.swatch.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchExportObserver">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+        </service>
         <service id="import_attribute.observer.attribute.option" class="TechDivision\Import\Attribute\Observers\AttributeOptionObserver">
+            <argument type="service" id="import_attribute.subject.option"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.option.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionUpdateObserver">
             <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
@@ -128,14 +173,30 @@
             <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
+        <service id="import_attribute.observer.attribute.option.value.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueUpdateObserver">
+            <argument type="service" id="import_attribute.subject.option"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.option.swatch" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchObserver">
+            <argument type="service" id="import_attribute.subject.option"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.option.swatch.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchUpdateObserver">
+            <argument type="service" id="import_attribute.subject.option"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
 
         <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\AttributeBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.attribute"/>
+            <argument type="service" id="import_attribute.repository.attribute.option"/>
+            <argument type="service" id="import_attribute.repository.attribute.option.value"/>
+            <argument type="service" id="import_attribute.repository.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.repository.catalog.attribute"/>
             <argument type="service" id="import_attribute.action.attribute"/>
             <argument type="service" id="import_attribute.action.attribute.option"/>
             <argument type="service" id="import_attribute.action.attribute.option.value"/>
+            <argument type="service" id="import_attribute.action.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.action.catalog.attribute"/>
         </service>
  
@@ -152,6 +213,7 @@
             <argument type="service" id="import.processor.registry"/>
             <argument type="service" id="import.generator.core.config.data.uid"/>
             <argument type="service" id="loggers"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
 
     </services>

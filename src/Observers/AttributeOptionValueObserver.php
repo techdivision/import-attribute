@@ -106,11 +106,11 @@ class AttributeOptionValueObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Initialize the attribute with the passed attributes and returns an instance.
+     * Initialize the EAV attribute option value with the passed attributes and returns an instance.
      *
-     * @param array $attr The attribute attributes
+     * @param array $attr The EAV attribute option value attributes
      *
-     * @return array The initialized attribute
+     * @return array The initialized EAV attribute option value
      */
     protected function initializeAttribute(array $attr)
     {

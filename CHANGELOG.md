@@ -7,6 +7,7 @@
 ## Features
 
 * Implement EAV attribute option swatch delete/add-update + replace functionality
+* Update generic configuration file
 
 # Version 1.0.0-alpha3
 

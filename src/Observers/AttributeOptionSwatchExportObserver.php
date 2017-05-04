@@ -73,7 +73,7 @@ class AttributeOptionSwatchExportObserver extends AbstractAttributeExportObserve
             $optionSwatch = array();
             if (isset($attributeOptionSwatch[$key])) {
                 // prepare the EAV attribute option swatch values
-                foreach ($this->explode($attributeOptionSwatch[$key]) as $value)  {
+                foreach ($this->explode($attributeOptionSwatch[$key]) as $value) {
                     $explodedSwatch = $this->explode($value, '=');
                     if (isset($explodedSwatch[0]) && isset($explodedSwatch[1])) {
                         $optionSwatch[$explodedSwatch[0]] = $explodedSwatch[1];

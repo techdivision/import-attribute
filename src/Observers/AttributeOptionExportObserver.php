@@ -59,7 +59,7 @@ class AttributeOptionExportObserver extends AbstractAttributeExportObserver
 
         // load the attribute option values/positions
         $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), array($this, 'explode'));
-        $attributeOptionPositions = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_POSITIONS, array(), array($this, 'explode'));
+        $attributeOptionSortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SORT_ORDER, array(), array($this, 'explode'));
         $attributeOptionSwatch = $this->explode($this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SWATCH), $this->getMultipleValueDelimiter());
 
         // iterate over the attribute option values and export them
@@ -80,14 +80,14 @@ class AttributeOptionExportObserver extends AbstractAttributeExportObserver
                 array(
                     ColumnKeys::ATTRIBUTE_CODE  => $this->getValue(ColumnKeys::ATTRIBUTE_CODE),
                     ColumnKeys::VALUE           => $attributeOptionValue,
-                    ColumnKeys::POSITION        => isset($attributeOptionPositions[$key]) ? $attributeOptionPositions[$key] : 0,
+                    ColumnKeys::SORT_ORDER      => isset($attributeOptionSortOrder[$key]) ? $attributeOptionSortOrder[$key] : 0,
                     ColumnKeys::SWATCH_TYPE     => isset($optionSwatch[ColumnKeys::TYPE]) ? $optionSwatch[ColumnKeys::TYPE] : null,
                     ColumnKeys::SWATCH_VALUE    => isset($optionSwatch[ColumnKeys::VALUE]) ? $optionSwatch[ColumnKeys::VALUE] : null
                 ),
                 array(
                     ColumnKeys::ATTRIBUTE_CODE  => ColumnKeys::ATTRIBUTE_CODE,
                     ColumnKeys::VALUE           => ColumnKeys::VALUE,
-                    ColumnKeys::POSITION        => ColumnKeys::POSITION,
+                    ColumnKeys::SORT_ORDER      => ColumnKeys::ATTRIBUTE_OPTION_SORT_ORDER,
                     ColumnKeys::SWATCH_TYPE     => ColumnKeys::ATTRIBUTE_OPTION_SWATCH,
                     ColumnKeys::SWATCH_VALUE    => ColumnKeys::ATTRIBUTE_OPTION_SWATCH
                 )

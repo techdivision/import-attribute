@@ -113,7 +113,14 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         $isVisibleInGrid = $this->getValue(ColumnKeys::IS_VISIBLE_IN_GRID, 0);
         $isFilterableInGrid = $this->getValue(ColumnKeys::IS_FILTERABLE_IN_GRID, 0);
         $searchWeight = $this->getValue(ColumnKeys::SEARCH_WEIGHT, 1);
-        $additionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA);
+
+        // load and extract the additional data
+        $additionalData = array();
+        $explodedAdditionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA, array(), array($this, 'explode'));
+        foreach ($explodedAdditionalData as $value) {
+            list ($key, $val) = $this->explode($value, '=');
+            $additionalData[$key] = $val;
+        }
 
         // return the prepared product
         return $this->initializeEntity(
@@ -147,6 +154,25 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
+     * Serialize the additional_data attribute of the passed array.
+     *
+     * @param array $attr The attribute with the data to serialize
+     *
+     * @return array The attribute with the serialized additional_data
+     */
+    protected function serializeAdditionalData(array $attr)
+    {
+
+        // serialize the additional data value if available
+        if (is_array($attr[MemberNames::ADDITIONAL_DATA])) {
+            $attr[MemberNames::ADDITIONAL_DATA] = serialize($attr[MemberNames::ADDITIONAL_DATA]);
+        }
+
+        // return the attribute
+        return $attr;
+    }
+
+    /**
      * Initialize the attribute with the passed attributes and returns an instance.
      *
      * @param array $attr The attribute attributes
@@ -155,7 +181,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      */
     protected function initializeAttribute(array $attr)
     {
-        return $attr;
+        return $this->serializeAdditionalData($attr);
     }
 
     /**

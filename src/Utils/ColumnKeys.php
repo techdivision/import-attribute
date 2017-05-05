@@ -40,11 +40,11 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
     const ATTRIBUTE_OPTION_VALUES = 'attribute_option_values';
 
     /**
-     * Name for the column 'attribute_option_positions'.
+     * Name for the column 'attribute_option_sort_order'.
      *
      * @var string
      */
-    const ATTRIBUTE_OPTION_POSITIONS = 'attribute_option_positions';
+    const ATTRIBUTE_OPTION_SORT_ORDER = 'attribute_option_sort_order';
 
     /**
      * Name for the column 'attribute_option_swatch'.

@@ -98,7 +98,7 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
         $attributeId = $attribute[MemberNames::ATTRIBUTE_ID];
 
         // load the sort order
-        $sortOrder = $this->getValue(ColumnKeys::POSITION);
+        $sortOrder = $this->getValue(ColumnKeys::SORT_ORDER);
 
         // return the prepared attribute option
         return $this->initializeEntity(

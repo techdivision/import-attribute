@@ -1,3 +1,13 @@
+# Version 1.0.0-alpha5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add handling for additional_data attribute => necessary to create swatch attributes
+
 # Version 1.0.0-alpha4
 
 ## Bugfixes

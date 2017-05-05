@@ -68,6 +68,20 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function getAttributeOptionSwatchRepository();
 
     /**
+     * Return's the catalog attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository The catalog attribute repository instance
+     */
+    public function getCatalogAttributeRepository();
+
+    /**
+     * Return's the entity attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository The entity attribute repository instance
+     */
+    public function getEntityAttributeRepository();
+
+    /**
      * Return's the attribute action instance.
      *
      * @return \TechDivision\Import\Attribute\Actions\AttributeAction The attribute action instance
@@ -108,6 +122,13 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return \TechDivision\Import\Attribute\Actions\CatalogAttributeAction The catalog attribute action instance
      */
     public function getCatalogAttributeAction();
+
+    /**
+     * Return's the entity attribute action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\EntityAttributeAction The entity attribute action instance
+     */
+    public function getEntityAttributeAction();
 
     /**
      * Load's and return's the EAV attribute with the passed code.
@@ -170,6 +191,18 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return array The EAV catalog attribute
      */
     public function loadCatalogAttribute($attributeId);
+
+    /**
+     * Return's the EAV entity attribute with the passed entity type, attribute, attribute set and attribute group ID.
+     *
+     * @param integer $entityTypeId     The ID of the EAV entity attribute's entity type to return
+     * @param integer $attributeId      The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId   The ID of the EAV entity attribute's attribute set to return
+     * @param integer $attributeGroupId The ID of the EAV entity attribute's attribute group to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
 
     /**
      * Persist's the passed EAV attribute data and return's the ID.

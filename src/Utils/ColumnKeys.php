@@ -54,11 +54,18 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
     const ATTRIBUTE_OPTION_SWATCH = 'attribute_option_swatch';
 
     /**
-     * Name for the column 'attribute_group_code'.
+     * Name for the column 'attribute_group_name'.
      *
      * @var string
      */
-    const ATTRIBUTE_GROUP_CODE = 'attribute_group_code';
+    const ATTRIBUTE_GROUP_NAME = 'attribute_group_name';
+
+    /**
+     * Name for the column 'attribute_set_name'.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_SET_NAME = 'attribute_set_name';
 
     /**
      * Name for the column 'attribute_model'.

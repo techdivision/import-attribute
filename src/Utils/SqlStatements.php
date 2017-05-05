@@ -124,6 +124,18 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                                                        AND t2.attribute_id = t1.attribute_id';
 
     /**
+     * The SQL statement to load the EAV entity attribute by its attribute ID, attribute set ID and attribute group ID.
+     *
+     * @var string
+     */
+    const ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID = 'SELECT *
+                                                                                            FROM eav_entity_attribute
+                                                                                           WHERE entity_type_id = :entity_type_id
+                                                                                             AND attribute_id = :attribute_id
+                                                                                             AND attribute_set_id = :attribute_set_id
+                                                                                             AND attribute_group_id = :attribute_group_id';
+
+    /**
      * The SQL statement to create a new EAV attribute.
      *
      * @var string
@@ -162,6 +174,24 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                       :default_value,
                                       :is_unique,
                                       :note)';
+
+    /**
+     * The SQL statement to create a new EAV entity attribute.
+     *
+     * @var string
+     */
+    const CREATE_ENTITY_ATTRIBUTE = 'INSERT
+                                       INTO eav_entity_attribute (entity_type_id,
+                                                                  attribute_id,
+                                                                  attribute_set_id,
+                                                                  attribute_group_id,
+                                                                  sort_order
+                                           )
+                                    VALUES (:entity_type_id,
+                                            :attribute_id,
+                                            :attribute_set_id,
+                                            :attribute_group_id,
+                                            :sort_order)';
 
     /**
      * The SQL statement to create a new EAV attribute label.
@@ -335,6 +365,19 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
      *
      * @var string
      */
+    const UPDATE_ENTITY_ATTRIBUTE = 'UPDATE eav_entity_attribute
+                                        SET entity_type_id = :entity_type_id,
+                                            attribute_id = :attribute_id,
+                                            attribute_set_id = :attribute_set_id,
+                                            attribute_group_id = :attribute_group_id,
+                                            sort_order = :sort_order
+                                      WHERE entity_attribute_id = :entity_attribute_id';
+
+    /**
+     * The SQL statement to update an existing EAV attribute label.
+     *
+     * @var string
+     */
     const UPDATE_ATTRIBUTE_LABEL = 'UPDATE eav_attribute_label
                                        SET attribute_id = :attribute_id,
                                            store_id = :store_id,
@@ -380,6 +423,13 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
      * @var string
      */
     const DELETE_ATTRIBUTE = 'DELETE FROM eav_attribute WHERE attribute_id = :attribute_id';
+
+    /**
+     * The SQL statement to remove a existing EAV entity attribute.
+     *
+     * @var string
+     */
+    const DELETE_ENTITY_ATTRIBUTE = 'DELETE FROM eav_entity_attribute WHERE entity_attribute_id = :entity_attribute_id';
 
     /**
      * The SQL statement to remove a existing EAV attribute label.

@@ -63,6 +63,20 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
     protected $lastAttributeId;
 
     /**
+     * The array with the available attribute sets.
+     *
+     * @var array
+     */
+    protected $attributeSets = array();
+
+    /**
+     * The array with the available attribute groups.
+     *
+     * @var array
+     */
+    protected $attributeGroups = array();
+
+    /**
      * The array with the pre-loaded attribute IDs.
      *
      * @var array
@@ -101,6 +115,28 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
     }
 
     /**
+     * Intializes the previously loaded global data for exactly one bunch.
+     *
+     * @param string $serial The serial of the actual import
+     *
+     * @return void
+     * @see \Importer\Csv\Actions\ProductImportAction::prepare()
+     */
+    public function setUp($serial)
+    {
+
+        // load the status of the actual import
+        $status = $this->getRegistryProcessor()->getAttribute($serial);
+
+        // load the global data we've prepared initially
+        $this->attributeSets = $status[RegistryKeys::GLOBAL_DATA][RegistryKeys::ATTRIBUTE_SETS];
+        $this->attributeGroups = $status[RegistryKeys::GLOBAL_DATA][RegistryKeys::ATTRIBUTE_GROUPS];
+
+        // prepare the callbacks
+        parent::setUp($serial);
+    }
+
+    /**
      * Clean up the global data after importing the bunch.
      *
      * @param string $serial The serial of the actual import
@@ -121,6 +157,74 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
             $serial,
             array(
                 RegistryKeys::PRE_LOADED_ATTRIBUTE_IDS => $this->preLoadedAttributeIds,
+            )
+        );
+    }
+
+    /**
+     * Return's the attribute set with the passed attribute set name.
+     *
+     * @param string $attributeSetName The name of the requested attribute set
+     * @param string $entityTypeCode   The entity type code of the requested attribute set
+     *
+     * @return array The EAV attribute set
+     * @throws \Exception Is thrown, if the attribute set with the passed name is not available
+     */
+    public function getAttributeSetByAttributeSetNameAndEntityTypeCode($attributeSetName, $entityTypeCode)
+    {
+
+        // query whether or not attribute sets for the actual entity type code are available
+        if (isset($this->attributeSets[$entityTypeCode])) {
+            // load the attribute sets for the actualy entity type code
+            $attributSets = $this->attributeSets[$entityTypeCode];
+
+            // query whether or not, the requested attribute set is available
+            if (isset($attributSets[$attributeSetName])) {
+                return $attributSets[$attributeSetName];
+            }
+        }
+
+        // throw an exception, if not
+        throw new \Exception(
+            sprintf(
+                'Found invalid attribute set name %s in file %s on line %d',
+                $attributeSetName,
+                $this->getFilename(),
+                $this->getLineNumber()
+            )
+        );
+    }
+
+    /**
+     * Return's the attribute group with the passed attribute set/group name.
+     *
+     * @param string $entityTypeCode     The entity type code of the requested attribute group
+     * @param string $attributeSetName   The name of the requested attribute group's attribute set
+     * @param string $attributeGroupName The name of the requested attribute group
+     *
+     * @return array The EAV attribute group
+     * @throws \Exception Is thrown, if the attribute group with the passed attribute set/group name is not available
+     */
+    public function getAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName)
+    {
+
+        // query whether or not attribute groups for the actual entity type code are available
+        if (isset($this->attributeGroups[$entityTypeCode])) {
+            // query whether or not, the attribute group with the passed set/group name is available
+            if (isset($this->attributeGroups[$entityTypeCode][$attributeSetName][$attributeGroupName])) {
+                return $this->attributeGroups[$entityTypeCode][$attributeSetName][$attributeGroupName];
+            }
+        }
+
+        // throw an exception, if not
+        throw new \Exception(
+            sprintf(
+                'Found invalid attribute group with entity type code %s attribute set/group name %s/%s in file %s on line %d',
+                $entityTypeCode,
+                $attributeSetName,
+                $attributeGroupName,
+                $this->getFilename(),
+                $this->getLineNumber()
             )
         );
     }

@@ -26,12 +26,14 @@ use TechDivision\Import\Attribute\Actions\AttributeOptionAction;
 use TechDivision\Import\Attribute\Actions\AttributeOptionValueAction;
 use TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction;
 use TechDivision\Import\Attribute\Actions\CatalogAttributeAction;
+use TechDivision\Import\Attribute\Actions\EntityAttributeAction;
 use TechDivision\Import\Attribute\Repositories\AttributeRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeLabelRepository;
-use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository;
+use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository;
+use TechDivision\Import\Attribute\Repositories\EntityAttributeRepository;
 
 /**
  * The attribute bunch processor implementation.
@@ -95,6 +97,13 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     protected $catalogAttributeRepository;
 
     /**
+     * The entity attribute repository instance.
+     *
+     * @var \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository
+     */
+    protected $entityAttributeRepository;
+
+    /**
      * The attribute action instance.
      *
      * @var \TechDivision\Import\Attribute\Actions\AttributeAction
@@ -137,6 +146,13 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     protected $catalogAttributeAction;
 
     /**
+     * The entity attribute action instance.
+     *
+     * @var \TechDivision\Import\Attribute\Actions\EntityAttributeAction
+     */
+    protected $entityAttributeAction;
+
+    /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
      * @param \PDO                                                                        $connection                      The PDO connection to use
@@ -146,12 +162,14 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository  $attributeOptionValueRepository  The attribute repository value instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository $attributeOptionSwatchRepository The attribute repository swatch instance
      * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository      $catalogAttributeRepository      The catalog attribute repository instance
+     * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository       $entityAttributeRepository       The entity attribute repository instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeAction                      $attributeAction                 The attribute action instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeLabelAction                 $attributeLabelAction            The attribute label action instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeOptionAction                $attributeOptionAction           The attribute option action instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction           $attributeOptionValueAction      The attribute option value action instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction          $attributeOptionSwatchAction     The attribute option swatch action instance
      * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction               $catalogAttributeAction          The catalog attribute action instance
+     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeAction                $entityAttributeAction           The entity attribute action instance
      */
     public function __construct(
         \PDO $connection,
@@ -161,12 +179,14 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         AttributeOptionValueRepository $attributeOptionValueRepository,
         AttributeOptionSwatchRepository $attributeOptionSwatchRepository,
         CatalogAttributeRepository $catalogAttributeRepository,
+        EntityAttributeRepository $entityAttributeRepository,
         AttributeAction $attributeAction,
         AttributeLabelAction $attributeLabelAction,
         AttributeOptionAction $attributeOptionAction,
         AttributeOptionValueAction $attributeOptionValueAction,
         AttributeOptionSwatchAction $attributeOptionSwatchAction,
-        CatalogAttributeAction $catalogAttributeAction
+        CatalogAttributeAction $catalogAttributeAction,
+        EntityAttributeAction $entityAttributeAction
     ) {
         $this->setConnection($connection);
         $this->setAttributeRepository($attributeRepository);
@@ -175,12 +195,14 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         $this->setAttributeOptionValueRepository($attributeOptionValueRepository);
         $this->setAttributeOptionSwatchRepository($attributeOptionSwatchRepository);
         $this->setCatalogAttributeRepository($catalogAttributeRepository);
+        $this->setEntityAttributeRepository($entityAttributeRepository);
         $this->setAttributeAction($attributeAction);
         $this->setAttributeLabelAction($attributeLabelAction);
         $this->setAttributeOptionAction($attributeOptionAction);
         $this->setAttributeOptionValueAction($attributeOptionValueAction);
         $this->setAttributeOptionSwatchAction($attributeOptionSwatchAction);
         $this->setCatalogAttributeAction($catalogAttributeAction);
+        $this->setEntityAttributeAction($entityAttributeAction);
     }
 
     /**
@@ -382,6 +404,28 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
+     * Set's the entity attribute repository instance.
+     *
+     * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository $entityAttributeRepository The entity attribute repository instance
+     *
+     * @return void
+     */
+    public function setEntityAttributeRepository(EntityAttributeRepository $entityAttributeRepository)
+    {
+        $this->entityAttributeRepository = $entityAttributeRepository;
+    }
+
+    /**
+     * Return's the entity attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository The entity attribute repository instance
+     */
+    public function getEntityAttributeRepository()
+    {
+        return $this->entityAttributeRepository;
+    }
+
+    /**
      * Set's the attribute action instance.
      *
      * @param \TechDivision\Import\Attribute\Actions\AttributeAction $attributeAction The attribute action instance
@@ -514,6 +558,28 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
+     * Set's the entity attribute action instance.
+     *
+     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeAction $entityAttributeAction The entity attribute action instance
+     *
+     * @return void
+     */
+    public function setEntityAttributeAction(EntityAttributeAction $entityAttributeAction)
+    {
+        $this->entityAttributeAction = $entityAttributeAction;
+    }
+
+    /**
+     * Return's the entity attribute action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\EntityAttributeAction The entity attribute action instance
+     */
+    public function getEntityAttributeAction()
+    {
+        return $this->entityAttributeAction;
+    }
+
+    /**
      * Load's and return's the EAV attribute with the passed code.
      *
      * @param string $attributeCode The code of the EAV attribute to load
@@ -594,6 +660,21 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
+     * Return's the EAV entity attribute with the passed entity type, attribute, attribute set and attribute group ID.
+     *
+     * @param integer $entityTypeId     The ID of the EAV entity attribute's entity type to return
+     * @param integer $attributeId      The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId   The ID of the EAV entity attribute's attribute set to return
+     * @param integer $attributeGroupId The ID of the EAV entity attribute's attribute group to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
+    {
+        return $this->getEntityAttributeRepository()->findOneByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+    }
+
+    /**
      * Persist's the passed EAV attribute data and return's the ID.
      *
      * @param array       $attribute The attribute data to persist
@@ -669,6 +750,19 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     public function persistCatalogAttribute(array $catalogAttribute, $name = null)
     {
         $this->getCatalogAttributeAction()->persist($catalogAttribute, $name);
+    }
+
+    /**
+     * Persist's the passed EAV entity attribute data and return's the ID.
+     *
+     * @param array       $entityAttribute The entity attribute data to persist
+     * @param string|null $name            The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistEntityAttribute(array $entityAttribute, $name = null)
+    {
+        $this->getEntityAttributeAction()->persist($entityAttribute, $name);
     }
 
     /**

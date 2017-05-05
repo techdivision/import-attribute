@@ -46,11 +46,27 @@ class CatalogAttributeUpdateObserver extends CatalogAttributeObserver
 
         // try to load the EAV catalog attribute with the attribute code
         if ($attribute = $this->loadCatalogAttribute($attr[MemberNames::ATTRIBUTE_ID])) {
-            return $this->mergeEntity($attribute, $attr);
+            // unserialize the additional data value if available
+            if (is_array($attribute[MemberNames::ADDITIONAL_DATA]) && $attribute[MemberNames::ADDITIONAL_DATA] !== null) {
+                // merge the additional data if available
+                $attribute[MemberNames::ADDITIONAL_DATA] = array_merge(
+                    $attr[MemberNames::ADDITIONAL_DATA],
+                    unserialize($attribute[MemberNames::ADDITIONAL_DATA])
+                );
+
+            } elseif (!is_array($attribute[MemberNames::ADDITIONAL_DATA]) && $attribute[MemberNames::ADDITIONAL_DATA] !== null) {
+                // unserialize and override the additional data
+                $attribute[MemberNames::ADDITIONAL_DATA] = unserialize($attribute[MemberNames::ADDITIONAL_DATA]);
+            } else {
+                // nothing here
+            }
+
+            // merge the attributes into the entity
+            return $this->serializeAdditionalData($this->mergeEntity($attribute, $attr));
         }
 
-        // simply return the attributes
-        return $attr;
+        //  serialize the additional data and return the attributes
+        return parent::initializeAttribute($attr);
     }
 
     /**

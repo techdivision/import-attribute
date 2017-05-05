@@ -40,11 +40,11 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
     const ATTRIBUTE_OPTION_VALUES = 'attribute_option_values';
 
     /**
-     * Name for the column 'attribute_option_positions'.
+     * Name for the column 'attribute_option_sort_order'.
      *
      * @var string
      */
-    const ATTRIBUTE_OPTION_POSITIONS = 'attribute_option_positions';
+    const ATTRIBUTE_OPTION_SORT_ORDER = 'attribute_option_sort_order';
 
     /**
      * Name for the column 'attribute_option_swatch'.
@@ -54,11 +54,18 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
     const ATTRIBUTE_OPTION_SWATCH = 'attribute_option_swatch';
 
     /**
-     * Name for the column 'attribute_group_code'.
+     * Name for the column 'attribute_group_name'.
      *
      * @var string
      */
-    const ATTRIBUTE_GROUP_CODE = 'attribute_group_code';
+    const ATTRIBUTE_GROUP_NAME = 'attribute_group_name';
+
+    /**
+     * Name for the column 'attribute_set_name'.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_SET_NAME = 'attribute_set_name';
 
     /**
      * Name for the column 'attribute_model'.
@@ -325,4 +332,39 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
      * @var string
      */
     const ADDITIONAL_DATA = 'additional_data';
+
+    /**
+     * Name for the column 'swatch_type'.
+     *
+     * @var string
+     */
+    const SWATCH_TYPE = 'swatch_type';
+
+    /**
+     * Name for the column 'swatch_value'.
+     *
+     * @var string
+     */
+    const SWATCH_VALUE = 'swatch_value';
+
+    /**
+     * Name for the column 'type'.
+     *
+     * @var string
+     */
+    const TYPE = 'type';
+
+    /**
+     * Name for the column 'admin_store_value'.
+     *
+     * @var string
+     */
+    const ADMIN_STORE_VALUE = 'admin_store_value';
+
+    /**
+     * Name for the column 'value'.
+     *
+     * @var string
+     */
+    const VALUE = 'value';
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Subjects\AttributeSubjectInterface
+ * TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction
  *
  * NOTICE OF LICENSE
  *
@@ -18,11 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Subjects;
+namespace TechDivision\Import\Attribute\Actions;
+
+use TechDivision\Import\Actions\AbstractAction;
 
 /**
- * The abstract product subject implementation that provides basic attribute
- * handling business logic.
+ * An action implementation that provides CRUD functionality for EAV attribute option swatch values.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -30,23 +31,6 @@ namespace TechDivision\Import\Attribute\Subjects;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-interface AttributeSubjectInterface
+class AttributeOptionSwatchAction extends AbstractAction
 {
-
-    /**
-     * Return's the ID of the attribute that has been created recently.
-     *
-     * @return integer The attribute ID
-     */
-    public function getLastEntityId();
-
-    /**
-     * Return's the entity type for the passed code.
-     *
-     * @param string $entityTypeCode The entity type code
-     *
-     * @return array The requested entity type
-     * @throws \Exception Is thrown, if the entity type with the passed code is not available
-     */
-    public function getEntityType($entityTypeCode);
 }

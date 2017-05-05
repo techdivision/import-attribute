@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Observers\CleanUpObserver
+ * TechDivision\Import\Attribute\Actions\Processors\EntityAttributeCreateProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Observers;
+namespace TechDivision\Import\Attribute\Actions\Processors;
 
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
 
 /**
- * Clean-Up after importing the row.
+ * The EAV entity attribute create processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,16 +31,24 @@ use TechDivision\Import\Attribute\Utils\ColumnKeys;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CleanUpObserver extends AbstractAttributeImportObserver
+class EntityAttributeCreateProcessor extends AbstractCreateProcessor
 {
 
     /**
-     * Process the observer's business logic.
+     * Return's the array with the SQL statements that has to be prepared.
      *
-     * @return array The processed row
+     * @return array The SQL statements to be prepared
+     * @see \TechDivision\Import\Actions\Processors\AbstractBaseProcessor::getStatements()
      */
-    protected function process()
+    protected function getStatements()
     {
-        $this->addAttributeCodeIdMapping($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
+
+        // load the utility class name
+        $utilityClassName = $this->getUtilityClassName();
+
+        // return the array with the SQL statements that has to be prepared
+        return array(
+            $utilityClassName::CREATE_ENTITY_ATTRIBUTE => $utilityClassName::CREATE_ENTITY_ATTRIBUTE
+        );
     }
 }

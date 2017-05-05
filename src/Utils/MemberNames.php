@@ -283,4 +283,18 @@ class MemberNames extends \TechDivision\Import\Utils\MemberNames
      * @var string
      */
     const SORT_ORDER = 'sort_order';
+
+    /**
+     * Name for the member 'type'.
+     *
+     * @var string
+     */
+    const TYPE = 'type';
+
+    /**
+     * Name for the member 'attribute_group_id'.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_GROUP_ID = 'attribute_group_id';
 }

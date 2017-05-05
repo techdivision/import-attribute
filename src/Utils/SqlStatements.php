@@ -54,6 +54,64 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
     const ATTRIBUTE_BY_ATTRIBUTE_CODE = 'SELECT * FROM eav_attribute WHERE attribute_code = :attribute_code';
 
     /**
+     * The SQL statement to load the EAV attribute label by its attribute code and store ID.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID = 'SELECT t1.*
+                                                              FROM eav_attribute_label t1,
+                                                                   eav_attribute t2
+                                                             WHERE t2.attribute_code = :attribute_code
+                                                               AND t1.attribute_id = t2.attribute_id
+                                                               AND t1.store_id = :store_id';
+
+    /**
+     * The SQL statement to load the EAV attribute option by its attribute code, store ID and value.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE = 'SELECT t2.*
+                                                                         FROM eav_attribute t1,
+                                                                              eav_attribute_option t2,
+                                                                              eav_attribute_option_value t3
+                                                                        WHERE t1.attribute_code = :attribute_code
+                                                                          AND t3.store_id = :store_id
+                                                                          AND t3.value = :value
+                                                                          AND t2.attribute_id = t1.attribute_id
+                                                                          AND t2.option_id = t3.option_id';
+
+    /**
+     * The SQL statement to load the EAV attribute option value by its attribute code, store ID and value.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_VALUE_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE = 'SELECT t3.*
+                                                                               FROM eav_attribute t1,
+                                                                                    eav_attribute_option t2,
+                                                                                    eav_attribute_option_value t3
+                                                                              WHERE t1.attribute_code = :attribute_code
+                                                                                AND t3.store_id = :store_id
+                                                                                AND t3.value = :value
+                                                                                AND t2.attribute_id = t1.attribute_id
+                                                                                AND t2.option_id = t3.option_id';
+
+    /**
+     * The SQL statement to load the EAV attribute option swtach by its attribute code, store ID, value and type.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE = 'SELECT t3.*
+                                                                                         FROM eav_attribute t1,
+                                                                                              eav_attribute_option t2,
+                                                                                              eav_attribute_option_swatch t3
+                                                                                        WHERE t1.attribute_code = :attribute_code
+                                                                                          AND t3.store_id = :store_id
+                                                                                          AND t3.value = :value
+                                                                                          AND t3.type = :type
+                                                                                          AND t2.attribute_id = t1.attribute_id
+                                                                                          AND t2.option_id = t3.option_id';
+
+    /**
      * The SQL statement to load the EAV catalog attribute by its attribute code and entity type ID.
      *
      * @var string
@@ -64,6 +122,18 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                                                      WHERE t1.attribute_code = :attribute_code
                                                                        AND t1.entity_type_id = :entity_type_id
                                                                        AND t2.attribute_id = t1.attribute_id';
+
+    /**
+     * The SQL statement to load the EAV entity attribute by its attribute ID, attribute set ID and attribute group ID.
+     *
+     * @var string
+     */
+    const ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID = 'SELECT *
+                                                                                            FROM eav_entity_attribute
+                                                                                           WHERE entity_type_id = :entity_type_id
+                                                                                             AND attribute_id = :attribute_id
+                                                                                             AND attribute_set_id = :attribute_set_id
+                                                                                             AND attribute_group_id = :attribute_group_id';
 
     /**
      * The SQL statement to create a new EAV attribute.
@@ -87,7 +157,7 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                                     default_value,
                                                     is_unique,
                                                     note
-                                   )
+                                     )
                               VALUES (:entity_type_id,
                                       :attribute_code,
                                       :attribute_model,
@@ -106,6 +176,38 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                       :note)';
 
     /**
+     * The SQL statement to create a new EAV entity attribute.
+     *
+     * @var string
+     */
+    const CREATE_ENTITY_ATTRIBUTE = 'INSERT
+                                       INTO eav_entity_attribute (entity_type_id,
+                                                                  attribute_id,
+                                                                  attribute_set_id,
+                                                                  attribute_group_id,
+                                                                  sort_order
+                                           )
+                                    VALUES (:entity_type_id,
+                                            :attribute_id,
+                                            :attribute_set_id,
+                                            :attribute_group_id,
+                                            :sort_order)';
+
+    /**
+     * The SQL statement to create a new EAV attribute label.
+     *
+     * @var string
+     */
+    const CREATE_ATTRIBUTE_LABEL = 'INSERT
+                                      INTO eav_attribute_label (attribute_id,
+                                                                store_id,
+                                                                value
+                                           )
+                                    VALUES (:attribute_id,
+                                            :store_id,
+                                            :value)';
+
+    /**
      * The SQL statement to create a new EAV attribute option.
      *
      * @var string
@@ -113,7 +215,7 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
     const CREATE_ATTRIBUTE_OPTION = 'INSERT
                                        INTO eav_attribute_option (attribute_id,
                                                                   sort_order
-                                          )
+                                            )
                                      VALUES (:attribute_id,
                                              :sort_order)';
 
@@ -126,10 +228,26 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                              INTO eav_attribute_option_value (option_id,
                                                                               store_id,
                                                                               value
-                                                )
+                                                  )
                                            VALUES (:option_id,
                                                    :store_id,
                                                    :value)';
+
+    /**
+     * The SQL statement to create a new EAV attribute option swatch value.
+     *
+     * @var string
+     */
+    const CREATE_ATTRIBUTE_OPTION_SWATCH = 'INSERT
+                                              INTO eav_attribute_option_swatch (option_id,
+                                                                                store_id,
+                                                                                value,
+                                                                                type
+                                                  )
+                                           VALUES (:option_id,
+                                                   :store_id,
+                                                   :value,
+                                                   :type)';
 
     /**
      * The SQL statement to create a new EAV catalog attribute.
@@ -243,6 +361,30 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                        WHERE attribute_id = :attribute_id';
 
     /**
+     * The SQL statement to update an existing EAV attribute label.
+     *
+     * @var string
+     */
+    const UPDATE_ENTITY_ATTRIBUTE = 'UPDATE eav_entity_attribute
+                                        SET entity_type_id = :entity_type_id,
+                                            attribute_id = :attribute_id,
+                                            attribute_set_id = :attribute_set_id,
+                                            attribute_group_id = :attribute_group_id,
+                                            sort_order = :sort_order
+                                      WHERE entity_attribute_id = :entity_attribute_id';
+
+    /**
+     * The SQL statement to update an existing EAV attribute label.
+     *
+     * @var string
+     */
+    const UPDATE_ATTRIBUTE_LABEL = 'UPDATE eav_attribute_label
+                                       SET attribute_id = :attribute_id,
+                                           store_id = :store_id,
+                                           value = :value
+                                     WHERE attribute_label_id = :attribute_label_id';
+
+    /**
      * The SQL statement to update an existing EAV attribute option.
      *
      * @var string
@@ -260,8 +402,20 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
     const UPDATE_ATTRIBUTE_OPTION_VALUE = 'UPDATE eav_attribute_option_value
                                               SET option_id = :option_id,
                                                   store_id = :store_id,
-                                                     value = :value
+                                                  value = :value
                                             WHERE value_id = :value_id';
+
+    /**
+     * The SQL statement to update an existing EAV attribute option value.
+     *
+     * @var string
+     */
+    const UPDATE_ATTRIBUTE_OPTION_SWATCH = 'UPDATE eav_attribute_option_swatch
+                                               SET option_id = :option_id,
+                                                   store_id = :store_id,
+                                                   value = :value,
+                                                   type = :type
+                                             WHERE swatch_id = :swatch_id';
 
     /**
      * The SQL statement to remove a existing EAV attribute.
@@ -269,6 +423,20 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
      * @var string
      */
     const DELETE_ATTRIBUTE = 'DELETE FROM eav_attribute WHERE attribute_id = :attribute_id';
+
+    /**
+     * The SQL statement to remove a existing EAV entity attribute.
+     *
+     * @var string
+     */
+    const DELETE_ENTITY_ATTRIBUTE = 'DELETE FROM eav_entity_attribute WHERE entity_attribute_id = :entity_attribute_id';
+
+    /**
+     * The SQL statement to remove a existing EAV attribute label.
+     *
+     * @var string
+     */
+    const DELETE_ATTRIBUTE_LABEL = 'DELETE FROM eav_attribute_label WHERE attribute_label_id = :attribute_label_id';
 
     /**
      * The SQL statement to remove a existing EAV attribute option.
@@ -283,6 +451,13 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
      * @var string
      */
     const DELETE_ATTRIBUTE_OPTION_VALUE = 'DELETE FROM eav_attribute_option_value WHERE value_id = :value_id';
+
+    /**
+     * The SQL statement to remove a existing EAV attribute option swatch value.
+     *
+     * @var string
+     */
+    const DELETE_ATTRIBUTE_OPTION_SWATCH= 'DELETE FROM eav_attribute_option_swatch WHERE swatch_id = :swatch_id';
 
     /**
      * The SQL statement to remove a existing EAV catalog attribute.

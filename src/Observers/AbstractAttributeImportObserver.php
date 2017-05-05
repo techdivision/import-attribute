@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Observers\AbstractObserver;
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
  * Abstract attribute observer that handles the process to import attribute bunches.
@@ -56,27 +57,13 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
     }
 
     /**
-     * Map's the passed attribute code to the attribute ID that has been created recently.
+     * Return's whether or not this is the admin store view.
      *
-     * @param string $attributeCode The attribute code that has to be mapped
-     *
-     * @return void
+     * @return boolean TRUE if we're in admin store view, else FALSE
      */
-    protected function addAttributeCodeIdMapping($attributeCode)
+    protected function isAdminStore()
     {
-        $this->getSubject()->addAttributeCodeIdMapping($attributeCode);
-    }
-
-    /**
-     * Queries whether or not the attribute with the passed code has already been processed.
-     *
-     * @param string $attributeCode The attribute code to check
-     *
-     * @return boolean TRUE if the path has been processed, else FALSE
-     */
-    protected function hasBeenProcessed($attributeCode)
-    {
-        return $this->getSubject()->hasBeenProcessed($attributeCode);
+        return $this->getValue(ColumnKeys::STORE_VIEW_CODE) === null;
     }
 
     /**

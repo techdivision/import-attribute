@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Observers\AttributeOptionObserver
+ * TechDivision\Import\Attribute\Observers\AttributeOptionSwatchObserver
  *
  * NOTICE OF LICENSE
  *
@@ -20,13 +20,14 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Subjects\SubjectInterface;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
- * Observer that create's the attribute options found in the additional CSV file.
+ * Observer that create's the attribute option swatchs found in the additional CSV file.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -34,7 +35,7 @@ use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeOptionObserver extends AbstractAttributeImportObserver
+class AttributeOptionSwatchObserver extends AbstractAttributeImportObserver
 {
 
     /**
@@ -70,19 +71,13 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
     protected function process()
     {
 
-        // query whether or not, we've found a new attribute code => means we've found a new attribute
-        if ($this->hasBeenProcessed($this->getValue(ColumnKeys::ATTRIBUTE_CODE), $this->getValue(ColumnKeys::VALUE))) {
-            return;
-        }
-
         // prepare the store view code
         $this->prepareStoreViewCode();
 
-        // prepare the attribue values
-        $attributeOption = $this->initializeAttribute($this->prepareAttributes());
-
-        // insert the attribute option and set the option ID
-        $this->setLastOptionId($this->persistAttributeOption($attributeOption));
+        // prepare and insert the attribute option swatch
+        if ($attr = $this->prepareAttributes()) {
+            $this->persistAttributeOptionSwatch($this->initializeAttribute($attr));
+        }
     }
 
     /**
@@ -93,28 +88,34 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
     protected function prepareAttributes()
     {
 
-        // load the attribute ID
-        $attribute = $this->loadAttributeByAttributeCode($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
-        $attributeId = $attribute[MemberNames::ATTRIBUTE_ID];
+        // load the option ID
+        $optionId = $this->getLastOptionId();
 
-        // load the sort order
-        $sortOrder = $this->getValue(ColumnKeys::SORT_ORDER);
+        // load the store ID, value + type
+        $storeId = $this->getRowStoreId(StoreViewCodes::ADMIN);
+        $value = $this->getValue(ColumnKeys::SWATCH_VALUE);
+        $type = $this->getValue(ColumnKeys::SWATCH_TYPE);
 
-        // return the prepared attribute option
-        return $this->initializeEntity(
-            array(
-                MemberNames::ATTRIBUTE_ID  => $attributeId,
-                MemberNames::SORT_ORDER    => $sortOrder
-            )
-        );
+        // load the attribute option swatch value/type
+        if ($value && $type) {
+            // return the prepared attribute option
+            return $this->initializeEntity(
+                array(
+                    MemberNames::OPTION_ID  => $optionId,
+                    MemberNames::STORE_ID   => $storeId,
+                    MemberNames::VALUE      => $value,
+                    MemberNames::TYPE       => $type
+                )
+            );
+        }
     }
 
     /**
-     * Initialize the EAV attribute option with the passed attributes and returns an instance.
+     * Initialize the EAV attribute option value with the passed attributes and returns an instance.
      *
-     * @param array $attr The EAV attribute option attributes
+     * @param array $attr The EAV attribute option value attributes
      *
-     * @return array The initialized EAV attribute option
+     * @return array The initialized EAV attribute option value
      */
     protected function initializeAttribute(array $attr)
     {
@@ -132,51 +133,24 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Queries whether or not the attribute with the passed code/value has already been processed.
+     * Return's the ID of the option that has been created recently.
      *
-     * @param string $attributeCode The attribute code to check
-     * @param string $value         The option value to check
-     *
-     * @return boolean TRUE if the path has been processed, else FALSE
+     * @return integer The option ID
      */
-    protected function hasBeenProcessed($attributeCode, $value)
+    protected function getLastOptionId()
     {
-        return $this->getSubject()->hasBeenProcessed($attributeCode, $value);
+        return $this->getSubject()->getLastOptionId();
     }
 
     /**
-     * Set's the ID of the option that has been created recently.
+     * Persist the passed attribute option swatch.
      *
-     * @param integer $lastOptionId The option ID
+     * @param array $attributeOptionSwatch The attribute option swatch to persist
      *
      * @return void
      */
-    protected function setLastOptionId($lastOptionId)
+    protected function persistAttributeOptionSwatch(array $attributeOptionSwatch)
     {
-        $this->getSubject()->setLastOptionId($lastOptionId);
-    }
-
-    /**
-     * Load's and return's the EAV attribute with the passed code.
-     *
-     * @param string $attributeCode The code of the EAV attribute to load
-     *
-     * @return array The EAV attribute
-     */
-    protected function loadAttributeByAttributeCode($attributeCode)
-    {
-        return $this->getAttributeBunchProcessor()->loadAttributeByAttributeCode($attributeCode);
-    }
-
-    /**
-     * Persist the passed attribute option.
-     *
-     * @param array $attributeOption The attribute option to persist
-     *
-     * @return void
-     */
-    protected function persistAttributeOption(array $attributeOption)
-    {
-        return $this->getAttributeBunchProcessor()->persistAttributeOption($attributeOption);
+        return $this->getAttributeBunchProcessor()->persistAttributeOptionSwatch($attributeOptionSwatch);
     }
 }

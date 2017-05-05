@@ -13,6 +13,10 @@
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
         </service>
+        <service id="import_attribute.repository.attribute.label" class="TechDivision\Import\Attribute\Repositories\AttributeLabelRepository">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
         <service id="import_attribute.repository.attribute.option" class="TechDivision\Import\Attribute\Repositories\AttributeOptionRepository">
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
@@ -39,6 +43,18 @@
             <argument>%import_attribute.utility.class.name%</argument>
         </service>
         <service id="import_attribute.action.processor.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeDeleteProcessor">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.label.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelCreateProcessor">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.label.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelUpdateProcessor">
+            <argument type="service" id="connection"/>
+            <argument>%import_attribute.utility.class.name%</argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.label.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelDeleteProcessor">
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
         </service>
@@ -96,6 +112,11 @@
             <argument type="service" id="import_attribute.action.processor.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.delete"/>
         </service>
+        <service id="import_attribute.action.attribute.label" class="TechDivision\Import\Attribute\Actions\AttributeLabelAction">
+            <argument type="service" id="import_attribute.action.processor.attribute.label.create"/>
+            <argument type="service" id="import_attribute.action.processor.attribute.label.update"/>
+            <argument type="service" id="import_attribute.action.processor.attribute.label.delete"/>
+        </service>
         <service id="import_attribute.action.attribute.option" class="TechDivision\Import\Attribute\Actions\AttributeOptionAction">
             <argument type="service" id="import_attribute.action.processor.attribute.option.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.update"/>
@@ -137,6 +158,14 @@
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.update" class="TechDivision\Import\Attribute\Observers\AttributeUpdateObserver">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.label" class="TechDivision\Import\Attribute\Observers\AttributeLabelObserver">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.observer.attribute.label.update" class="TechDivision\Import\Attribute\Observers\AttributeLabelUpdateObserver">
             <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
@@ -189,11 +218,13 @@
         <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\AttributeBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.attribute"/>
+            <argument type="service" id="import_attribute.repository.attribute.label"/>
             <argument type="service" id="import_attribute.repository.attribute.option"/>
             <argument type="service" id="import_attribute.repository.attribute.option.value"/>
             <argument type="service" id="import_attribute.repository.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.repository.catalog.attribute"/>
             <argument type="service" id="import_attribute.action.attribute"/>
+            <argument type="service" id="import_attribute.action.attribute.label"/>
             <argument type="service" id="import_attribute.action.attribute.option"/>
             <argument type="service" id="import_attribute.action.attribute.option.value"/>
             <argument type="service" id="import_attribute.action.attribute.option.swatch"/>

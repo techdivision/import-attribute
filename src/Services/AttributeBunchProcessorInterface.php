@@ -40,11 +40,46 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function getAttributeRepository();
 
     /**
+     * Return's the attribute label repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\AttributeRepository The attribute label repository instance
+     */
+    public function getAttributeLabelRepository();
+
+    /**
+     * Return's the attribute option repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\AttributeOptionRepository The attribute option repository instance
+     */
+    public function getAttributeOptionRepository();
+
+    /**
+     * Return's the attribute option value repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository The attribute option value repository instance
+     */
+    public function getAttributeOptionValueRepository();
+
+    /**
+     * Return's the attribute option swatch repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository The attribute option swatch repository instance
+     */
+    public function getAttributeOptionSwatchRepository();
+
+    /**
      * Return's the attribute action instance.
      *
      * @return \TechDivision\Import\Attribute\Actions\AttributeAction The attribute action instance
      */
     public function getAttributeAction();
+
+    /**
+     * Return's the attribute label action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\AttributeAction The attribute label action instance
+     */
+    public function getAttributeLabelAction();
 
     /**
      * Return's the attribute option action instance.
@@ -82,6 +117,16 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return array The EAV attribute
      */
     public function loadAttributeByAttributeCode($attributeCode);
+
+    /**
+     * Return's the EAV attribute label with the passed attribute code and store ID.
+     *
+     * @param string  $attributeCode The attribute code of the EAV attribute label to return
+     * @param integer $storeId       The store ID of the EAV attribute label to return
+     *
+     * @return array The EAV attribute label
+     */
+    public function loadAttributeLabelByAttributeCodeAndStoreId($attributeCode, $storeId);
 
     /**
      * Load's and return's the EAV attribute option with the passed code, store ID and value.
@@ -135,6 +180,16 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return string The ID of the persisted attribute
      */
     public function persistAttribute(array $attribute, $name = null);
+
+    /**
+     * Persist the passed attribute label.
+     *
+     * @param array       $attributeLabel The attribute label to persist
+     * @param string|null $name           The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistAttributeLabel(array $attributeLabel, $name = null);
 
     /**
      * Persist's the passed EAV attribute option data and return's the ID.

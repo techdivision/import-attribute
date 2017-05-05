@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Observers\AbstractObserver;
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
  * Abstract attribute observer that handles the process to import attribute bunches.
@@ -53,6 +54,16 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
 
         // return the processed row
         return $this->getRow();
+    }
+
+    /**
+     * Return's whether or not this is the admin store view.
+     *
+     * @return boolean TRUE if we're in admin store view, else FALSE
+     */
+    protected function isAdminStore()
+    {
+        return $this->getValue(ColumnKeys::STORE_VIEW_CODE) === null;
     }
 
     /**

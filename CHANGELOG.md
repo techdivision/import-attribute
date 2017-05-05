@@ -1,13 +1,3 @@
-# Version 1.0.0-alpha5
-
-## Bugfixes
-
-* None
-
-## Features
-
-* Add handling for additional_data attribute => necessary to create swatch attributes
-
 # Version 1.0.0-alpha4
 
 ## Bugfixes
@@ -16,8 +6,10 @@
 
 ## Features
 
-* Implement EAV attribute option swatch delete/add-update + replace functionality
 * Update generic configuration file
+* Add functionality to persist attribute labels
+* Implement EAV attribute option swatch delete/add-update + replace functionality
+* Add handling for additional_data attribute => necessary to create swatch attributes
 
 # Version 1.0.0-alpha3
 

@@ -20,8 +20,6 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
-
 /**
  * Observer that exports the attribute options to an additional CSV file for further processing.
  *
@@ -40,16 +38,6 @@ abstract class AbstractAttributeExportObserver extends AbstractAttributeImportOb
      * @return string The artefact type
      */
     abstract protected function getArtefactType();
-
-    /**
-     * Return's whether or not this is the admin store view.
-     *
-     * @return boolean TRUE if we're in admin store view, else FALSE
-     */
-    protected function isAdminStore()
-    {
-        return $this->getValue(ColumnKeys::STORE_VIEW_CODE) === null;
-    }
 
     /**
      * Create's and return's a new empty artefact entity.

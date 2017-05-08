@@ -1,3 +1,14 @@
+# Version 1.0.0-alpha5
+
+## Bugfixes
+
+* Load attribute sort_order column from CSV file instead of setting 0
+* Update README.md file
+
+## Features
+
+* None
+
 # Version 1.0.0-alpha4
 
 ## Bugfixes

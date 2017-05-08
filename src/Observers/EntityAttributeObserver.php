@@ -105,6 +105,9 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
         $attributeGroup = $this->getAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME));
         $attributeGroupId = $attributeGroup[MemberNames::ATTRIBUTE_GROUP_ID];
 
+        // load the sort order for the attribute
+        $sortOrder = $this->getValue(ColumnKeys::SORT_ORDER, 0);
+
         // return the prepared product
         return $this->initializeEntity(
             array(
@@ -112,7 +115,7 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
                 MemberNames::ENTITY_TYPE_ID     => $entityTypeId,
                 MemberNames::ATTRIBUTE_SET_ID   => $attributeSetId,
                 MemberNames::ATTRIBUTE_GROUP_ID => $attributeGroupId,
-                MemberNames::SORT_ORDER         => 0
+                MemberNames::SORT_ORDER         => $sortOrder
             )
         );
     }

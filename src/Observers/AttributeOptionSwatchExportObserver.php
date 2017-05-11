@@ -67,7 +67,8 @@ class AttributeOptionSwatchExportObserver extends AbstractAttributeExportObserve
         // iterate over the attribute option values and export them
         foreach ($attributeOptionValues as $key => $attributeOptionValue) {
             // load the artefacts with the admin store values
-            $adminValueArtefacts = reset($this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId()));
+            $existingArtefacts = $this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId());
+            $adminValueArtefacts = reset($existingArtefacts);
 
             // initialize the attribute option swatch data
             $optionSwatch = array();

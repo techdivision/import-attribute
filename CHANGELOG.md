@@ -1,3 +1,13 @@
+# Version 1.0.0-alpha6
+
+## Bugfixes
+
+* Fixed invalid usage of passing by reference in AttributeOptionValueExportObserver class
+
+## Features
+
+* None
+
 # Version 1.0.0-alpha5
 
 ## Bugfixes

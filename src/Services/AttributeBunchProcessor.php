@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Services;
 
+use TechDivision\Import\Repositories\EavAttributeOptionValueRepository;
 use TechDivision\Import\Attribute\Actions\AttributeAction;
 use TechDivision\Import\Attribute\Actions\AttributeLabelAction;
 use TechDivision\Import\Attribute\Actions\AttributeOptionAction;
@@ -30,7 +31,6 @@ use TechDivision\Import\Attribute\Actions\EntityAttributeAction;
 use TechDivision\Import\Attribute\Repositories\AttributeRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeLabelRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionRepository;
-use TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository;
 use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository;
 use TechDivision\Import\Attribute\Repositories\EntityAttributeRepository;
@@ -76,11 +76,11 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     protected $attributeOptionRepository;
 
     /**
-     * The attribute option value repository instance.
+     * The repository to access EAV attribute option values.
      *
-     * @var \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository
+     * @var \TechDivision\Import\Product\Repositories\EavAttributeOptionValueRepository
      */
-    protected $attributeOptionValueRepository;
+    protected $eavAttributeOptionValueRepository;
 
     /**
      * The attribute option swatch repository instance.
@@ -155,28 +155,28 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
-     * @param \PDO                                                                        $connection                      The PDO connection to use
-     * @param \TechDivision\Import\Attribute\Repositories\AttributeRepository             $attributeRepository             The attribute repository instance
-     * @param \TechDivision\Import\Attribute\Repositories\AttributeLabelRepository        $attributeLabelRepository        The attribute label repository instance
-     * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionRepository       $attributeOptionRepository       The attribute repository instance
-     * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository  $attributeOptionValueRepository  The attribute repository value instance
-     * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository $attributeOptionSwatchRepository The attribute repository swatch instance
-     * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository      $catalogAttributeRepository      The catalog attribute repository instance
-     * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository       $entityAttributeRepository       The entity attribute repository instance
-     * @param \TechDivision\Import\Attribute\Actions\AttributeAction                      $attributeAction                 The attribute action instance
-     * @param \TechDivision\Import\Attribute\Actions\AttributeLabelAction                 $attributeLabelAction            The attribute label action instance
-     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionAction                $attributeOptionAction           The attribute option action instance
-     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction           $attributeOptionValueAction      The attribute option value action instance
-     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction          $attributeOptionSwatchAction     The attribute option swatch action instance
-     * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction               $catalogAttributeAction          The catalog attribute action instance
-     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeAction                $entityAttributeAction           The entity attribute action instance
+     * @param \PDO                                                                        $connection                        The PDO connection to use
+     * @param \TechDivision\Import\Attribute\Repositories\AttributeRepository             $attributeRepository               The attribute repository instance
+     * @param \TechDivision\Import\Attribute\Repositories\AttributeLabelRepository        $attributeLabelRepository          The attribute label repository instance
+     * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionRepository       $attributeOptionRepository         The attribute repository instance
+     * @param \TechDivision\Import\Product\Repositories\EavAttributeOptionValueRepository $eavAttributeOptionValueRepository The EAV attribute option value repository to use
+     * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository $attributeOptionSwatchRepository   The attribute repository swatch instance
+     * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository      $catalogAttributeRepository        The catalog attribute repository instance
+     * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepository       $entityAttributeRepository         The entity attribute repository instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeAction                      $attributeAction                   The attribute action instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeLabelAction                 $attributeLabelAction              The attribute label action instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionAction                $attributeOptionAction             The attribute option action instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionValueAction           $attributeOptionValueAction        The attribute option value action instance
+     * @param \TechDivision\Import\Attribute\Actions\AttributeOptionSwatchAction          $attributeOptionSwatchAction       The attribute option swatch action instance
+     * @param \TechDivision\Import\Attribute\Actions\CatalogAttributeAction               $catalogAttributeAction            The catalog attribute action instance
+     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeAction                $entityAttributeAction             The entity attribute action instance
      */
     public function __construct(
         \PDO $connection,
         AttributeRepository $attributeRepository,
         AttributeLabelRepository $attributeLabelRepository,
         AttributeOptionRepository $attributeOptionRepository,
-        AttributeOptionValueRepository $attributeOptionValueRepository,
+        EavAttributeOptionValueRepository $eavAttributeOptionValueRepository,
         AttributeOptionSwatchRepository $attributeOptionSwatchRepository,
         CatalogAttributeRepository $catalogAttributeRepository,
         EntityAttributeRepository $entityAttributeRepository,
@@ -192,7 +192,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         $this->setAttributeRepository($attributeRepository);
         $this->setAttributeLabelRepository($attributeLabelRepository);
         $this->setAttributeOptionRepository($attributeOptionRepository);
-        $this->setAttributeOptionValueRepository($attributeOptionValueRepository);
+        $this->setEavAttributeOptionValueRepository($eavAttributeOptionValueRepository);
         $this->setAttributeOptionSwatchRepository($attributeOptionSwatchRepository);
         $this->setCatalogAttributeRepository($catalogAttributeRepository);
         $this->setEntityAttributeRepository($entityAttributeRepository);
@@ -338,25 +338,25 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
-     * Set's the attribute option value repository instance.
+     * Set's the repository to access EAV attribute option values.
      *
-     * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository $attributeOptionValueRepository The attribute option value repository instance
+     * @param \TechDivision\Import\Product\Repositories\EavAttributeOptionValueRepository $eavAttributeOptionValueRepository The repository to access EAV attribute option values
      *
      * @return void
      */
-    public function setAttributeOptionValueRepository(AttributeOptionValueRepository $attributeOptionValueRepository)
+    public function setEavAttributeOptionValueRepository($eavAttributeOptionValueRepository)
     {
-        $this->attributeOptionValueRepository = $attributeOptionValueRepository;
+        $this->eavAttributeOptionValueRepository = $eavAttributeOptionValueRepository;
     }
 
     /**
-     * Return's the attribute option value repository instance.
+     * Return's the repository to access EAV attribute option values.
      *
-     * @return \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository The attribute option value repository instance
+     * @return \TechDivision\Import\Product\Repositories\EavAttributeOptionValueRepository The repository instance
      */
-    public function getAttributeOptionValueRepository()
+    public function getEavAttributeOptionValueRepository()
     {
-        return $this->attributeOptionValueRepository;
+        return $this->eavAttributeOptionValueRepository;
     }
 
     /**
@@ -629,7 +629,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      */
     public function loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
     {
-        return $this->getAttributeOptionValueRepository()->findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+        return $this->getEavAttributeOptionValueRepository()->findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
     }
 
     /**

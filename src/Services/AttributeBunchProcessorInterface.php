@@ -54,11 +54,11 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function getAttributeOptionRepository();
 
     /**
-     * Return's the attribute option value repository instance.
+     * Return's the repository to access EAV attribute option values.
      *
-     * @return \TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository The attribute option value repository instance
+     * @return \TechDivision\Import\Product\Repositories\EavAttributeOptionValueRepository The repository instance
      */
-    public function getAttributeOptionValueRepository();
+    public function getEavAttributeOptionValueRepository();
 
     /**
      * Return's the attribute option swatch repository instance.

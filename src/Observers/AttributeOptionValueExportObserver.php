@@ -66,7 +66,8 @@ class AttributeOptionValueExportObserver extends AbstractAttributeExportObserver
         // iterate over the attribute option values and export them
         foreach ($attributeOptionValues as $key => $attributeOptionValue) {
             // load the artefacts with the admin store values
-            $adminValueArtefacts = reset($this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId()));
+            $existingAdminValueArtefacts = $this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId());
+            $adminValueArtefacts = reset($existingAdminValueArtefacts);
 
             // initialize and add the new artefact
             $artefacts[] = $this->newArtefact(

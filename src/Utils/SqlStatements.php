@@ -81,21 +81,6 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                                                                           AND t2.option_id = t3.option_id';
 
     /**
-     * The SQL statement to load the EAV attribute option value by its attribute code, store ID and value.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_OPTION_VALUE_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE = 'SELECT t3.*
-                                                                               FROM eav_attribute t1,
-                                                                                    eav_attribute_option t2,
-                                                                                    eav_attribute_option_value t3
-                                                                              WHERE t1.attribute_code = :attribute_code
-                                                                                AND t3.store_id = :store_id
-                                                                                AND t3.value = :value
-                                                                                AND t2.attribute_id = t1.attribute_id
-                                                                                AND t2.option_id = t3.option_id';
-
-    /**
      * The SQL statement to load the EAV attribute option swtach by its attribute code, store ID, value and type.
      *
      * @var string

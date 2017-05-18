@@ -21,10 +21,6 @@
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
         </service>
-        <service id="import_attribute.repository.attribute.option.value" class="TechDivision\Import\Attribute\Repositories\AttributeOptionValueRepository">
-            <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
-        </service>
         <service id="import_attribute.repository.attribute.option.swatch" class="TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository">
             <argument type="service" id="connection"/>
             <argument>%import_attribute.utility.class.name%</argument>
@@ -249,7 +245,7 @@
             <argument type="service" id="import_attribute.repository.attribute"/>
             <argument type="service" id="import_attribute.repository.attribute.label"/>
             <argument type="service" id="import_attribute.repository.attribute.option"/>
-            <argument type="service" id="import_attribute.repository.attribute.option.value"/>
+            <argument type="service" id="import.repository.eav.attribute.option.value"/>
             <argument type="service" id="import_attribute.repository.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.repository.catalog.attribute"/>
             <argument type="service" id="import_attribute.repository.entity.attribute"/>

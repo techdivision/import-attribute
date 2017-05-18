@@ -1,3 +1,13 @@
+# Version 1.0.0-beta1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Replace AttributeOptionValueRepository with EavAttributeOptionValueRepository from techdivision/import library
+
 # Version 1.0.0-alpha6
 
 ## Bugfixes

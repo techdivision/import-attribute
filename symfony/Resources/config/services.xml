@@ -158,85 +158,56 @@
         <service id="configuration.import_attribute.subject.bunch" synthetic="true" />
         <service id="configuration.import_attribute.subject.option" synthetic="true" />
 
-        <service id="import_attribute.observer.pre.load.attribute.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeIdObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
-        <service id="import_attribute.observer.pre.load.attribute.option.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeOptionIdObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
-        <service id="import_attribute.observer.attribute.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeCleanUpObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
-        <service id="import_attribute.observer.attribute.option.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeOptionCleanUpObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
+        <service id="import_attribute.observer.pre.load.attribute.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeIdObserver"/>
+        <service id="import_attribute.observer.pre.load.attribute.option.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeOptionIdObserver"/>
+        <service id="import_attribute.observer.attribute.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeCleanUpObserver"/>
+        <service id="import_attribute.observer.attribute.option.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeOptionCleanUpObserver"/>
+        <service id="import_attribute.observer.attribute.option.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionExportObserver"/>
+        <service id="import_attribute.observer.attribute.option.value.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueExportObserver"/>
+        <service id="import_attribute.observer.attribute.option.swatch.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchExportObserver"/>
         <service id="import_attribute.observer.attribute" class="TechDivision\Import\Attribute\Observers\AttributeObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.update" class="TechDivision\Import\Attribute\Observers\AttributeUpdateObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.label" class="TechDivision\Import\Attribute\Observers\AttributeLabelObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.label.update" class="TechDivision\Import\Attribute\Observers\AttributeLabelUpdateObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.catalog.attribute" class="TechDivision\Import\Attribute\Observers\CatalogAttributeObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.catalog.attribute.update" class="TechDivision\Import\Attribute\Observers\CatalogAttributeUpdateObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.clear.attribute" class="TechDivision\Import\Attribute\Observers\ClearAttributeObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
-        <service id="import_attribute.observer.attribute.option.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionExportObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
-        <service id="import_attribute.observer.attribute.option.value.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueExportObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
-        <service id="import_attribute.observer.attribute.option.swatch.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchExportObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
-        </service>
         <service id="import_attribute.observer.attribute.option" class="TechDivision\Import\Attribute\Observers\AttributeOptionObserver">
-            <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.option.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionUpdateObserver">
-            <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.option.value" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueObserver">
-            <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.option.value.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueUpdateObserver">
-            <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.option.swatch" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchObserver">
-            <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.attribute.option.swatch.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchUpdateObserver">
-            <argument type="service" id="import_attribute.subject.option"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.entity.attribute" class="TechDivision\Import\Attribute\Observers\EntityAttributeObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
         <service id="import_attribute.observer.entity.attribute.update" class="TechDivision\Import\Attribute\Observers\EntityAttributeUpdateObserver">
-            <argument type="service" id="import_attribute.subject.bunch"/>
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
 

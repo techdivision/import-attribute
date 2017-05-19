@@ -22,7 +22,6 @@ namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Subjects\SubjectInterface;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
@@ -47,18 +46,10 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     /**
      * Initializes the observer with the passed subject instance.
      *
-     * @param \TechDivision\Import\Subjects\SubjectInterface                           $subject                 The observer's subject instance
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
      */
-    public function __construct(
-        SubjectInterface $subject,
-        AttributeBunchProcessorInterface $attributeBunchProcessor
-    ) {
-
-        // pass the subject through to the parend observer
-        parent::__construct($subject);
-
-        // initialize the attribute bunch processor
+    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
+    {
         $this->attributeBunchProcessor = $attributeBunchProcessor;
     }
 

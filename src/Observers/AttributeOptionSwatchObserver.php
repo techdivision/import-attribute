@@ -88,7 +88,7 @@ class AttributeOptionSwatchObserver extends AbstractAttributeImportObserver
         $type = $this->getValue(ColumnKeys::SWATCH_TYPE);
 
         // load the attribute option swatch value/type
-        if ($value && $type) {
+        if ($value !== null && $type !== null) {
             // return the prepared attribute option
             return $this->initializeEntity(
                 array(

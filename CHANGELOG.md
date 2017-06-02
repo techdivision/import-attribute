@@ -1,3 +1,13 @@
+# Version 1.0.0-beta3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Bugfix for invalid query on 0 values when creating text swatch values
+
 # Version 1.0.0-beta2
 
 ## Bugfixes

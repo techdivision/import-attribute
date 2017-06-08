@@ -1,3 +1,13 @@
+# Version 1.0.0-beta4
+
+## Bugfixes
+
+* Define selected fields when loading rows from catalog_eav_attribute to avoid exception on custom defined fields
+
+## Features
+
+* Remove archive directory from default configuration file
+
 # Version 1.0.0-beta3
 
 ## Bugfixes

@@ -44,7 +44,32 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
      *
      * @var string
      */
-    const CATALOG_ATTRIBUTE = 'SELECT * FROM catalog_eav_attribute WHERE attribute_id = :attribute_id';
+    const CATALOG_ATTRIBUTE = 'SELECT attribute_id,
+                                      frontend_input_renderer,
+                                      is_global,
+                                      is_visible,
+                                      is_searchable,
+                                      is_filterable,
+                                      is_comparable,
+                                      is_visible_on_front,
+                                      is_html_allowed_on_front,
+                                      is_used_for_price_rules,
+                                      is_filterable_in_search,
+                                      used_in_product_listing,
+                                      used_for_sort_by,
+                                      apply_to,
+                                      is_visible_in_advanced_search,
+                                      position,
+                                      is_wysiwyg_enabled,
+                                      is_used_for_promo_rules,
+                                      is_required_in_admin_store,
+                                      is_used_in_grid,
+                                      is_visible_in_grid,
+                                      is_filterable_in_grid,
+                                      search_weight,
+                                      additional_data
+                                 FROM catalog_eav_attribute
+                                WHERE attribute_id = :attribute_id';
 
     /**
      * The SQL statement to load the EAV attribute by its attribute code.

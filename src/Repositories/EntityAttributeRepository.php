@@ -54,7 +54,8 @@ class EntityAttributeRepository extends AbstractRepository
         $utilityClassName = $this->getUtilityClassName();
 
         // initialize the prepared statements
-        $this->entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt = $this->getConnection()->prepare($utilityClassName::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID);
+        $this->entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID));
     }
 
     /**

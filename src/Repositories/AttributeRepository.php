@@ -54,7 +54,8 @@ class AttributeRepository extends AbstractRepository
         $utilityClassName = $this->getUtilityClassName();
 
         // initialize the prepared statements
-        $this->attributeByAttributeCodeStmt = $this->getConnection()->prepare($utilityClassName::ATTRIBUTE_BY_ATTRIBUTE_CODE);
+        $this->attributeByAttributeCodeStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_BY_ATTRIBUTE_CODE));
     }
 
     /**

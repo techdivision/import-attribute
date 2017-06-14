@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Services;
 
+use TechDivision\Import\Connection\ConnectionInterface;
 use TechDivision\Import\Repositories\EavAttributeOptionValueRepository;
 use TechDivision\Import\Attribute\Actions\AttributeAction;
 use TechDivision\Import\Attribute\Actions\AttributeLabelAction;
@@ -48,9 +49,9 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
 {
 
     /**
-     * A PDO connection initialized with the values from the Doctrine EntityManager.
+     * A connection to use.
      *
-     * @var \PDO
+     * @var \TechDivision\Import\Connection\ConnectionInterface
      */
     protected $connection;
 
@@ -155,7 +156,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
-     * @param \PDO                                                                        $connection                        The PDO connection to use
+     * @param \TechDivision\Import\Connection\ConnectionInterface                         $connection                        The connection to use
      * @param \TechDivision\Import\Attribute\Repositories\AttributeRepository             $attributeRepository               The attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeLabelRepository        $attributeLabelRepository          The attribute label repository instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionRepository       $attributeOptionRepository         The attribute repository instance
@@ -172,7 +173,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Attribute\Actions\EntityAttributeAction                $entityAttributeAction             The entity attribute action instance
      */
     public function __construct(
-        \PDO $connection,
+        ConnectionInterface $connection,
         AttributeRepository $attributeRepository,
         AttributeLabelRepository $attributeLabelRepository,
         AttributeOptionRepository $attributeOptionRepository,
@@ -208,11 +209,11 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the passed connection.
      *
-     * @param \PDO $connection The connection to set
+     * @param \TechDivision\Import\Connection\ConnectionInterface $connection The connection to set
      *
      * @return void
      */
-    public function setConnection(\PDO $connection)
+    public function setConnection(ConnectionInterface $connection)
     {
         $this->connection = $connection;
     }
@@ -220,7 +221,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the connection.
      *
-     * @return \PDO The connection instance
+     * @return \TechDivision\Import\Connection\ConnectionInterface The connection instance
      */
     public function getConnection()
     {

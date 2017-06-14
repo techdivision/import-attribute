@@ -48,7 +48,7 @@ class EntityAttributeDeleteProcessor extends AbstractDeleteProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::DELETE_ENTITY_ATTRIBUTE => $utilityClassName::DELETE_ENTITY_ATTRIBUTE
+            $utilityClassName::DELETE_ENTITY_ATTRIBUTE => $this->getUtilityClass()->find($utilityClassName::DELETE_ENTITY_ATTRIBUTE)
         );
     }
 }

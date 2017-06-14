@@ -49,7 +49,7 @@ class AttributeOptionUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_ATTRIBUTE_OPTION => $utilityClassName::UPDATE_ATTRIBUTE_OPTION
+            $utilityClassName::UPDATE_ATTRIBUTE_OPTION => $this->getUtilityClass()->find($utilityClassName::UPDATE_ATTRIBUTE_OPTION)
         );
     }
 

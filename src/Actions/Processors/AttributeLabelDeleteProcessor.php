@@ -48,7 +48,7 @@ class AttributeLabelDeleteProcessor extends AbstractDeleteProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::DELETE_ATTRIBUTE_LABEL => $utilityClassName::DELETE_ATTRIBUTE_LABEL
+            $utilityClassName::DELETE_ATTRIBUTE_LABEL => $this->getUtilityClass()->find($utilityClassName::DELETE_ATTRIBUTE_LABEL)
         );
     }
 }

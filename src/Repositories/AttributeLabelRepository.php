@@ -54,7 +54,8 @@ class AttributeLabelRepository extends AbstractRepository
         $utilityClassName = $this->getUtilityClassName();
 
         // initialize the prepared statements
-        $this->attributeLabelByAttributeCodeAndStoreIdStmt= $this->getConnection()->prepare($utilityClassName::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID);
+        $this->attributeLabelByAttributeCodeAndStoreIdStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID));
     }
 
     /**

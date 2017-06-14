@@ -48,7 +48,7 @@ class CatalogAttributeDeleteProcessor extends AbstractDeleteProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::DELETE_CATALOG_ATTRIBUTE => $utilityClassName::DELETE_CATALOG_ATTRIBUTE
+            $utilityClassName::DELETE_CATALOG_ATTRIBUTE => $this->getUtilityClass()->find($utilityClassName::DELETE_CATALOG_ATTRIBUTE)
         );
     }
 }

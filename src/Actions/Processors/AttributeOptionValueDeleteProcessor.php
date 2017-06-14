@@ -48,7 +48,7 @@ class AttributeOptionValueDeleteProcessor extends AbstractDeleteProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::DELETE_ATTRIBUTE_OPTION_VALUE => $utilityClassName::DELETE_ATTRIBUTE_OPTION_VALUE
+            $utilityClassName::DELETE_ATTRIBUTE_OPTION_VALUE => $this->getUtilityClass()->find($utilityClassName::DELETE_ATTRIBUTE_OPTION_VALUE)
         );
     }
 }

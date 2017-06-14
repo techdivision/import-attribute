@@ -3,120 +3,118 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="import_attribute.utility.class.name">TechDivision\Import\Attribute\Utils\SqlStatements</parameter>
-    </parameters>
-
     <services>
+
+        <service id="import_attribute.utility.class.name" class="TechDivision\Import\Attribute\Utils\SqlStatements"/>
 
         <service id="import_attribute.repository.attribute" class="TechDivision\Import\Attribute\Repositories\AttributeRepository">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.repository.attribute.label" class="TechDivision\Import\Attribute\Repositories\AttributeLabelRepository">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.repository.attribute.option" class="TechDivision\Import\Attribute\Repositories\AttributeOptionRepository">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.repository.attribute.option.swatch" class="TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.repository.catalog.attribute" class="TechDivision\Import\Attribute\Repositories\CatalogAttributeRepository">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.repository.entity.attribute" class="TechDivision\Import\Attribute\Repositories\EntityAttributeRepository">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
 
         <service id="import_attribute.action.processor.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.label.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.label.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.label.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.value.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.value.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.value.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.swatch.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.swatch.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.swatch.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.catalog.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.catalog.attribute.update" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.catalog.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.entity.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\EntityAttributeCreateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.entity.attribute.update" class="TechDivision\Import\Attribute\Actions\Processors\EntityAttributeUpdateProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
         <service id="import_attribute.action.processor.entity.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\EntityAttributeDeleteProcessor">
             <argument type="service" id="connection"/>
-            <argument>%import_attribute.utility.class.name%</argument>
+            <argument type="service" id="import_attribute.utility.class.name"/>
         </service>
 
         <service id="import_attribute.action.attribute" class="TechDivision\Import\Attribute\Actions\AttributeAction">

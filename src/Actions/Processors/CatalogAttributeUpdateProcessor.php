@@ -48,7 +48,7 @@ class CatalogAttributeUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_CATALOG_ATTRIBUTE => $utilityClassName::UPDATE_CATALOG_ATTRIBUTE
+            $utilityClassName::UPDATE_CATALOG_ATTRIBUTE => $this->getUtilityClass()->find($utilityClassName::UPDATE_CATALOG_ATTRIBUTE)
         );
     }
 }

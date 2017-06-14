@@ -54,7 +54,8 @@ class AttributeOptionRepository extends AbstractRepository
         $utilityClassName = $this->getUtilityClassName();
 
         // initialize the prepared statements
-        $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt = $this->getConnection()->prepare($utilityClassName::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE);
+        $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
     }
 
     /**

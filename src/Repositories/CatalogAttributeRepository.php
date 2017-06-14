@@ -54,7 +54,8 @@ class CatalogAttributeRepository extends AbstractRepository
         $utilityClassName = $this->getUtilityClassName();
 
         // initialize the prepared statements
-        $this->catalogAttributeStmt = $this->getConnection()->prepare($utilityClassName::CATALOG_ATTRIBUTE);
+        $this->catalogAttributeStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::CATALOG_ATTRIBUTE));
     }
 
     /**

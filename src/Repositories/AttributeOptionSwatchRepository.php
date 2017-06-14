@@ -54,7 +54,8 @@ class AttributeOptionSwatchRepository extends AbstractRepository
         $utilityClassName = $this->getUtilityClassName();
 
         // initialize the prepared statements
-        $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt = $this->getConnection()->prepare($utilityClassName::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE);
+        $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE));
     }
 
     /**

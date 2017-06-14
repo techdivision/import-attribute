@@ -48,7 +48,7 @@ class AttributeLabelUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_ATTRIBUTE_LABEL => $utilityClassName::UPDATE_ATTRIBUTE_LABEL
+            $utilityClassName::UPDATE_ATTRIBUTE_LABEL => $this->getUtilityClass()->find($utilityClassName::UPDATE_ATTRIBUTE_LABEL)
         );
     }
 }

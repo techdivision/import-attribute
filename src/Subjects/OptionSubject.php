@@ -24,7 +24,6 @@ use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Utils\Generators\GeneratorInterface;
 use TechDivision\Import\Services\RegistryProcessorInterface;
-use TechDivision\Import\Configuration\SubjectConfigurationInterface;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
@@ -63,14 +62,12 @@ class OptionSubject extends AbstractAttributeSubject
     /**
      * Initialize the subject instance.
      *
-     * @param \TechDivision\Import\Configuration\SubjectConfigurationInterface         $configuration              The subject configuration instance
      * @param \TechDivision\Import\Services\RegistryProcessorInterface                 $registryProcessor          The registry processor instance
      * @param \TechDivision\Import\Utils\Generators\GeneratorInterface                 $coreConfigDataUidGenerator The UID generator for the core config data
      * @param array                                                                    $systemLoggers              The array with the system loggers instances
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor    The attribute bunch processor instance
      */
     public function __construct(
-        SubjectConfigurationInterface $configuration,
         RegistryProcessorInterface $registryProcessor,
         GeneratorInterface $coreConfigDataUidGenerator,
         array $systemLoggers,
@@ -78,7 +75,7 @@ class OptionSubject extends AbstractAttributeSubject
     ) {
 
         // pass the parameters to the parent constructor
-        parent::__construct($configuration, $registryProcessor, $coreConfigDataUidGenerator, $systemLoggers);
+        parent::__construct($registryProcessor, $coreConfigDataUidGenerator, $systemLoggers);
 
         // initialize the attribute bunch processor
         $this->attributeBunchProcessor = $attributeBunchProcessor;

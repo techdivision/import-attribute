@@ -1,3 +1,43 @@
+# Version 1.0.0-beta9
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to new plugin + subject factory implementations
+
+# Version 1.0.0-beta8
+
+## Bugfixes
+
+* Fix issue which caused multiple attribute option values for same option_id and store_id
+
+## Features
+
+* None
+
+# Version 1.0.0-beta7
+
+## Bugfixes
+
+* Fix json syntax errors
+
+## Features
+
+* None
+
+# Version 1.0.0-beta6
+
+## Bugfixes
+
+* Remove clean-up observer for option and option-value import
+
+## Features
+
+* None
+
 # Version 1.0.0-beta5
 
 ## Bugfixes

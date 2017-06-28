@@ -118,8 +118,7 @@
                 {
                   "import": [
                     "import_attribute.observer.pre.load.attribute.option.id",
-                    "import_attribute.observer.attribute.option.swatch",
-                    "import_attribute.observer.attribute.option.clean.up"
+                    "import_attribute.observer.attribute.option.swatch"
                   ]
                 }
               ]
@@ -200,8 +199,7 @@
                 {
                   "import": [
                     "import_attribute.observer.pre.load.attribute.option.id",
-                    "import_attribute.observer.attribute.option.swatch.update",
-                    "import_attribute.observer.attribute.option.clean.up"
+                    "import_attribute.observer.attribute.option.swatch.update"
                   ]
                 }
               ]

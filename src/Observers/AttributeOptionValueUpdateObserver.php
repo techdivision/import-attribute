@@ -12,6 +12,7 @@
  * PHP version 5
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
+ * @author    Vadim Justus <v.justus@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/import-attribute
@@ -21,12 +22,12 @@
 namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Utils\StoreViewCodes;
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
  * Observer that update's the attribute option values found in the additional CSV file.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
+ * @author    Vadim Justus <v.justus@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/import-attribute
@@ -44,14 +45,12 @@ class AttributeOptionValueUpdateObserver extends AttributeOptionValueObserver
      */
     protected function initializeAttribute(array $attr)
     {
-
         // initialize the data to load the EAV attribute option
-        $value = $this->getValue(ColumnKeys::VALUE);
+        $optionId = $this->getLastOptionId();
         $storeId = $this->getRowStoreId(StoreViewCodes::ADMIN);
-        $attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE);
 
         // try to load the EAV attribute option value
-        if ($attributeOptionValue = $this->loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)) {
+        if ($attributeOptionValue = $this->loadAttributeOptionValueByOptionIdAndStoreId($optionId, $storeId)) {
             return $this->mergeEntity($attributeOptionValue, $attr);
         }
 
@@ -60,16 +59,15 @@ class AttributeOptionValueUpdateObserver extends AttributeOptionValueObserver
     }
 
     /**
-     * Load's and return's the EAV attribute option value with the passed code, store ID and value.
+     * Load's and return's the EAV attribute option value with the passed option ID and store ID.
      *
-     * @param string  $attributeCode The code of the EAV attribute option to load
-     * @param integer $storeId       The store ID of the attribute option to load
-     * @param string  $value         The value of the attribute option to load
+     * @param string  $optionId The option ID
+     * @param integer $storeId  The store ID of the attribute option to load
      *
      * @return array The EAV attribute option value
      */
-    protected function loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
+    protected function loadAttributeOptionValueByOptionIdAndStoreId($optionId, $storeId)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+        return $this->getAttributeBunchProcessor()->loadAttributeOptionValueByOptionIdAndStoreId($optionId, $storeId);
     }
 }

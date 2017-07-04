@@ -153,16 +153,16 @@
             <argument type="service" id="import_attribute.action.processor.entity.attribute.delete"/>
         </service>
 
-        <service id="configuration.import_attribute.subject.bunch" synthetic="true" />
-        <service id="configuration.import_attribute.subject.option" synthetic="true" />
-
-        <service id="import_attribute.observer.pre.load.attribute.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeIdObserver"/>
-        <service id="import_attribute.observer.pre.load.attribute.option.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeOptionIdObserver"/>
         <service id="import_attribute.observer.attribute.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeCleanUpObserver"/>
-        <service id="import_attribute.observer.attribute.option.clean.up" class="TechDivision\Import\Attribute\Observers\AttributeOptionCleanUpObserver"/>
         <service id="import_attribute.observer.attribute.option.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionExportObserver"/>
         <service id="import_attribute.observer.attribute.option.value.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueExportObserver"/>
         <service id="import_attribute.observer.attribute.option.swatch.export" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchExportObserver"/>
+        <service id="import_attribute.observer.pre.load.attribute.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeIdObserver">
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.observer.pre.load.attribute.option.id" class="TechDivision\Import\Attribute\Observers\PreLoadAttributeOptionIdObserver">
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
         <service id="import_attribute.observer.attribute" class="TechDivision\Import\Attribute\Observers\AttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
@@ -226,19 +226,17 @@
             <argument type="service" id="import_attribute.action.catalog.attribute"/>
             <argument type="service" id="import_attribute.action.entity.attribute"/>
         </service>
- 
+
         <service id="import_attribute.subject.bunch" class="TechDivision\Import\Attribute\Subjects\BunchSubject" shared="false">
             <argument type="service" id="import.processor.registry"/>
             <argument type="service" id="import.generator.core.config.data.uid"/>
             <argument type="service" id="loggers"/>
-            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
- 
+
         <service id="import_attribute.subject.option" class="TechDivision\Import\Attribute\Subjects\OptionSubject" shared="false">
             <argument type="service" id="import.processor.registry"/>
             <argument type="service" id="import.generator.core.config.data.uid"/>
             <argument type="service" id="loggers"/>
-            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
 
     </services>

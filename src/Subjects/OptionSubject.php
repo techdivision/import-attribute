@@ -20,11 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
-use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Utils\Generators\GeneratorInterface;
-use TechDivision\Import\Services\RegistryProcessorInterface;
-use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * The subject implementation that handles the business logic to persist attribute options.
@@ -39,13 +35,6 @@ class OptionSubject extends AbstractAttributeSubject
 {
 
     /**
-     * The attribute processor instance.
-     *
-     * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
-     */
-    protected $attributeBunchProcessor;
-
-    /**
      * The ID of the option that has been created recently.
      *
      * @var integer
@@ -58,38 +47,6 @@ class OptionSubject extends AbstractAttributeSubject
      * @var array
      */
     protected $attributeCodeValueOptionIdMapping = array();
-
-    /**
-     * Initialize the subject instance.
-     *
-     * @param \TechDivision\Import\Services\RegistryProcessorInterface                 $registryProcessor          The registry processor instance
-     * @param \TechDivision\Import\Utils\Generators\GeneratorInterface                 $coreConfigDataUidGenerator The UID generator for the core config data
-     * @param array                                                                    $systemLoggers              The array with the system loggers instances
-     * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor    The attribute bunch processor instance
-     */
-    public function __construct(
-        RegistryProcessorInterface $registryProcessor,
-        GeneratorInterface $coreConfigDataUidGenerator,
-        array $systemLoggers,
-        AttributeBunchProcessorInterface $attributeBunchProcessor
-    ) {
-
-        // pass the parameters to the parent constructor
-        parent::__construct($registryProcessor, $coreConfigDataUidGenerator, $systemLoggers);
-
-        // initialize the attribute bunch processor
-        $this->attributeBunchProcessor = $attributeBunchProcessor;
-    }
-
-    /**
-     * Return's the attribute bunch processor instance.
-     *
-     * @return \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface The attribute bunch processor instance
-     */
-    protected function getAttributeBunchProcessor()
-    {
-        return $this->attributeBunchProcessor;
-    }
 
     /**
      * Map's the passed attribue code and value to the option ID that has been created recently.
@@ -150,23 +107,14 @@ class OptionSubject extends AbstractAttributeSubject
     }
 
     /**
-     * Pre-load the option ID for the EAV attribute option with the passed attribute code/value.
+     * Pre-load the option ID for the passed EAV attribute option.
      *
-     * @param string $attributeCode The code of the EAV attribute to pre-load
-     * @param string $value         The option admin store view value of the EAV attribute option to pre-load
+     * @param array $attributeOption The EAV attribute option with the ID that has to be pre-loaded
      *
      * @return void
      */
-    public function preLoadOptionId($attributeCode, $value)
+    public function preLoadOptionId(array $attributeOption)
     {
-
-        // load the ID of the admin store
-        $storeId = $this->stores[StoreViewCodes::ADMIN][MemberNames::STORE_ID];
-
-        // load the EAV attribute option with the passed value
-        $attributeOption = $this->getAttributeBunchProcessor()->loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
-
-        // set the EAV attribute option ID
         $this->setLastOptionId($attributeOption[MemberNames::OPTION_ID]);
     }
 }

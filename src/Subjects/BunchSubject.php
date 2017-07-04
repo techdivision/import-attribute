@@ -24,9 +24,6 @@ use TechDivision\Import\Subjects\ExportableTrait;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\RegistryKeys;
 use TechDivision\Import\Subjects\ExportableSubjectInterface;
-use TechDivision\Import\Utils\Generators\GeneratorInterface;
-use TechDivision\Import\Services\RegistryProcessorInterface;
-use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * The subject implementation that handles the business logic to persist attributes.
@@ -46,13 +43,6 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
      * @var \TechDivision\Import\Subjects\ExportableTrait;
      */
     use ExportableTrait;
-
-    /**
-     * The attribute processor instance.
-     *
-     * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
-     */
-    protected $attributeBunchProcessor;
 
     /**
      * The ID of the attribute that has been created recently.
@@ -88,28 +78,6 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
      * @var array
      */
     protected $attributeCodeIdMapping = array();
-
-    /**
-     * Initialize the subject instance.
-     *
-     * @param \TechDivision\Import\Services\RegistryProcessorInterface                 $registryProcessor          The registry processor instance
-     * @param \TechDivision\Import\Utils\Generators\GeneratorInterface                 $coreConfigDataUidGenerator The UID generator for the core config data
-     * @param array                                                                    $systemLoggers              The array with the system loggers instances
-     * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor    The attribute bunch processor instance
-     */
-    public function __construct(
-        RegistryProcessorInterface $registryProcessor,
-        GeneratorInterface $coreConfigDataUidGenerator,
-        array $systemLoggers,
-        AttributeBunchProcessorInterface $attributeBunchProcessor
-    ) {
-
-        // pass the parameters to the parent constructor
-        parent::__construct($registryProcessor, $coreConfigDataUidGenerator, $systemLoggers);
-
-        // initialize the attribute bunch processor
-        $this->attributeBunchProcessor = $attributeBunchProcessor;
-    }
 
     /**
      * Intializes the previously loaded global data for exactly one bunch.
@@ -227,20 +195,15 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
     }
 
     /**
-     * Pre-load the attribute ID for the EAV attribute with the passed code.
+     * Pre-load and temporary persist the attribute ID for the passed EAV attribute.
      *
-     * @param string $attributeCode The code of the EAV attribute to pre-load
+     * @param array $attribute The EAV attribute to pre-load
      *
      * @return void
      */
-    public function preLoadAttributeId($attributeCode)
+    public function preLoadAttributeId(array $attribute)
     {
-
-        // load the EAV attribute by the passed code
-        $attribute = $this->loadAttributeByAttributeCode($attributeCode);
-
-        // temporary persist the pre-loaded attribute code => ID mapping
-        $this->preLoadedAttributeIds[$attributeCode]= $attribute[MemberNames::ATTRIBUTE_ID];
+        $this->preLoadedAttributeIds[$attribute[MemberNames::ATTRIBUTE_CODE]]= $attribute[MemberNames::ATTRIBUTE_ID];
     }
 
     /**
@@ -297,27 +260,5 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
     public function getLastAttributeId()
     {
         return $this->lastAttributeId;
-    }
-
-    /**
-     * Return's the attribute bunch processor instance.
-     *
-     * @return \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface The attribute bunch processor instance
-     */
-    protected function getAttributeBunchProcessor()
-    {
-        return $this->attributeBunchProcessor;
-    }
-
-    /**
-     * Load's and return's the EAV attribute with the passed code.
-     *
-     * @param string $attributeCode The code of the EAV attribute to load
-     *
-     * @return array The EAV attribute
-     */
-    protected function loadAttributeByAttributeCode($attributeCode)
-    {
-        return $this->getAttributeBunchProcessor()->loadAttributeByAttributeCode($attributeCode);
     }
 }

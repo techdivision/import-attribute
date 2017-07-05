@@ -20,7 +20,9 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * Observer that pre-loads the option ID of the EAV attribute option with the attribute code/value found in the CSV file.
@@ -35,6 +37,33 @@ class PreLoadAttributeOptionIdObserver extends AbstractAttributeImportObserver
 {
 
     /**
+     * The attribute processor instance.
+     *
+     * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
+     */
+    protected $attributeBunchProcessor;
+
+    /**
+     * Initializes the observer with the passed subject instance.
+     *
+     * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     */
+    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
+    {
+        $this->attributeBunchProcessor = $attributeBunchProcessor;
+    }
+
+    /**
+     * Return's the attribute bunch processor instance.
+     *
+     * @return \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface The attribute bunch processor instance
+     */
+    protected function getAttributeBunchProcessor()
+    {
+        return $this->attributeBunchProcessor;
+    }
+
+    /**
      * Process the observer's business logic.
      *
      * @return array The processed row
@@ -42,13 +71,24 @@ class PreLoadAttributeOptionIdObserver extends AbstractAttributeImportObserver
     protected function process()
     {
 
+        // load the store value and the attribute code
+        $value = $this->getValue(ColumnKeys::ADMIN_STORE_VALUE);
+        $attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE);
+
         // query whether or not, we've found a new attribute code => means we've found a new EAV attribute
-        if ($this->hasBeenProcessed($attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE), $value = $this->getValue(ColumnKeys::ADMIN_STORE_VALUE))) {
+        if ($this->hasBeenProcessed($attributeCode, $value)) {
             return;
         }
 
-        // preserve the attribute ID for the EAV attribute with the passed code
-        $this->preLoadOptionId($attributeCode, $value);
+        // load the ID of the admin store
+        $storeId = $this->getStoreId(StoreViewCodes::ADMIN);
+
+        // load the EAV attribute option with the passed value
+        $attributeOption = $this->getAttributeBunchProcessor()
+                                ->loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+
+        // preserve the attribute ID for the passed EAV attribute option
+        $this->preLoadOptionId($attributeOption);
     }
 
     /**
@@ -65,15 +105,14 @@ class PreLoadAttributeOptionIdObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Pre-load the option ID for the EAV attribute option with the passed attribute code/value.
+     * Pre-load the option ID for the passed EAV attribute option.
      *
-     * @param string $attributeCode The code of the EAV attribute to pre-load
-     * @param string $value         The option admin store view value of the EAV attribute option to pre-load
+     * @param array $attributeOption The EAV attribute option with the ID that has to be pre-loaded
      *
      * @return void
      */
-    protected function preLoadOptionId($attributeCode, $value)
+    protected function preLoadOptionId(array $attributeOption)
     {
-        return $this->getSubject()->preLoadOptionId($attributeCode, $value);
+        return $this->getSubject()->preLoadOptionId($attributeOption);
     }
 }

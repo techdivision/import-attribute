@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * Observer that pre-loads the attribute ID of the EAV attribute with the code found in the CSV file.
@@ -33,6 +34,33 @@ use TechDivision\Import\Attribute\Utils\ColumnKeys;
  */
 class PreLoadAttributeIdObserver extends AbstractAttributeImportObserver
 {
+
+    /**
+     * The attribute processor instance.
+     *
+     * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
+     */
+    protected $attributeBunchProcessor;
+
+    /**
+     * Initializes the observer with the passed subject instance.
+     *
+     * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     */
+    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
+    {
+        $this->attributeBunchProcessor = $attributeBunchProcessor;
+    }
+
+    /**
+     * Return's the attribute bunch processor instance.
+     *
+     * @return \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface The attribute bunch processor instance
+     */
+    protected function getAttributeBunchProcessor()
+    {
+        return $this->attributeBunchProcessor;
+    }
 
     /**
      * Process the observer's business logic.
@@ -48,7 +76,9 @@ class PreLoadAttributeIdObserver extends AbstractAttributeImportObserver
         }
 
         // preserve the attribute ID for the EAV attribute with the passed code
-        $this->preLoadAttributeId($attributeCode);
+        if ($attribute = $this->loadAttributeByAttributeCode($attributeCode)) {
+            $this->preLoadAttributeId($attribute);
+        }
     }
 
     /**
@@ -64,14 +94,26 @@ class PreLoadAttributeIdObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Pre-load the attribute ID for the EAV attribute with the passed code.
+     * Pre-load and temporary persist the attribute ID for the passed EAV attribute.
      *
-     * @param string $attributeCode The code of the EAV attribute to pre-load
+     * @param array $attribute The EAV attribute to pre-load
      *
      * @return void
      */
-    protected function preLoadAttributeId($attributeCode)
+    protected function preLoadAttributeId(array $attribute)
     {
-        return $this->getSubject()->preLoadAttributeId($attributeCode);
+        return $this->getSubject()->preLoadAttributeId($attribute);
+    }
+
+    /**
+     * Load's and return's the EAV attribute with the passed code.
+     *
+     * @param string $attributeCode The code of the EAV attribute to load
+     *
+     * @return array The EAV attribute
+     */
+    protected function loadAttributeByAttributeCode($attributeCode)
+    {
+        return $this->getAttributeBunchProcessor()->loadAttributeByAttributeCode($attributeCode);
     }
 }

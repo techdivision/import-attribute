@@ -54,6 +54,15 @@ class AttributeUpdateObserver extends AttributeObserver
     }
 
     /**
+     * Should default values be used for undefined columns
+     * @return bool
+     */
+    protected function isForceDefaultValues()
+    {
+        return false;
+    }
+
+    /**
      * Load's and return's the EAV attribute with the passed code.
      *
      * @param string $attributeCode The code of the EAV attribute to load

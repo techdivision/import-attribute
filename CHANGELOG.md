@@ -1,3 +1,13 @@
+# Version 1.0.0-beta11
+
+## Bugfixes
+
+* Fix issue which caused, that all attribute settings were overriten by default values
+
+## Features
+
+* None
+
 # Version 1.0.0-beta10
 
 ## Bugfixes

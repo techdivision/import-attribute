@@ -71,77 +71,105 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
+     * @return array
+     */
+    protected function getDefaultValues()
+    {
+        return array(
+            MemberNames::IS_GLOBAL => 1,
+            MemberNames::IS_VISIBLE => 1,
+            MemberNames::IS_SEARCHABLE => 0,
+            MemberNames::IS_FILTERABLE => 0,
+            MemberNames::IS_COMPARABLE => 0,
+            MemberNames::IS_VISIBLE_ON_FRONT => 0,
+            MemberNames::IS_HTML_ALLOWED_ON_FRONT => 0,
+            MemberNames::IS_USED_FOR_PRICE_RULES => 0,
+            MemberNames::IS_FILTERABLE_IN_SEARCH => 0,
+            MemberNames::USED_IN_PRODUCT_LISTING => 0,
+            MemberNames::USED_FOR_SORT_BY => 0,
+            MemberNames::IS_VISIBLE_IN_ADVANCED_SEARCH => 0,
+            MemberNames::POSITION => 0,
+            MemberNames::IS_WYSIWYG_ENABLED => 0,
+            MemberNames::IS_USED_FOR_PROMO_RULES => 0,
+            MemberNames::IS_REQUIRED_IN_ADMIN_STORE => 0,
+            MemberNames::IS_USED_IN_GRID => 0,
+            MemberNames::IS_VISIBLE_IN_GRID => 0,
+            MemberNames::IS_FILTERABLE_IN_GRID => 0,
+            MemberNames::SEARCH_WEIGHT => 1,
+            MemberNames::ADDITIONAL_DATA => array(),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCallbacks()
+    {
+        return array(
+            MemberNames::ADDITIONAL_DATA => function($value) {
+                $result = array();
+                $explodedAdditionalData = $this->explode($value);
+                foreach ($explodedAdditionalData as $value) {
+                    list ($key, $val) = $this->explode($value, '=');
+                    $result[$key] = $val;
+                }
+                return $result;
+            },
+        );
+    }
+
+    /**
      * Prepare the attributes of the entity that has to be persisted.
      *
      * @return array The prepared attributes
      */
     protected function prepareAttributes()
     {
-
         // load the recently created EAV attribute ID
         $attributeId = $this->getLastAttributeId();
 
-        // load the data from the row
-        $frontendInputRenderer = $this->getValue(ColumnKeys::FRONTEND_INPUT_RENDERER);
-        $isGlobal = $this->getValue(ColumnKeys::IS_GLOBAL, 1);
-        $isVisible = $this->getValue(ColumnKeys::IS_VISIBLE, 1);
-        $isSearchable = $this->getValue(ColumnKeys::IS_SEARCHABLE, 0);
-        $isFilterable = $this->getValue(ColumnKeys::IS_FILTERABLE, 0);
-        $isComparable = $this->getValue(ColumnKeys::IS_COMPARABLE, 0);
-        $isVisibleOnFront = $this->getValue(ColumnKeys::IS_VISIBLE_ON_FRONT, 0);
-        $isHtmlAllowedOnFront = $this->getValue(ColumnKeys::IS_HTML_ALLOWED_ON_FRONT, 0);
-        $isUsedForPriceRules = $this->getValue(ColumnKeys::IS_USED_FOR_PRICE_RULES, 0);
-        $isFilterableInSearch = $this->getValue(ColumnKeys::IS_FILTERABLE_IN_SEARCH, 0);
-        $usedInProductListing = $this->getValue(ColumnKeys::USED_IN_PRODUCT_LISTING, 0);
-        $usedForSortBy = $this->getValue(ColumnKeys::USED_FOR_SORT_BY, 0);
-        $applyTo = $this->getValue(ColumnKeys::APPLY_TO);
-        $isVisibleInAdvancedSearch = $this->getValue(ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH, 0);
-        $position = $this->getValue(ColumnKeys::POSITION, 0);
-        $isWysiwygEnabled = $this->getValue(ColumnKeys::IS_WYSIWYG_ENABLED, 0);
-        $isUsedForPromoRules = $this->getValue(ColumnKeys::IS_USED_FOR_PROMO_RULES, 0);
-        $isRequiredInAdminStore = $this->getValue(ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE, 0);
-        $isUsedInGrid = $this->getValue(ColumnKeys::IS_USED_IN_GRID, 0);
-        $isVisibleInGrid = $this->getValue(ColumnKeys::IS_VISIBLE_IN_GRID, 0);
-        $isFilterableInGrid = $this->getValue(ColumnKeys::IS_FILTERABLE_IN_GRID, 0);
-        $searchWeight = $this->getValue(ColumnKeys::SEARCH_WEIGHT, 1);
-
-        // load and extract the additional data
-        $additionalData = array();
-        $explodedAdditionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA, array(), array($this, 'explode'));
-        foreach ($explodedAdditionalData as $value) {
-            list ($key, $val) = $this->explode($value, '=');
-            $additionalData[$key] = $val;
-        }
-
-        // return the prepared product
-        return $this->initializeEntity(
+        return $this->initializeEntity(array_merge(
             array(
-                MemberNames::ATTRIBUTE_ID                  => $attributeId,
-                MemberNames::FRONTEND_INPUT_RENDERER       => $frontendInputRenderer,
-                MemberNames::IS_GLOBAL                     => $isGlobal,
-                MemberNames::IS_VISIBLE                    => $isVisible,
-                MemberNames::IS_SEARCHABLE                 => $isSearchable,
-                MemberNames::IS_FILTERABLE                 => $isFilterable,
-                MemberNames::IS_COMPARABLE                 => $isComparable,
-                MemberNames::IS_VISIBLE_ON_FRONT           => $isVisibleOnFront,
-                MemberNames::IS_HTML_ALLOWED_ON_FRONT      => $isHtmlAllowedOnFront,
-                MemberNames::IS_USED_FOR_PRICE_RULES       => $isUsedForPriceRules,
-                MemberNames::IS_FILTERABLE_IN_SEARCH       => $isFilterableInSearch,
-                MemberNames::USED_IN_PRODUCT_LISTING       => $usedInProductListing,
-                MemberNames::USED_FOR_SORT_BY              => $usedForSortBy,
-                MemberNames::APPLY_TO                      => $applyTo,
-                MemberNames::IS_VISIBLE_IN_ADVANCED_SEARCH => $isVisibleInAdvancedSearch,
-                MemberNames::POSITION                      => $position,
-                MemberNames::IS_WYSIWYG_ENABLED            => $isWysiwygEnabled,
-                MemberNames::IS_USED_FOR_PROMO_RULES       => $isUsedForPromoRules,
-                MemberNames::IS_REQUIRED_IN_ADMIN_STORE    => $isRequiredInAdminStore,
-                MemberNames::IS_USED_IN_GRID               => $isUsedInGrid,
-                MemberNames::IS_VISIBLE_IN_GRID            => $isVisibleInGrid,
-                MemberNames::IS_FILTERABLE_IN_GRID         => $isFilterableInGrid,
-                MemberNames::SEARCH_WEIGHT                 => $searchWeight,
-                MemberNames::ADDITIONAL_DATA               => $additionalData
+                MemberNames::ATTRIBUTE_ID => $attributeId
+            ),
+            $this->getPreparedAttributeData(
+                array(
+                    MemberNames::FRONTEND_INPUT_RENDERER,
+                    MemberNames::IS_GLOBAL,
+                    MemberNames::IS_VISIBLE,
+                    MemberNames::IS_SEARCHABLE,
+                    MemberNames::IS_FILTERABLE,
+                    MemberNames::IS_COMPARABLE,
+                    MemberNames::IS_VISIBLE_ON_FRONT,
+                    MemberNames::IS_HTML_ALLOWED_ON_FRONT,
+                    MemberNames::IS_USED_FOR_PRICE_RULES,
+                    MemberNames::IS_FILTERABLE_IN_SEARCH,
+                    MemberNames::USED_IN_PRODUCT_LISTING,
+                    MemberNames::USED_FOR_SORT_BY,
+                    MemberNames::APPLY_TO,
+                    MemberNames::IS_VISIBLE_IN_ADVANCED_SEARCH,
+                    MemberNames::POSITION,
+                    MemberNames::IS_WYSIWYG_ENABLED,
+                    MemberNames::IS_USED_FOR_PROMO_RULES,
+                    MemberNames::IS_REQUIRED_IN_ADMIN_STORE,
+                    MemberNames::IS_USED_IN_GRID,
+                    MemberNames::IS_VISIBLE_IN_GRID,
+                    MemberNames::IS_FILTERABLE_IN_GRID,
+                    MemberNames::SEARCH_WEIGHT,
+                    MemberNames::ADDITIONAL_DATA,
+                ),
+                $this->isForceDefaultValues()
             )
-        );
+        ));
+    }
+
+    /**
+     * Should default values be used for undefined columns
+     * @return bool
+     */
+    protected function isForceDefaultValues()
+    {
+        return true;
     }
 
     /**

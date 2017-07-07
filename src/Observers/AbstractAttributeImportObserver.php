@@ -74,4 +74,73 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
      * @return void
      */
     abstract protected function process();
+
+
+    /**
+     * Prepare data array by given values in source
+     *
+     * @param array $keys
+     * @param bool $useDefaults
+     * @return array
+     */
+    protected function getPreparedAttributeData(array $keys, $useDefaults = true)
+    {
+        $attribute = [];
+        foreach ($keys as $key) {
+            if ($this->hasValue($key) || $useDefaults) {
+                $attribute[$key] = $this->getValue($key, $this->getDefaultValue($key), $this->getCallback($key));
+            }
+        }
+        return $attribute;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultValues()
+    {
+        return array();
+    }
+
+    /**
+     * Retrieve default value for given key
+     *
+     * @param string $key
+     * @return null
+     */
+    protected function getDefaultValue($key)
+    {
+        $defaultValues = $this->getDefaultValues();
+
+        if (isset($defaultValues[$key])) {
+            return $defaultValues[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCallbacks()
+    {
+        return array();
+    }
+
+    /**
+     * Retrieve callbacks for given column key
+     *
+     * @param string $key
+     * @return null
+     */
+    protected function getCallback($key)
+    {
+        $callbacks = $this->getCallbacks();
+
+        if (isset($callbacks[$key])) {
+            return $callbacks[$key];
+        }
+
+        return null;
+    }
 }

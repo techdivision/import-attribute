@@ -75,63 +75,55 @@ class AttributeObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * @return array
-     */
-    protected function getDefaultValues()
-    {
-        return array(
-            MemberNames::BACKEND_TYPE => BackendTypeKeys::BACKEND_TYPE_STATIC,
-            MemberNames::IS_REQUIRED => 0,
-            MemberNames::IS_USER_DEFINED => 1,
-            MemberNames::IS_UNIQUE => 0,
-        );
-    }
-
-    /**
      * Prepare the attributes of the entity that has to be persisted.
      *
      * @return array The prepared attributes
      */
     protected function prepareAttributes()
     {
+
         // map the entity type code to the ID
         $entityType = $this->getEntityType($this->getValue(ColumnKeys::ENTITY_TYPE_CODE));
         $entityTypeId = $entityType[MemberNames::ENTITY_TYPE_ID];
 
-        return $this->initializeEntity(array_merge(
-            array(
-                MemberNames::ENTITY_TYPE_ID => $entityTypeId
-            ),
-            $this->getPreparedAttributeData(
-                array(
-                    MemberNames::ATTRIBUTE_CODE,
-                    MemberNames::ATTRIBUTE_MODEL,
-                    MemberNames::BACKEND_MODEL,
-                    MemberNames::BACKEND_TYPE,
-                    MemberNames::BACKEND_TABLE,
-                    MemberNames::FRONTEND_MODEL,
-                    MemberNames::FRONTEND_INPUT,
-                    MemberNames::FRONTEND_LABEL,
-                    MemberNames::FRONTEND_CLASS,
-                    MemberNames::SOURCE_MODEL,
-                    MemberNames::IS_REQUIRED,
-                    MemberNames::IS_USER_DEFINED,
-                    MemberNames::DEFAULT_VALUE,
-                    MemberNames::IS_UNIQUE,
-                    MemberNames::NOTE,
-                ),
-                $this->isForceDefaultValues()
-            )
-        ));
-    }
+        // load the data from the row
+        $attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE);
+        $attributeModel = $this->getValue(ColumnKeys::ATTRIBUTE_MODEL);
+        $backendModel = $this->getValue(ColumnKeys::BACKEND_MODEL);
+        $backendType = $this->getValue(ColumnKeys::BACKEND_TYPE, BackendTypeKeys::BACKEND_TYPE_STATIC);
+        $backendTable = $this->getValue(ColumnKeys::BACKEND_TABLE);
+        $frontendModel = $this->getValue(ColumnKeys::FRONTEND_MODEL);
+        $frontendInput = $this->getValue(ColumnKeys::FRONTEND_INPUT);
+        $frontendLabel = $this->getValue(ColumnKeys::FRONTEND_LABEL);
+        $frontendClass = $this->getValue(ColumnKeys::FRONTEND_CLASS);
+        $sourceModel = $this->getValue(ColumnKeys::SOURCE_MODEL);
+        $isRequired = $this->getValue(ColumnKeys::IS_REQUIRED, 0);
+        $isUserDefined = $this->getValue(ColumnKeys::IS_USER_DEFINED, 1);
+        $defaultValue = $this->getValue(ColumnKeys::DEFAULT_VALUE);
+        $isUnique = $this->getValue(ColumnKeys::IS_UNIQUE, 0);
+        $note = $this->getValue(ColumnKeys::NOTE);
 
-    /**
-     * Should default values be used for undefined columns
-     * @return bool
-     */
-    protected function isForceDefaultValues()
-    {
-        return true;
+        // return the prepared product
+        return $this->initializeEntity(
+            array(
+                MemberNames::ENTITY_TYPE_ID  => $entityTypeId,
+                MemberNames::ATTRIBUTE_CODE  => $attributeCode,
+                MemberNames::ATTRIBUTE_MODEL => $attributeModel,
+                MemberNames::BACKEND_MODEL   => $backendModel,
+                MemberNames::BACKEND_TYPE    => $backendType,
+                MemberNames::BACKEND_TABLE   => $backendTable,
+                MemberNames::FRONTEND_MODEL  => $frontendModel,
+                MemberNames::FRONTEND_INPUT  => $frontendInput,
+                MemberNames::FRONTEND_LABEL  => $frontendLabel,
+                MemberNames::FRONTEND_CLASS  => $frontendClass,
+                MemberNames::SOURCE_MODEL    => $sourceModel,
+                MemberNames::IS_REQUIRED     => $isRequired,
+                MemberNames::IS_USER_DEFINED => $isUserDefined,
+                MemberNames::DEFAULT_VALUE   => $defaultValue,
+                MemberNames::IS_UNIQUE       => $isUnique,
+                MemberNames::NOTE            => $note
+            )
+        );
     }
 
     /**

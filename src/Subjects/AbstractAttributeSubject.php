@@ -20,8 +20,9 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
-use TechDivision\Import\Utils\RegistryKeys;
 use TechDivision\Import\Subjects\AbstractSubject;
+use TechDivision\Import\Subjects\EntitySubjectInterface;
+use TechDivision\Import\Utils\RegistryKeys;
 
 /**
  * The abstract product subject implementation that provides basic attribute
@@ -33,7 +34,7 @@ use TechDivision\Import\Subjects\AbstractSubject;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-abstract class AbstractAttributeSubject extends AbstractSubject implements AttributeSubjectInterface
+abstract class AbstractAttributeSubject extends AbstractSubject implements AttributeSubjectInterface, EntitySubjectInterface
 {
 
     /**
@@ -56,7 +57,6 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
      * @param string $serial The serial of the actual import
      *
      * @return void
-     * @see \Importer\Csv\Actions\ProductImportAction::prepare()
      */
     public function setUp($serial)
     {

@@ -35,15 +35,6 @@ class CatalogAttributeUpdateObserver extends CatalogAttributeObserver
 {
 
     /**
-     * Should default values be used for undefined columns
-     * @return bool
-     */
-    protected function isForceDefaultValues()
-    {
-        return false;
-    }
-
-    /**
      * Initialize the attribute with the passed attributes and returns an instance.
      *
      * @param array $attr The attribute attributes
@@ -52,6 +43,7 @@ class CatalogAttributeUpdateObserver extends CatalogAttributeObserver
      */
     protected function initializeAttribute(array $attr)
     {
+
         // try to load the EAV catalog attribute with the attribute code
         if ($attribute = $this->loadCatalogAttribute($attr[MemberNames::ATTRIBUTE_ID])) {
             // unserialize the additional data value if available

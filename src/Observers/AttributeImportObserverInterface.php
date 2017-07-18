@@ -20,8 +20,8 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
-use TechDivision\Import\Subjects\SubjectInterface;
 use TechDivision\Import\Observers\ObserverInterface;
+use TechDivision\Import\Subjects\SubjectInterface;
 
 /**
  * Interface for all attribute import observers.
@@ -41,7 +41,7 @@ interface AttributeImportObserverInterface extends ObserverInterface
      * @param \TechDivision\Import\Subjects\SubjectInterface $subject The subject instance
      *
      * @return array The modified row
-     * @see \TechDivision\Import\Product\Observers\ImportObserverInterface::handle()
+     * @see \TechDivision\Import\Observers\ObserverInterface::handle()
      */
     public function handle(SubjectInterface $subject);
 }

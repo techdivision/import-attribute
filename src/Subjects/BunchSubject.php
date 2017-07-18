@@ -20,10 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
-use TechDivision\Import\Subjects\ExportableTrait;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\RegistryKeys;
 use TechDivision\Import\Subjects\ExportableSubjectInterface;
+use TechDivision\Import\Subjects\ExportableTrait;
 
 /**
  * The subject implementation that handles the business logic to persist attributes.
@@ -85,7 +85,6 @@ class BunchSubject extends AbstractAttributeSubject implements ExportableSubject
      * @param string $serial The serial of the actual import
      *
      * @return void
-     * @see \Importer\Csv\Actions\ProductImportAction::prepare()
      */
     public function setUp($serial)
     {

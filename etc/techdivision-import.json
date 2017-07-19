@@ -89,7 +89,6 @@
               "observers": [
                 {
                   "import": [
-                    "import_attribute.observer.pre.load.attribute.option.id",
                     "import_attribute.observer.attribute.option",
                     "import_attribute.observer.attribute.option.value",
                     "import_attribute.observer.attribute.option.swatch"

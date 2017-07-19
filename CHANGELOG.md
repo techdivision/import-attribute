@@ -1,3 +1,13 @@
+# Version 1.0.0-beta13
+
+## Bugfixes
+
+* Remove invalid attribute option pre-load observer in attribute replace operation
+
+## Features
+
+* None
+
 # Version 1.0.0-beta12
 
 ## Bugfixes

@@ -132,7 +132,7 @@ class RoboFile extends \Robo\Tasks
         // run the copy past detector
         $this->_exec(
             sprintf(
-                '%s/bin/phpcpd %s --log-pmd %s/reports/pmd-cpd.xml',
+                '%s/bin/phpcpd %s --exclude Utils --log-pmd %s/reports/pmd-cpd.xml',
                 $this->properties['vendor.dir'],
                 $this->properties['src.dir'],
                 $this->properties['target.dir']

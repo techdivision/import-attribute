@@ -1,3 +1,13 @@
+# Version 1.0.0-beta15
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Insert/Update values in catalog_eav_attribute table dynamically
+
 # Version 1.0.0-beta14
 
 ## Bugfixes

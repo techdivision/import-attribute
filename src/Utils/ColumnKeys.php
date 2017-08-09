@@ -247,7 +247,7 @@ class ColumnKeys extends \TechDivision\Import\Utils\ColumnKeys
      *
      * @var string
      */
-    const USED_IN_PRODUCT_LISTING = 'used_in_product_listing ';
+    const USED_IN_PRODUCT_LISTING = 'used_in_product_listing';
 
     /**
      * Name for the column 'used_for_sort_by'.

@@ -44,6 +44,37 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     protected $attributeBunchProcessor;
 
     /**
+     * The array with the possible column names.
+     *
+     * @var array
+     */
+    protected $columnNames = array(
+        ColumnKeys::FRONTEND_INPUT_RENDERER,
+        ColumnKeys::IS_GLOBAL,
+        ColumnKeys::IS_VISIBLE,
+        ColumnKeys::IS_SEARCHABLE,
+        ColumnKeys::IS_FILTERABLE,
+        ColumnKeys::IS_COMPARABLE,
+        ColumnKeys::IS_VISIBLE_ON_FRONT,
+        ColumnKeys::IS_HTML_ALLOWED_ON_FRONT,
+        ColumnKeys::IS_USED_FOR_PRICE_RULES,
+        ColumnKeys::IS_FILTERABLE_IN_SEARCH,
+        ColumnKeys::USED_IN_PRODUCT_LISTING,
+        ColumnKeys::USED_FOR_SORT_BY,
+        ColumnKeys::APPLY_TO,
+        ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH,
+        ColumnKeys::POSITION,
+        ColumnKeys::IS_WYSIWYG_ENABLED,
+        ColumnKeys::IS_USED_FOR_PROMO_RULES,
+        ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE,
+        ColumnKeys::IS_USED_IN_GRID,
+        ColumnKeys::IS_VISIBLE_IN_GRID,
+        ColumnKeys::IS_FILTERABLE_IN_GRID,
+        ColumnKeys::SEARCH_WEIGHT,
+        ColumnKeys::ADDITIONAL_DATA
+    );
+
+    /**
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
@@ -81,67 +112,42 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         // load the recently created EAV attribute ID
         $attributeId = $this->getLastAttributeId();
 
-        // load the data from the row
-        $frontendInputRenderer = $this->getValue(ColumnKeys::FRONTEND_INPUT_RENDERER);
-        $isGlobal = $this->getValue(ColumnKeys::IS_GLOBAL, 1);
-        $isVisible = $this->getValue(ColumnKeys::IS_VISIBLE, 1);
-        $isSearchable = $this->getValue(ColumnKeys::IS_SEARCHABLE, 0);
-        $isFilterable = $this->getValue(ColumnKeys::IS_FILTERABLE, 0);
-        $isComparable = $this->getValue(ColumnKeys::IS_COMPARABLE, 0);
-        $isVisibleOnFront = $this->getValue(ColumnKeys::IS_VISIBLE_ON_FRONT, 0);
-        $isHtmlAllowedOnFront = $this->getValue(ColumnKeys::IS_HTML_ALLOWED_ON_FRONT, 0);
-        $isUsedForPriceRules = $this->getValue(ColumnKeys::IS_USED_FOR_PRICE_RULES, 0);
-        $isFilterableInSearch = $this->getValue(ColumnKeys::IS_FILTERABLE_IN_SEARCH, 0);
-        $usedInProductListing = $this->getValue(ColumnKeys::USED_IN_PRODUCT_LISTING, 0);
-        $usedForSortBy = $this->getValue(ColumnKeys::USED_FOR_SORT_BY, 0);
-        $applyTo = $this->getValue(ColumnKeys::APPLY_TO);
-        $isVisibleInAdvancedSearch = $this->getValue(ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH, 0);
-        $position = $this->getValue(ColumnKeys::POSITION, 0);
-        $isWysiwygEnabled = $this->getValue(ColumnKeys::IS_WYSIWYG_ENABLED, 0);
-        $isUsedForPromoRules = $this->getValue(ColumnKeys::IS_USED_FOR_PROMO_RULES, 0);
-        $isRequiredInAdminStore = $this->getValue(ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE, 0);
-        $isUsedInGrid = $this->getValue(ColumnKeys::IS_USED_IN_GRID, 0);
-        $isVisibleInGrid = $this->getValue(ColumnKeys::IS_VISIBLE_IN_GRID, 0);
-        $isFilterableInGrid = $this->getValue(ColumnKeys::IS_FILTERABLE_IN_GRID, 0);
-        $searchWeight = $this->getValue(ColumnKeys::SEARCH_WEIGHT, 1);
+        // initialize the attributes
+        $attr = array(MemberNames::ATTRIBUTE_ID => $attributeId);
 
-        // load and extract the additional data
-        $additionalData = array();
-        $explodedAdditionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA, array(), array($this, 'explode'));
-        foreach ($explodedAdditionalData as $value) {
-            list ($key, $val) = $this->explode($value, '=');
-            $additionalData[$key] = $val;
+        // iterate over the possible columns and handle the data
+        foreach ($this->columnNames as $columnName) {
+            // query whether or not, the column is available in the CSV file
+            if ($this->getSubject()->hasHeader($columnName)) {
+                // custom handling for the additional_data column
+                if ($columnName === ColumnKeys::ADDITIONAL_DATA) {
+                    // load the additional data
+                    $explodedAdditionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA, array(), array($this->getSubject(), 'explode'));
+
+                    // query whether or not additional data has been set
+                    if (sizeof($explodedAdditionalData) > 0) {
+                        // load and extract the additional data
+                        $additionalData = array();
+                        foreach ($explodedAdditionalData as $value) {
+                            list ($key, $val) = $this->getSubject()->explode($value, '=');
+                            $additionalData[$key] = $val;
+                        }
+
+                        // set the additional data
+                        $attr[$columnName] = $additionalData;
+                    }
+
+                } else {
+                    // query whether or not a column contains a value
+                    if ($this->hasValue($columnName)) {
+                        $attr[$columnName] = $this->getValue($columnName);
+                    }
+                }
+            }
         }
 
         // return the prepared product
-        return $this->initializeEntity(
-            array(
-                MemberNames::ATTRIBUTE_ID                  => $attributeId,
-                MemberNames::FRONTEND_INPUT_RENDERER       => $frontendInputRenderer,
-                MemberNames::IS_GLOBAL                     => $isGlobal,
-                MemberNames::IS_VISIBLE                    => $isVisible,
-                MemberNames::IS_SEARCHABLE                 => $isSearchable,
-                MemberNames::IS_FILTERABLE                 => $isFilterable,
-                MemberNames::IS_COMPARABLE                 => $isComparable,
-                MemberNames::IS_VISIBLE_ON_FRONT           => $isVisibleOnFront,
-                MemberNames::IS_HTML_ALLOWED_ON_FRONT      => $isHtmlAllowedOnFront,
-                MemberNames::IS_USED_FOR_PRICE_RULES       => $isUsedForPriceRules,
-                MemberNames::IS_FILTERABLE_IN_SEARCH       => $isFilterableInSearch,
-                MemberNames::USED_IN_PRODUCT_LISTING       => $usedInProductListing,
-                MemberNames::USED_FOR_SORT_BY              => $usedForSortBy,
-                MemberNames::APPLY_TO                      => $applyTo,
-                MemberNames::IS_VISIBLE_IN_ADVANCED_SEARCH => $isVisibleInAdvancedSearch,
-                MemberNames::POSITION                      => $position,
-                MemberNames::IS_WYSIWYG_ENABLED            => $isWysiwygEnabled,
-                MemberNames::IS_USED_FOR_PROMO_RULES       => $isUsedForPromoRules,
-                MemberNames::IS_REQUIRED_IN_ADMIN_STORE    => $isRequiredInAdminStore,
-                MemberNames::IS_USED_IN_GRID               => $isUsedInGrid,
-                MemberNames::IS_VISIBLE_IN_GRID            => $isVisibleInGrid,
-                MemberNames::IS_FILTERABLE_IN_GRID         => $isFilterableInGrid,
-                MemberNames::SEARCH_WEIGHT                 => $searchWeight,
-                MemberNames::ADDITIONAL_DATA               => $additionalData
-            )
-        );
+        return $this->initializeEntity($attr);
     }
 
     /**
@@ -155,7 +161,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     {
 
         // serialize the additional data value if available
-        if (is_array($attr[MemberNames::ADDITIONAL_DATA])) {
+        if (isset($attr[MemberNames::ADDITIONAL_DATA]) && is_array($attr[MemberNames::ADDITIONAL_DATA])) {
             $attr[MemberNames::ADDITIONAL_DATA] = serialize($attr[MemberNames::ADDITIONAL_DATA]);
         }
 

@@ -31,7 +31,7 @@ use TechDivision\Import\Attribute\Utils\MemberNames;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class OptionSubject extends AbstractAttributeSubject
+class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInterface
 {
 
     /**

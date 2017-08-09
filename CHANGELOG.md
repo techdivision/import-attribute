@@ -1,3 +1,13 @@
+# Version 1.0.0-beta16
+
+## Bugfixes
+
+* Remove unnecessary error_log() statements
+
+## Features
+
+* None
+
 # Version 1.0.0-beta15
 
 ## Bugfixes

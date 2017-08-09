@@ -34,7 +34,7 @@ use TechDivision\Import\Subjects\ExportableTrait;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class BunchSubject extends AbstractAttributeSubject implements ExportableSubjectInterface
+class BunchSubject extends AbstractAttributeSubject implements BunchSubjectInterface, ExportableSubjectInterface
 {
 
     /**

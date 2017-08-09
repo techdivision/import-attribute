@@ -20,7 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
+use TechDivision\Import\Attribute\Utils\SqlStatements;
 use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
+use TechDivision\Import\Utils\EntityStatus;
+use TechDivision\Import\Attribute\Utils\MemberNames;
 
 /**
  * The EAV catalog attribute update processor implementation.
@@ -42,13 +45,53 @@ class CatalogAttributeUpdateProcessor extends AbstractUpdateProcessor
      */
     protected function getStatements()
     {
+        return array();
+    }
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
+    /**
+     * Implements the CRUD functionality the processor is responsible for,
+     * can be one of CREATE, READ, UPDATE or DELETE a entity.
+     *
+     * @param array       $row  The data to handle
+     * @param string|null $name The name of the prepared statement to execute
+     *
+     * @return void
+     */
+    public function execute($row, $name = null)
+    {
 
-        // return the array with the SQL statements that has to be prepared
-        return array(
-            $utilityClassName::UPDATE_CATALOG_ATTRIBUTE => $this->getUtilityClass()->find($utilityClassName::UPDATE_CATALOG_ATTRIBUTE)
-        );
+        // load the field names
+        $keys = array_keys($row);
+
+        // create a unique name for the prepared statement
+        $name = sprintf('%s-%s', $name, md5(implode('-', $keys)));
+
+        // query whether or not the statement has been prepared
+        if (!$this->hasPreparedStatement($name)) {
+            // remove the last value as PK from the array with the keys
+            $pk = $keys[array_search(MemberNames::ATTRIBUTE_ID, $row, true)];
+
+            // remove the entity status from the keys
+            unset($keys[array_search(MemberNames::ATTRIBUTE_ID, $keys, true)]);
+            unset($keys[array_search(EntityStatus::MEMBER_NAME, $keys, true)]);
+
+            // prepare the SET part of the SQL statement
+            array_walk($keys, function (&$value, $key) {
+                $value = sprintf('%s=:%s', $value, $value);
+            });
+
+            // create the prepared UPDATE statement
+            $statement = sprintf($this->getUtilityClass()->find(SqlStatements::UPDATE_CATALOG_ATTRIBUTE), implode(',', $keys), $pk);
+
+            error_log($statement);
+
+            // prepare the statement
+            $this->addPreparedStatement($name, $this->getConnection()->prepare($statement));
+        }
+
+        error_log(print_r($row, true));
+
+        // pass the call to the parent method
+        return parent::execute($row, $name);
     }
 }

@@ -83,13 +83,9 @@ class CatalogAttributeUpdateProcessor extends AbstractUpdateProcessor
             // create the prepared UPDATE statement
             $statement = sprintf($this->getUtilityClass()->find(SqlStatements::UPDATE_CATALOG_ATTRIBUTE), implode(',', $keys), $pk);
 
-            error_log($statement);
-
             // prepare the statement
             $this->addPreparedStatement($name, $this->getConnection()->prepare($statement));
         }
-
-        error_log(print_r($row, true));
 
         // pass the call to the parent method
         return parent::execute($row, $name);

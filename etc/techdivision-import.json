@@ -5,7 +5,6 @@
   "source-date-format": "n/d/y, g:i A",
   "archive-artefacts" : true,
   "debug-mode" : false,
-  "system-name" : "system-name/attribute-import",
   "entity-type-code" : "eav_attribute",
   "databases": [
   ],

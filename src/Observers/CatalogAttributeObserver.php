@@ -37,6 +37,20 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
 {
 
     /**
+     * The key for the additional data containing the swatch type.
+     *
+     * @var string
+     */
+    const SWATCH_INPUT_TYPE = 'swatch_input_type';
+
+    /**
+     * The available swatch types.
+     *
+     * @var array
+     */
+    protected $swatchTypes = array('text', 'visual');
+
+    /**
      * The attribute processor instance.
      *
      * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
@@ -105,6 +119,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      * Prepare the attributes of the entity that has to be persisted.
      *
      * @return array The prepared attributes
+     * @throws \Exception Is thrown, if the size of the option values doesn't equals the size of swatch values, in case
      */
     protected function prepareAttributes()
     {
@@ -121,7 +136,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
             if ($this->getSubject()->hasHeader($columnName)) {
                 // custom handling for the additional_data column
                 if ($columnName === ColumnKeys::ADDITIONAL_DATA) {
-                    // load the additional data
+                    // load the raw additional data
                     $explodedAdditionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA, array(), array($this->getSubject(), 'explode'));
 
                     // query whether or not additional data has been set
@@ -135,6 +150,24 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
 
                         // set the additional data
                         $attr[$columnName] = $additionalData;
+
+                        // query whether or not the attribute is a text or a visual swatch
+                        if ($this->isSwatchType($additionalData)) {
+                            // load the attribute option values for the custom store views
+                            $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), array($this, 'explode'));
+                            $attributeOptionSwatch = $this->getSubject()->explode($this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SWATCH), $this->getSubject()->getMultipleValueDelimiter());
+
+                            // query whether or not the size of the option values equals the size of the swatch values
+                            if (($sizeOfSwatchValues = sizeof($attributeOptionSwatch)) !== ($sizeOfOptionValues = sizeof($attributeOptionValues))) {
+                                throw new \Exception(
+                                    sprintf(
+                                        'Size of option values "%d" doesn\'t equals size of swatch values "%d"',
+                                        $sizeOfOptionValues,
+                                        $sizeOfSwatchValues
+                                    )
+                                );
+                            }
+                        }
                     }
 
                 } else {
@@ -223,6 +256,18 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     protected function getLastAttributeId()
     {
         return $this->getSubject()->getLastAttributeId();
+    }
+
+    /**
+     * Return's TRUE if the additional data contains a swatch type.
+     *
+     * @param array $additionalData The additional data to query for a valid swatch type
+     *
+     * @return boolean TRUE if the data contains a swatch type, else FALSE
+     */
+    protected function isSwatchType(array $additionalData)
+    {
+        return isset($additionalData[CatalogAttributeObserver::SWATCH_INPUT_TYPE]) && in_array($additionalData[CatalogAttributeObserver::SWATCH_INPUT_TYPE], $this->swatchTypes);
     }
 
     /**

@@ -1,3 +1,13 @@
+# Version 1.0.0-beta17
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Make sure that the size of option values equlas the size of swatch values when a swatch type is found
+
 # Version 1.0.0-beta16
 
 ## Bugfixes

@@ -49,4 +49,11 @@ interface AttributeSubjectInterface
      * @throws \Exception Is thrown, if the entity type with the passed code is not available
      */
     public function getEntityType($entityTypeCode);
+
+    /**
+     * Return's the multiple value delimiter character to use, default value is comma (|).
+     *
+     * @return string The multiple value delimiter character
+     */
+    public function getMultipleValueDelimiter();
 }

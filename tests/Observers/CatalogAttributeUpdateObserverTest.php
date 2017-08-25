@@ -252,10 +252,13 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
         $mockSubject->expects($this->once())
                     ->method('getRow')
                     ->willReturn($row);
-        $mockSubject->expects($this->exactly(69))
+        $mockSubject->expects($this->exactly(71))
                     ->method('hasHeader')
                     ->willReturn(true);
-        $mockSubject->expects($this->exactly(46))
+        $mockSubject->expects($this->once())
+                    ->method('getMultipleValueDelimiter')
+                    ->willReturn('|');
+        $mockSubject->expects($this->exactly(48))
                     ->method('getHeader')
                     ->withConsecutive(
                         array(ColumnKeys::ATTRIBUTE_CODE),
@@ -304,7 +307,8 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
                         array(ColumnKeys::SEARCH_WEIGHT),
                         array(ColumnKeys::SEARCH_WEIGHT),
                         array(ColumnKeys::ADDITIONAL_DATA),
-                        array(ColumnKeys::ADDITIONAL_DATA)
+                        array(ColumnKeys::ATTRIBUTE_OPTION_VALUES),
+                        array(ColumnKeys::ATTRIBUTE_OPTION_SWATCH)
                      )
                     ->willReturnOnConsecutiveCalls(
                         0,
@@ -353,25 +357,28 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
                         22,
                         22,
                         23,
-                        23
+                        7,
+                        8
                      );
         $mockSubject->expects($this->once())
                     ->method('hasBeenProcessed')
                     ->with($attributeCode)
                     ->willReturn(false);
-        $mockSubject->expects($this->exactly(4))
+        $mockSubject->expects($this->exactly(5))
                     ->method('explode')
                     ->withConsecutive(
                         array($additionaData),
                         array('swatch_input_type=visual', '='),
                         array('update_product_preview_image=0', '='),
-                        array('use_product_image_for_swatch=1', '=')
+                        array('use_product_image_for_swatch=1', '='),
+                        array(0, '|')
                     )
                     ->willReturnOnConsecutiveCalls(
                         array('swatch_input_type=visual', 'update_product_preview_image=0', 'use_product_image_for_swatch=1'),
                         array('swatch_input_type', 'visual'),
                         array('update_product_preview_image', '0'),
-                        array('use_product_image_for_swatch', '1')
+                        array('use_product_image_for_swatch', '1'),
+                        array()
                     );
         $mockSubject->expects($this->once())
                     ->method('getLastAttributeId')

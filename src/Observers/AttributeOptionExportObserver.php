@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use Rhumsaa\Uuid\Uuid;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
@@ -76,7 +77,7 @@ class AttributeOptionExportObserver extends AbstractAttributeExportObserver
             }
 
             // initialize and add the new artefact
-            $artefacts[] = $this->newArtefact(
+            $artefacts[Uuid::uuid4()->toString()] = $this->newArtefact(
                 array(
                     ColumnKeys::ATTRIBUTE_CODE  => $this->getValue(ColumnKeys::ATTRIBUTE_CODE),
                     ColumnKeys::VALUE           => $attributeOptionValue,

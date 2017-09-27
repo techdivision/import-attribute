@@ -1,3 +1,13 @@
+# Version 1.0.0-beta18
+
+## Bugfixes
+
+* Fixes attribute import issue for option translations
+
+## Features
+
+* None
+
 # Version 1.0.0-beta17
 
 ## Bugfixes

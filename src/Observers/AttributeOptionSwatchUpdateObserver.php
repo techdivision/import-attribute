@@ -61,8 +61,8 @@ class AttributeOptionSwatchUpdateObserver extends AttributeOptionSwatchObserver
     /**
      * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
      *
-     * @param integer $optionId
-     * @param integer $storeId
+     * @param integer $optionId The option ID of the attribute option swatch to load
+     * @param integer $storeId  The store ID of the attribute option swatch to load
      *
      * @return array The EAV attribute option swatch
      */

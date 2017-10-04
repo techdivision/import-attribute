@@ -43,6 +43,13 @@ class AttributeOptionSwatchRepository extends AbstractRepository
     protected $attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt;
 
     /**
+     * The prepared statement to load an existing EAV attribute option swatch by its option ID and store ID
+     *
+     * @var \PDOStatement
+     */
+    protected $attributeOptionSwatchByOptionIdAndStoreIdStmt;
+
+    /**
      * Initializes the repository's prepared statements.
      *
      * @return void
@@ -56,6 +63,9 @@ class AttributeOptionSwatchRepository extends AbstractRepository
         // initialize the prepared statements
         $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt =
             $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE));
+
+        $this->attributeOptionSwatchByOptionIdAndStoreIdStmt =
+            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID));
     }
 
     /**
@@ -82,5 +92,27 @@ class AttributeOptionSwatchRepository extends AbstractRepository
         // load and return the EAV attribute option swatch with the passed parameters
         $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt->execute($params);
         return $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option swatch with the passed option ID and store ID
+     *
+     * @param string  $optionId The option ID of the attribute option swatch to load
+     * @param integer $storeId  The store ID of the attribute option swatch to load
+     *
+     * @return array The EAV attribute option swatch
+     */
+    public function findOneByOptionIdAndStoreId($optionId, $storeId)
+    {
+
+        // the parameters of the EAV attribute option to load
+        $params = array(
+            MemberNames::OPTION_ID => $optionId,
+            MemberNames::STORE_ID  => $storeId,
+        );
+
+        // load and return the EAV attribute option swatch with the passed parameters
+        $this->attributeOptionSwatchByOptionIdAndStoreIdStmt->execute($params);
+        return $this->attributeOptionSwatchByOptionIdAndStoreIdStmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

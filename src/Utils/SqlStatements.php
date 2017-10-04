@@ -75,6 +75,13 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
     const ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE = 'attribute_option_swatch.by.attribute_code.and.store_id.and.value.and.type';
 
     /**
+     * The SQL statement to load the EAV attribute option swtach by its attribute code, store ID, value and type.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID = 'attribute_option_swatch.by.option_id.and.store_id';
+
+    /**
      * The SQL statement to load the EAV catalog attribute by its attribute code and entity type ID.
      *
      * @var string
@@ -307,6 +314,11 @@ class SqlStatements extends \TechDivision\Import\Utils\SqlStatements
                 AND t3.type = :type
                 AND t2.attribute_id = t1.attribute_id
                 AND t2.option_id = t3.option_id',
+        SqlStatements::ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID =>
+            'SELECT t1.*
+               FROM eav_attribute_option_swatch t1
+              WHERE t1.store_id = :store_id
+                AND t1.option_id = :option_id',
         SqlStatements::CATALOG_ATTRIBUTE_BY_ATTRIBUTE_CODE_AND_ENTITY_TYPE_ID =>
             'SELECT t2.*
                FROM eav_attribute t1

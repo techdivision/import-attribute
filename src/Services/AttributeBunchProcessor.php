@@ -662,6 +662,19 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
+     * Load's and return's the EAV attribute option swatch with the passed option ID and store ID
+     *
+     * @param integer $optionId The option ID of the attribute option swatch to load
+     * @param integer $storeId  The store ID of the attribute option swatch to load
+     *
+     * @return array The EAV attribute option swatch
+     */
+    public function loadAttributeOptionSwatchByOptionIdAndStoreId($optionId, $storeId)
+    {
+        return $this->getAttributeOptionSwatchRepository()->findOneByOptionIdAndStoreId($optionId, $storeId);
+    }
+
+    /**
      * Load's and retur's the EAV catalog attribute with the passed ID.
      *
      * @param string $attributeId The ID of the EAV catalog attribute to return

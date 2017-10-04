@@ -20,8 +20,8 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Utils\StoreViewCodes;
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
 
 /**
  * Observer that update's the attribute option swatchs found in the additional CSV file.
@@ -46,13 +46,11 @@ class AttributeOptionSwatchUpdateObserver extends AttributeOptionSwatchObserver
     {
 
         // initialize the data to load the EAV attribute option swatch
-        $value = $this->getValue(ColumnKeys::SWATCH_VALUE);
-        $type = $this->getValue(ColumnKeys::SWATCH_TYPE);
+        $optionId = isset($attr[MemberNames::OPTION_ID]) ? $attr[MemberNames::OPTION_ID] : null;
         $storeId = $this->getRowStoreId(StoreViewCodes::ADMIN);
-        $attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE);
 
         // try to load the EAV attribute option swatch
-        if ($attributeOptionSwatch = $this->loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type)) {
+        if ($attributeOptionSwatch = $this->loadAttributeOptionSwatchByOptionIdAndStoreId($optionId, $storeId)) {
             return $this->mergeEntity($attributeOptionSwatch, $attr);
         }
 
@@ -63,15 +61,13 @@ class AttributeOptionSwatchUpdateObserver extends AttributeOptionSwatchObserver
     /**
      * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
      *
-     * @param string  $attributeCode The code of the EAV attribute option swatch to load
-     * @param integer $storeId       The store ID of the attribute option swatch to load
-     * @param string  $value         The value of the attribute option swatch to load
-     * @param string  $type          The type of the attribute option swatch to load
+     * @param integer $optionId The option ID of the attribute option swatch to load
+     * @param integer $storeId  The store ID of the attribute option swatch to load
      *
      * @return array The EAV attribute option swatch
      */
-    protected function loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type)
+    protected function loadAttributeOptionSwatchByOptionIdAndStoreId($optionId, $storeId)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type);
+        return $this->getAttributeBunchProcessor()->loadAttributeOptionSwatchByOptionIdAndStoreId($optionId, $storeId);
     }
 }

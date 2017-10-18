@@ -1,3 +1,23 @@
+# Version 1.0.0-beta20
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring to optimize artefact export handling
+
+# Version 1.0.0-beta19
+
+## Bugfixes
+
+* Fix issue for updating attribute option swatch values
+
+## Features
+
+* None
+
 # Version 1.0.0-beta18
 
 ## Bugfixes

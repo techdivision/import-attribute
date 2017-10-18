@@ -56,14 +56,15 @@ abstract class AbstractAttributeExportObserver extends AbstractAttributeImportOb
      * Add the passed product type artefacts to the product with the
      * last entity ID.
      *
-     * @param array $artefacts The product type artefacts
+     * @param array   $artefacts The product type artefacts
+     * @param boolean $override  Whether or not the artefacts for the actual entity ID has to be overwritten
      *
      * @return void
      * @uses \TechDivision\Import\Product\Bundle\Subjects\BunchSubject::getLastEntityId()
      */
-    protected function addArtefacts(array $artefacts)
+    protected function addArtefacts(array $artefacts, $override = true)
     {
-        $this->getSubject()->addArtefacts($this->getArtefactType(), $artefacts);
+        $this->getSubject()->addArtefacts($this->getArtefactType(), $artefacts, $override);
     }
 
     /**

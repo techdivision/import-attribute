@@ -1,3 +1,13 @@
+# Version 1.0.0-beta21
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove unnecessary AbstractAttributeSubject::tearDown() method
+
 # Version 1.0.0-beta20
 
 ## Bugfixes

@@ -72,28 +72,6 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
     }
 
     /**
-     * Clean up the global data after importing the bunch.
-     *
-     * @param string $serial The serial of the actual import
-     *
-     * @return void
-     */
-    public function tearDown($serial)
-    {
-
-        // invoke the parent method
-        parent::tearDown($serial);
-
-        // update the status
-        $this->getRegistryProcessor()->mergeAttributesRecursive(
-            $serial,
-            array(
-                RegistryKeys::FILES => array($this->getFilename() => array(RegistryKeys::STATUS => 1))
-            )
-        );
-    }
-
-    /**
      * Return's the header mappings for the actual entity.
      *
      * @return array The header mappings

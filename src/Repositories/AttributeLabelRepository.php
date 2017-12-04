@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Repositories;
 
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Repositories\AbstractRepository;
 
 /**
@@ -50,12 +51,9 @@ class AttributeLabelRepository extends AbstractRepository
     public function init()
     {
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
         // initialize the prepared statements
         $this->attributeLabelByAttributeCodeAndStoreIdStmt =
-            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID));
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID));
     }
 
     /**

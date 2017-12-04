@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Repositories;
 
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Repositories\AbstractRepository;
 
 /**
@@ -50,12 +51,9 @@ class EntityAttributeRepository extends AbstractRepository
     public function init()
     {
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
         // initialize the prepared statements
         $this->entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt =
-            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID));
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID));
     }
 
     /**

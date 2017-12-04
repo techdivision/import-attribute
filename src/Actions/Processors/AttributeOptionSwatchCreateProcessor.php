@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
 
 /**
@@ -43,12 +44,9 @@ class AttributeOptionSwatchCreateProcessor extends AbstractCreateProcessor
     protected function getStatements()
     {
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::CREATE_ATTRIBUTE_OPTION_SWATCH => $this->getUtilityClass()->find($utilityClassName::CREATE_ATTRIBUTE_OPTION_SWATCH)
+            SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_SWATCH => $this->loadStatement(SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_SWATCH)
         );
     }
 }

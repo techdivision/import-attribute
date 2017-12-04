@@ -21,7 +21,7 @@
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
 use TechDivision\Import\Utils\EntityStatus;
-use TechDivision\Import\Attribute\Utils\SqlStatements;
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
 
 /**
@@ -60,7 +60,7 @@ class CatalogAttributeCreateProcessor extends AbstractCreateProcessor
             unset($keys[array_search(EntityStatus::MEMBER_NAME, $keys)]);
 
             // create the prepared UPDATE statement
-            $statement = sprintf($this->getUtilityClass()->find(SqlStatements::CREATE_CATALOG_ATTRIBUTE), implode(',', $keys), implode(',:', $keys));
+            $statement = sprintf($this->loadStatement(SqlStatementKeys::CREATE_CATALOG_ATTRIBUTE), implode(',', $keys), implode(',:', $keys));
 
             // prepare the statement
             $this->addPreparedStatement($name, $this->getConnection()->prepare($statement));

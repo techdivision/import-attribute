@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Repositories;
 
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Repositories\AbstractRepository;
 
 /**
@@ -57,15 +58,12 @@ class AttributeOptionSwatchRepository extends AbstractRepository
     public function init()
     {
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
         // initialize the prepared statements
         $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt =
-            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE));
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE));
 
         $this->attributeOptionSwatchByOptionIdAndStoreIdStmt =
-            $this->getConnection()->prepare($this->getUtilityClass()->find($utilityClassName::ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID));
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID));
     }
 
     /**

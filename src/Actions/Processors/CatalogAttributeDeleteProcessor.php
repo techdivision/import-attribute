@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
 
 /**
@@ -43,12 +44,9 @@ class CatalogAttributeDeleteProcessor extends AbstractDeleteProcessor
     protected function getStatements()
     {
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::DELETE_CATALOG_ATTRIBUTE => $this->getUtilityClass()->find($utilityClassName::DELETE_CATALOG_ATTRIBUTE)
+            SqlStatementKeys::DELETE_CATALOG_ATTRIBUTE => $this->loadStatement(SqlStatementKeys::DELETE_CATALOG_ATTRIBUTE)
         );
     }
 }

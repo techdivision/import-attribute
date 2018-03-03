@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 
 /**
@@ -43,12 +44,9 @@ class EntityAttributeUpdateProcessor extends AbstractUpdateProcessor
     protected function getStatements()
     {
 
-        // load the utility class name
-        $utilityClassName = $this->getUtilityClassName();
-
         // return the array with the SQL statements that has to be prepared
         return array(
-            $utilityClassName::UPDATE_ENTITY_ATTRIBUTE => $this->getUtilityClass()->find($utilityClassName::UPDATE_ENTITY_ATTRIBUTE)
+            SqlStatementKeys::UPDATE_ENTITY_ATTRIBUTE => $this->loadStatement(SqlStatementKeys::UPDATE_ENTITY_ATTRIBUTE)
         );
     }
 }

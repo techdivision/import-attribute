@@ -20,10 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
-use TechDivision\Import\Attribute\Utils\SqlStatements;
-use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
+use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 
 /**
  * The EAV catalog attribute update processor implementation.
@@ -81,7 +81,7 @@ class CatalogAttributeUpdateProcessor extends AbstractUpdateProcessor
             });
 
             // create the prepared UPDATE statement
-            $statement = sprintf($this->getUtilityClass()->find(SqlStatements::UPDATE_CATALOG_ATTRIBUTE), implode(',', $keys), $pk);
+            $statement = sprintf($this->loadStatement(SqlStatementKeys::UPDATE_CATALOG_ATTRIBUTE), implode(',', $keys), $pk);
 
             // prepare the statement
             $this->addPreparedStatement($name, $this->getConnection()->prepare($statement));

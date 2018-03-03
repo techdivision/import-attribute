@@ -1,3 +1,13 @@
+# Version 1.0.0-beta22
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactored DI + switch to new SqlStatementRepositories instead of SqlStatements
+
 # Version 1.0.0-beta21
 
 ## Bugfixes

@@ -31,6 +31,6 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class EntityAttributeAction extends AbstractAction
+class EntityAttributeAction extends AbstractAction implements EntityAttributeActionInterface
 {
 }

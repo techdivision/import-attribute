@@ -33,7 +33,7 @@ use TechDivision\Import\Repositories\AbstractRepository;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CatalogAttributeRepository extends AbstractRepository
+class CatalogAttributeRepository extends AbstractRepository implements CatalogAttributeRepositoryInterface
 {
 
     /**

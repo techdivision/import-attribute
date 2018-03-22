@@ -1,3 +1,13 @@
+# Version 1.0.0-beta25
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove unnecessary methods from AttributeBunchProcessorInterface
+
 # Version 1.0.0-beta24
 
 ## Bugfixes

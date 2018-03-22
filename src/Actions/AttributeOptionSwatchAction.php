@@ -31,6 +31,6 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeOptionSwatchAction extends AbstractAction
+class AttributeOptionSwatchAction extends AbstractAction implements AttributeOptionSwatchActionInterface
 {
 }

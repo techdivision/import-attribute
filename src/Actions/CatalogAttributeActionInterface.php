@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\AttributeLabelAction
+ * TechDivision\Import\Attribute\Actions\CatalogAttributeActionInterface
  *
  * NOTICE OF LICENSE
  *
@@ -20,10 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Actions;
 
-use TechDivision\Import\Actions\AbstractAction;
+use TechDivision\Import\Actions\ActionInterface;
 
 /**
- * An action implementation that provides CRUD functionality for EAV attribute label.
+ * Interface for action implementations that provides CRUD functionality for EAV catalog attributes.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,6 +31,6 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeLabelAction extends AbstractAction implements AttributeLabelActionInterface
+interface CatalogAttributeActionInterface extends ActionInterface
 {
 }

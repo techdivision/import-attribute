@@ -1,3 +1,14 @@
+# Version 1.0.0-beta24
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add missing interfaces for actions and repositories
+* Replace class type hints for AttributeBunchProcessor with interfaces
+
 # Version 1.0.0-beta23
 
 ## Bugfixes

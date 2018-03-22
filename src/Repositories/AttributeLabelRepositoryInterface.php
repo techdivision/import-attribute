@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\AttributeLabelAction
+ * TechDivision\Import\Attribute\Repositories\AttributeLabelRepositoryInterface
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Actions;
+namespace TechDivision\Import\Attribute\Repositories;
 
-use TechDivision\Import\Actions\AbstractAction;
+use TechDivision\Import\Repositories\RepositoryInterface;
 
 /**
- * An action implementation that provides CRUD functionality for EAV attribute label.
+ * Interface for repository implementations to load EAV attribute label data.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,6 +31,16 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeLabelAction extends AbstractAction implements AttributeLabelActionInterface
+interface AttributeLabelRepositoryInterface extends RepositoryInterface
 {
+
+    /**
+     * Return's the EAV attribute label with the passed attribute code and store ID.
+     *
+     * @param string  $attributeCode The attribute code of the EAV attribute label to return
+     * @param integer $storeId       The store ID of the EAV attribute label to return
+     *
+     * @return array The EAV attribute label
+     */
+    public function findOneByAttributeCodeAndStoreId($attributeCode, $storeId);
 }

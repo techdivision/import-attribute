@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Actions\AttributeLabelAction
+ * TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterface
  *
  * NOTICE OF LICENSE
  *
@@ -18,12 +18,12 @@
  * @link      http://www.techdivision.com
  */
 
-namespace TechDivision\Import\Attribute\Actions;
+namespace TechDivision\Import\Attribute\Repositories;
 
-use TechDivision\Import\Actions\AbstractAction;
+use TechDivision\Import\Repositories\RepositoryInterface;
 
 /**
- * An action implementation that provides CRUD functionality for EAV attribute label.
+ * Interface for repository implementations to load EAV attribute option data.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2016 TechDivision GmbH <info@techdivision.com>
@@ -31,6 +31,17 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeLabelAction extends AbstractAction implements AttributeLabelActionInterface
+interface AttributeOptionRepositoryInterface extends RepositoryInterface
 {
+
+    /**
+     * Load's and return's the EAV attribute option with the passed code, store ID and value.
+     *
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
 }

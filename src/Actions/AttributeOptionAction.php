@@ -32,7 +32,7 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeOptionAction extends AbstractAction
+class AttributeOptionAction extends AbstractAction implements AttributeOptionActionInterface
 {
 
     /**

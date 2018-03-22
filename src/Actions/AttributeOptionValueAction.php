@@ -31,6 +31,6 @@ use TechDivision\Import\Actions\AbstractAction;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeOptionValueAction extends AbstractAction
+class AttributeOptionValueAction extends AbstractAction implements AttributeOptionValueActionInterface
 {
 }

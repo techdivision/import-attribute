@@ -180,7 +180,7 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
             MemberNames::IS_VISIBLE_IN_GRID            => 1,
             MemberNames::IS_FILTERABLE_IN_GRID         => 1,
             MemberNames::SEARCH_WEIGHT                 => 0,
-            MemberNames::ADDITIONAL_DATA               => serialize(array()),
+            MemberNames::ADDITIONAL_DATA               => json_encode(array()),
             EntityStatus::MEMBER_NAME                  => EntityStatus::STATUS_UPDATE
         );
 
@@ -409,7 +409,7 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
             MemberNames::IS_VISIBLE_IN_GRID            => 1,
             MemberNames::IS_FILTERABLE_IN_GRID         => 1,
             MemberNames::SEARCH_WEIGHT                 => 0,
-            MemberNames::ADDITIONAL_DATA               => serialize(array()),
+            MemberNames::ADDITIONAL_DATA               => json_encode(array()),
             EntityStatus::MEMBER_NAME                  => EntityStatus::STATUS_UPDATE
         );
 
@@ -438,7 +438,7 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
             MemberNames::IS_VISIBLE_IN_GRID            => 0,
             MemberNames::IS_FILTERABLE_IN_GRID         => 0,
             MemberNames::SEARCH_WEIGHT                 => 1,
-            MemberNames::ADDITIONAL_DATA               => serialize($explodedAdditionalData),
+            MemberNames::ADDITIONAL_DATA               => json_encode($explodedAdditionalData),
             EntityStatus::MEMBER_NAME                  => EntityStatus::STATUS_UPDATE
         );
 

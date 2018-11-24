@@ -169,7 +169,6 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
                             }
                         }
                     }
-
                 } else {
                     // query whether or not a column contains a value
                     if ($this->hasValue($columnName)) {

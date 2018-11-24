@@ -53,7 +53,6 @@ class CatalogAttributeUpdateObserver extends CatalogAttributeObserver
                     $attr[MemberNames::ADDITIONAL_DATA],
                     json_decode($attribute[MemberNames::ADDITIONAL_DATA])
                 );
-
             } elseif (!is_array($attribute[MemberNames::ADDITIONAL_DATA]) && $attribute[MemberNames::ADDITIONAL_DATA] !== null) {
                 // unserialize and override the additional data
                 $attribute[MemberNames::ADDITIONAL_DATA] = json_decode($attribute[MemberNames::ADDITIONAL_DATA]);

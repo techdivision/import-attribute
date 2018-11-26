@@ -1,6 +1,6 @@
 {
   "magento-edition": "CE",
-  "magento-version": "2.1.2",
+  "magento-version": "2.3.0",
   "operation-name" : "add-update",
   "source-date-format": "n/d/y, g:i A",
   "archive-artefacts" : true,
@@ -50,7 +50,9 @@
             {
               "id": "import_attribute.subject.bunch",
               "identifier": "files",
-              "prefix": "attribute-import",
+              "file-resolver": {
+                "prefix": "attribute-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -80,13 +82,17 @@
             {
               "id": "import.subject.move.files",
               "identifier": "move-files",
-              "prefix": "attribute-import",
+              "file-resolver": {
+                "prefix": "attribute-import"
+              },
               "ok-file-needed": true
             },
             {
               "id": "import_attribute.subject.bunch",
               "identifier": "files",
-              "prefix": "attribute-import",
+              "file-resolver": {
+                "prefix": "attribute-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -107,7 +113,9 @@
             {
               "id": "import_attribute.subject.option",
               "identifier": "files",
-              "prefix": "option-import",
+              "file-resolver": {
+                "prefix": "option-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -121,7 +129,9 @@
             {
               "id": "import_attribute.subject.option",
               "identifier": "files",
-              "prefix": "option-value-import",
+              "file-resolver": {
+                "prefix": "option-value-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -134,7 +144,9 @@
             {
               "id": "import_attribute.subject.option",
               "identifier": "files",
-              "prefix": "option-swatch-import",
+              "file-resolver": {
+                "prefix": "option-swatch-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -163,13 +175,17 @@
             {
               "id": "import.subject.move.files",
               "identifier": "move-files",
-              "prefix": "attribute-import",
+              "file-resolver": {
+                "prefix": "attribute-import"
+              },
               "ok-file-needed": true
             },
             {
               "id": "import_attribute.subject.bunch",
               "identifier": "files",
-              "prefix": "attribute-import",
+              "file-resolver": {
+                "prefix": "attribute-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -188,7 +204,9 @@
             {
               "id": "import_attribute.subject.option",
               "identifier": "files",
-              "prefix": "option-import",
+              "file-resolver": {
+                "prefix": "option-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -202,7 +220,9 @@
             {
               "id": "import_attribute.subject.option",
               "identifier": "files",
-              "prefix": "option-value-import",
+              "file-resolver": {
+                "prefix": "option-value-import"
+              },
               "observers": [
                 {
                   "import": [
@@ -215,7 +235,9 @@
             {
               "id": "import_attribute.subject.option",
               "identifier": "files",
-              "prefix": "option-swatch-import",
+              "file-resolver": {
+                "prefix": "option-swatch-import"
+              },
               "observers": [
                 {
                   "import": [

@@ -240,6 +240,10 @@
             <argument type="service" id="import.events.emitter"/>
         </service>
 
+        <service id="import_attribute.callback.create.multiselect.option.value" class="TechDivision\Import\Attribute\Callbacks\CreateMultiselectOptionValueCallback">
+            <argument type="service" id="import_attribute.subject.bunch"/>
+        </service>
+
     </services>
 
 </container>

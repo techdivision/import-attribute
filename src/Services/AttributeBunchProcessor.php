@@ -586,6 +586,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param string $attributeCode The code of the EAV attribute to load
      *
      * @return array The EAV attribute
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeByEntityTypeIdAndAttributeCode() instead
      */
     public function loadAttributeByAttributeCode($attributeCode)
     {
@@ -613,6 +614,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param string  $value         The value of the attribute option to load
      *
      * @return array The EAV attribute option
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
      */
     public function loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
     {
@@ -627,6 +629,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param string  $value         The value of the attribute option to load
      *
      * @return array The EAV attribute option value
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
      */
     public function loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
     {
@@ -655,6 +658,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param string  $type          The type of the attribute option swatch to load
      *
      * @return array The EAV attribute option swatch
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
      */
     public function loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type)
     {

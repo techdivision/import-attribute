@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Callbacks\CreateMultiselectOptionValueCallback
+ * TechDivision\Import\Attribute\Callbacks\CreateSelectOptionValueCallback
  *
  * NOTICE OF LICENSE
  *
@@ -34,7 +34,7 @@ use TechDivision\Import\Observers\AttributeCodeAndValueAwareObserverInterface;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CreateMultiselectOptionValueCallback extends AbstractCallback
+class CreateSelectOptionValueCallback extends AbstractCallback
 {
 
     /**
@@ -91,18 +91,13 @@ class CreateMultiselectOptionValueCallback extends AbstractCallback
         $attributeCode = $observer->getAttributeCode();
         $attributeValue = $observer->getAttributeValue();
 
-        // load the ID of the actual store
+        // load the store ID
         $storeId = $this->getStoreId(StoreViewCodes::ADMIN);
 
-        // explode the multiselect values
-        $vals = explode('|', $attributeValue);
+        // create the option + swatch/value if necessary
+        $this->getOptionValueAndSwatchHandler()->createOptionValueOrSwatchIfNecessary($attributeCode, $storeId, $attributeValue);
 
-        // convert the option values into option value ID's
-        foreach ($vals as $val) {
-            $this->getOptionValueAndSwatchHandler()->createOptionValueIfNecessary($attributeCode, $storeId, $val);
-        }
-
-        // return the values
+        // return the attribute value
         return $attributeValue;
     }
 }

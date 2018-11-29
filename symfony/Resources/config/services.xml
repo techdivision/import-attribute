@@ -6,7 +6,7 @@
     <services>
 
         <service id="import_attribute.repository.sql.statement" class="TechDivision\Import\Attribute\Repositories\SqlStatementRepository"/>
-        <service id="import_attribute.repository.attribute" class="TechDivision\Import\Attribute\Repositories\AttributeRepository">
+        <service id="import_attribute.repository.attribute" class="TechDivision\Import\Attribute\Repositories\EavAttributeRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
@@ -14,11 +14,15 @@
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
-        <service id="import_attribute.repository.attribute.option" class="TechDivision\Import\Attribute\Repositories\AttributeOptionRepository">
+        <service id="import_attribute.repository.attribute.option" class="TechDivision\Import\Attribute\Repositories\EavAttributeOptionRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
-        <service id="import_attribute.repository.attribute.option.swatch" class="TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository">
+        <service id="import_attribute.repository.attribute.option.value" class="TechDivision\Import\Attribute\Repositories\EavAttributeOptionValueRepository">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute.repository.attribute.option.swatch" class="TechDivision\Import\Attribute\Repositories\EavAttributeOptionSwatchRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
@@ -27,6 +31,10 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
         <service id="import_attribute.repository.entity.attribute" class="TechDivision\Import\Attribute\Repositories\EntityAttributeRepository">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute.repository.entity.type" class="TechDivision\Import\Attribute\Repositories\EavEntityTypeRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
@@ -208,15 +216,16 @@
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
 
-        <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\AttributeBunchProcessor">
+        <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.attribute"/>
             <argument type="service" id="import_attribute.repository.attribute.label"/>
             <argument type="service" id="import_attribute.repository.attribute.option"/>
-            <argument type="service" id="import.repository.eav.attribute.option.value"/>
+            <argument type="service" id="import_attribute.repository.attribute.option.value"/>
             <argument type="service" id="import_attribute.repository.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.repository.catalog.attribute"/>
             <argument type="service" id="import_attribute.repository.entity.attribute"/>
+            <argument type="service" id="import_attribute.repository.entity.type"/>
             <argument type="service" id="import_attribute.action.attribute"/>
             <argument type="service" id="import_attribute.action.attribute.label"/>
             <argument type="service" id="import_attribute.action.attribute.option"/>
@@ -238,6 +247,22 @@
             <argument type="service" id="import.generator.core.config.data.uid"/>
             <argument type="service" id="loggers"/>
             <argument type="service" id="import.events.emitter"/>
+        </service>
+
+        <service id="import_attribute.callback.swatch.type.loader" class="TechDivision\Import\Attribute\Callbacks\SwatchTypeLoader">
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
+        <service id="import_attribute.callback.option.value.and.swatch.handler" class="TechDivision\Import\Attribute\Callbacks\OptionValueAndSwatchHandler">
+            <argument type="service" id="configuration"/>
+            <argument type="service" id="loggers"/>
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import_attribute.callback.swatch.type.loader"/>
+        </service>
+        <service id="import_attribute.callback.create.select.option.value" class="TechDivision\Import\Attribute\Callbacks\CreateSelectOptionValueCallback">
+            <argument type="service" id="import_attribute.callback.option.value.and.swatch.handler"/>
+        </service>
+        <service id="import_attribute.callback.create.multiselect.option.value" class="TechDivision\Import\Attribute\Callbacks\CreateMultiselectOptionValueCallback">
+            <argument type="service" id="import_attribute.callback.option.value.and.swatch.handler"/>
         </service>
 
     </services>

@@ -1,3 +1,13 @@
+# Version 3.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add callbacks to dynamically create attribute option as well as option values/swatches (merged from 2.x branch)
+
 # Version 3.0.0
 
 ## Bugfixes

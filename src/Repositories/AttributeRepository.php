@@ -73,6 +73,8 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
      * @param string $attributeCode The code of the EAV attribute to return
      *
      * @return array The EAV attribute
+     * @deprecated Since 2.0.2
+     * @see \TechDivision\Import\Attribute\Repositories\AttributeRepositoryInterface::findOneByEntityIdAndAttributeCode()
      */
     public function findOneByAttributeCode($attributeCode)
     {

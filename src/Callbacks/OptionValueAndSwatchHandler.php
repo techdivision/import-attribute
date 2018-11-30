@@ -23,9 +23,9 @@ namespace TechDivision\Import\Attribute\Callbacks;
 use Doctrine\Common\Collections\Collection;
 use TechDivision\Import\SystemLoggerTrait;
 use TechDivision\Import\Utils\EntityStatus;
-use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface;
 use TechDivision\Import\ConfigurationInterface;
+use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * A handler implementation that creates, whether it exists or not, the option as well as the swatch/value.
@@ -56,7 +56,7 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     /**
      * The attribute bunch processor instance.
      *
-     * @var \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface
+     * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
      */
     protected $attributeBunchProcessor;
 
@@ -70,15 +70,15 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     /**
      * Initialize the handler with the passed logger collection, swatch type loader and attribute bunch processor instance.
      *
-     * @param \TechDivision\Import\ConfigurationInterface                                      $configuration      The configuration instance
-     * @param \Doctrine\Common\Collections\Collection                                          $systemLoggers      The collection containing the system loggers
-     * @param \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface $attributeProcessor The attribute bunch processor instance
-     * @param \TechDivision\Import\Attribute\Callbacks\SwatchTypeLoaderInterface               $swatchTypeLoader   The swatch type loader instance
+     * @param \TechDivision\Import\ConfigurationInterface                              $configuration      The configuration instance
+     * @param \Doctrine\Common\Collections\Collection                                  $systemLoggers      The collection containing the system loggers
+     * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Attribute\Callbacks\SwatchTypeLoaderInterface       $swatchTypeLoader   The swatch type loader instance
      */
     public function __construct(
         ConfigurationInterface $configuration,
         Collection $systemLoggers,
-        ExtendedAttributeBunchProcessorInterface $attributeProcessor,
+        AttributeBunchProcessorInterface $attributeProcessor,
         SwatchTypeLoaderInterface $swatchTypeLoader
     ) {
         $this->configuration = $configuration;
@@ -100,7 +100,7 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     /**
      * Returns the attribute bunch processor instance.
      *
-     * @return \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface The attribute bunch processor instance
+     * @return \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface The attribute bunch processor instance
      */
     protected function getAttributeBunchProcessor()
     {
@@ -131,7 +131,7 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     {
 
         // queryh whether or not we've a swatch attribute
-        if ($type = $this->getSwatchTypeLoader()->loadSwatchType($attributeCode)) {
+        if ($type = $this->getSwatchTypeLoader()->loadSwatchType($this->getEntityTypeId(), $attributeCode)) {
             $this->createOptionSwatchIfNecessary($attributeCode, $storeId, $value, $type);
         } else {
             $this->createOptionValueIfNecessary($attributeCode, $storeId, $value);
@@ -151,11 +151,8 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     public function createOptionValueIfNecessary($attributeCode, $storeId, $value)
     {
 
-        // load the actual entity type ID
-        $entityTypeId = $this->getEntityTypeId();
-
         // try to load the attribute option value and add the option ID
-        if ($this->loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)) {
+        if ($this->loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId = $this->getEntityTypeId(), $attributeCode, $storeId, $value)) {
             return;
         }
 
@@ -183,11 +180,8 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     public function createOptionSwatchIfNecessary($attributeCode, $storeId, $value, $type)
     {
 
-        // load the actual entity type ID
-        $entityTypeId = $this->getEntityTypeId();
-
         // try to load the attribute option value and add the option ID
-        if ($this->loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $attributeCode, $storeId, $value)) {
+        if ($this->loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId = $this->getEntityTypeId(), $attributeCode, $attributeCode, $storeId, $value)) {
             return;
         }
 

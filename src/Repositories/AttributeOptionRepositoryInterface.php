@@ -42,6 +42,8 @@ interface AttributeOptionRepositoryInterface extends RepositoryInterface
      * @param string  $value         The value of the attribute option to load
      *
      * @return array The EAV attribute option
+     * @deprecated Since 2.0.2
+     * @see \TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValue()
      */
     public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
 

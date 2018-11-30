@@ -69,6 +69,19 @@ abstract class AbstractAttributeImportObserver extends AbstractObserver implemen
     }
 
     /**
+     * Returns the entity type ID for the passed code, or if no entity type code has
+     * been passed, the default one from the configuration will be used.
+     *
+     * @param string|null $entityTypeCode The entity type code
+     *
+     * @return integer The actual entity type ID
+     */
+    protected function getEntityTypeId($entityTypeCode = null)
+    {
+        return $this->getSubject()->getEntityTypeId($entityTypeCode);
+    }
+
+    /**
      * Process the observer's business logic.
      *
      * @return void

@@ -71,60 +71,64 @@ class SwatchTypeLoader implements SwatchTypeLoaderInterface
     }
 
     /**
-     * Query whether or not a swatch type for the attribute with the given code has already been loaded.
+     * Query whether or not a swatch type for the attribute with the given key has already been loaded.
      *
-     * @param string $attributeCode The attribute code to query for
+     * @param string $key The key to query for
      *
      * @return boolean TRUE if the swatch type has been loaded, else FALSE
      */
-    protected function hasSwatchType($attributeCode)
+    protected function hasSwatchType($key)
     {
-        return isset($this->swatchType[$attributeCode]);
+        return isset($this->swatchType[$key]);
     }
 
     /**
-     * Set the swatch type for the given attribute code.
+     * Set the swatch type for the given attribute key.
      *
-     * @param string $attributeCode The attribute code to set the swatch type for
-     * @param string $swatchType    The swatch type of the attribute with the given code
+     * @param string $key        The attribute key to set the swatch type for
+     * @param string $swatchType The swatch type of the attribute with the given code
      *
      * @return void
      */
-    protected function setSwatchType($attributeCode, $swatchType)
+    protected function setSwatchType($key, $swatchType)
     {
-        $this->swatchType[$attributeCode] = $swatchType;
+        $this->swatchType[$key] = $swatchType;
     }
 
     /**
-     * Returns the swatch type for the passed attribute code.
+     * Returns the swatch type for the passed attribute key.
      *
-     * @param string $attributeCode The attribute to return the swatch type for
+     * @param string $key The attribute key to return the swatch type for
      *
-     * @return string|null The swatch type of the attribute with the passed code or NULL
+     * @return string|null The swatch type of the attribute with the passed key or NULL
      */
-    protected function getSwatchType($attributeCode)
+    protected function getSwatchType($key)
     {
 
         // reutrn the swatch type, if available
-        if (isset($this->swatchType[$attributeCode])) {
-            return $this->swatchType[$attributeCode];
+        if (isset($this->swatchType[$key])) {
+            return $this->swatchType[$key];
         }
     }
 
     /**
-     * The attribute code to load the swatch type for.
+     * Returns the swatch type for the attribute with the passed code and entity type ID.
      *
-     * @param string $attributeCode The attribute code
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return the swatch type for
+     * @param string  $attributeCode The attribute code
      *
      * @return string|null The swatch type (either one of 'text' or 'visual') or NULL, if the attribute is NOT a swatch type
      */
-    public function loadSwatchType($attributeCode)
+    public function loadSwatchType($entityTypeId, $attributeCode)
     {
 
+        // prepare a unique key for the swatch type from the given code and entity type ID
+        $key = sprintf('%d-%s', $entityTypeId, $attributeCode);
+
         // query whether or not a swatch type has been set
-        if ($this->hasSwatchType($attributeCode) === false) {
+        if ($this->hasSwatchType($key) === false) {
             // load the attribute and the catalog attribute data
-            $attribute = $this->loadAttributeByAttributeCode($attributeCode);
+            $attribute = $this->loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode);
             $catalogAttribute = $this->loadCatalogAttribute($attribute[MemberNames::ATTRIBUTE_ID]);
 
             // query whether or not additional data is available (to figure out if the attribute is a swatch type or not)
@@ -132,24 +136,25 @@ class SwatchTypeLoader implements SwatchTypeLoaderInterface
                 // unserialize the additional data
                 $additionalData = json_decode($catalogAttribute[MemberNames::ADDITIONAL_DATA]);
                 // load and return the swatch type (can be either one of 'text' or 'visual')
-                return $this->setSwatchType($attributeCode, $additionalData[CatalogAttributeObserver::SWATCH_INPUT_TYPE]);
+                return $this->setSwatchType($key, $additionalData[CatalogAttributeObserver::SWATCH_INPUT_TYPE]);
             }
         }
 
         // return the actual swatch type
-        return $this->getSwatchType($attributeCode);
+        return $this->getSwatchType($key);
     }
 
     /**
-     * Load's and return's the EAV attribute with the passed code.
+     * Return's the EAV attribute with the passed entity type ID and code.
      *
-     * @param string $attributeCode The code of the EAV attribute to load
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
      *
      * @return array The EAV attribute
      */
-    protected function loadAttributeByAttributeCode($attributeCode)
+    protected function loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeByAttributeCode($attributeCode);
+        return $this->getAttributeBunchProcessor()->loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode);
     }
 
     /**

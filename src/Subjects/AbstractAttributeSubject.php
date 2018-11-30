@@ -23,6 +23,8 @@ namespace TechDivision\Import\Attribute\Subjects;
 use TechDivision\Import\Subjects\AbstractSubject;
 use TechDivision\Import\Subjects\EntitySubjectInterface;
 use TechDivision\Import\Utils\RegistryKeys;
+use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Utils\EntityTypeCodes;
 
 /**
  * The abstract product subject implementation that provides basic attribute
@@ -52,6 +54,26 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
     protected $headerMappings = array();
 
     /**
+     * The default entity type code.
+     *
+     * @var string
+     */
+    protected $defaultEntityTypeCode;
+
+    /**
+     * Mapping for the virtual entity type code to the real Magento 2 EAV entity type code.
+     *
+     * @var array
+     */
+    protected $entityTypeCodeMappings = array(
+        EntityTypeCodes::EAV_ATTRIBUTE             => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::CATALOG_PRODUCT           => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::CATALOG_CATEGORY          => EntityTypeCodes::CATALOG_CATEGORY,
+        EntityTypeCodes::CATALOG_PRODUCT_PRICE     => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::CATALOG_PRODUCT_INVENTORY => EntityTypeCodes::CATALOG_PRODUCT
+    );
+
+    /**
      * Intializes the previously loaded global data for exactly one bunch.
      *
      * @param string $serial The serial of the actual import
@@ -66,6 +88,9 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
 
         // load the global data we've prepared initially
         $this->entityTypes = $status[RegistryKeys::GLOBAL_DATA][RegistryKeys::ENTITY_TYPES];
+
+        // initialize the default entity type code with the value from the configuration
+        $this->defaultEntityTypeCode = $this->entityTypeCodeMappings[$this->getConfiguration()->getConfiguration()->getEntityTypeCode()];
 
         // prepare the callbacks
         parent::setUp($serial);
@@ -82,15 +107,31 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
     }
 
     /**
-     * Return's the entity type for the passed code.
+     * Returns the default entity type code.
      *
-     * @param string $entityTypeCode The entity type code
+     * @return string The default entity type code
+     */
+    public function getDefaultEntityTypeCode()
+    {
+        return $this->defaultEntityTypeCode;
+    }
+
+    /**
+     * Return's the entity type for the passed code, of if no entity type code has
+     * been passed, the default one from the configuration will be used.
+     *
+     * @param string|null $entityTypeCode The entity type code
      *
      * @return array The requested entity type
      * @throws \Exception Is thrown, if the entity type with the passed code is not available
      */
-    public function getEntityType($entityTypeCode)
+    public function getEntityType($entityTypeCode = null)
     {
+
+        // set the default entity type code, if non has been passed
+        if ($entityTypeCode === null) {
+            $entityTypeCode = $this->getDefaultEntityTypeCode();
+        }
 
         // query whether or not, the entity type with the passed code is available
         if (isset($this->entityTypes[$entityTypeCode])) {
@@ -106,5 +147,23 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
                 $this->getLineNumber()
             )
         );
+    }
+
+    /**
+     * Returns the entity type ID for the passed code, or if no entity type code has
+     * been passed, the default one from the configuration will be used.
+     *
+     * @param string|null $entityTypeCode The entity type code
+     *
+     * @return integer The actual entity type ID
+     */
+    public function getEntityTypeId($entityTypeCode = null)
+    {
+
+        // load the entity type for the given code, or the default one otherwise
+        $entityType = $this->getEntityType($entityTypeCode ? $entityTypeCode : $this->getDefaultEntityTypeCode());
+
+        // return the entity type ID
+        return $entityType[MemberNames::ENTITY_TYPE_ID];
     }
 }

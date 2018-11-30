@@ -41,6 +41,19 @@ interface AttributeLabelRepositoryInterface extends RepositoryInterface
      * @param integer $storeId       The store ID of the EAV attribute label to return
      *
      * @return array The EAV attribute label
+     * @deprecated Since 2.0.2
+     * @see \TechDivision\Import\Attribute\Repositories\AttributeLabelRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreId()
      */
     public function findOneByAttributeCodeAndStoreId($attributeCode, $storeId);
+
+    /**
+     * Return's the EAV attribute label with the passed attribute code and store ID.
+     *
+     * @param integer $entityTypeId  The ID of the EAV entity attribute to return the label for
+     * @param string  $attributeCode The attribute code of the EAV attribute label to return
+     * @param integer $storeId       The store ID of the EAV attribute label to return
+     *
+     * @return array The EAV attribute label
+     */
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreId($entityTypeId, $attributeCode, $storeId);
 }

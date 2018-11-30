@@ -45,13 +45,16 @@ class AttributeOptionUpdateObserver extends AttributeOptionObserver
     protected function initializeAttribute(array $attr)
     {
 
+        // load the entity type ID for the value from the system configuration
+        $entityTypeId = $this->getEntityTypeId();
+
         // initialize the data to load the EAV attribute option
         $value = $this->getValue(ColumnKeys::VALUE);
         $storeId = $this->getRowStoreId(StoreViewCodes::ADMIN);
         $attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE);
 
         // try to load the EAV attribute option
-        if ($attributeOption = $this->loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)) {
+        if ($attributeOption = $this->loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)) {
             return $this->mergeEntity($attributeOption, $attr);
         }
 
@@ -60,16 +63,17 @@ class AttributeOptionUpdateObserver extends AttributeOptionObserver
     }
 
     /**
-     * Load's and return's the EAV attribute option with the passed code, store ID and value.
+     * Load's and return's the EAV attribute option with the passed entity type ID, code, store ID and value.
      *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
      * @param string  $attributeCode The code of the EAV attribute option to load
      * @param integer $storeId       The store ID of the attribute option to load
      * @param string  $value         The value of the attribute option to load
      *
      * @return array The EAV attribute option
      */
-    protected function loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
+    protected function loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+        return $this->getAttributeBunchProcessor()->loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
     }
 }

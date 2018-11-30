@@ -44,6 +44,13 @@ class AttributeLabelRepository extends AbstractRepository implements AttributeLa
     protected $attributeLabelByAttributeCodeAndStoreIdStmt;
 
     /**
+     * The prepared statement to load an existing EAV attribute label by its entity type ID, attribute code and store ID.
+     *
+     * @var \PDOStatement
+     */
+    protected $attributeLabelByEntityTypeIdAndAttributeCodeAndStoreIdStmt;
+
+    /**
      * Initializes the repository's prepared statements.
      *
      * @return void
@@ -54,6 +61,10 @@ class AttributeLabelRepository extends AbstractRepository implements AttributeLa
         // initialize the prepared statements
         $this->attributeLabelByAttributeCodeAndStoreIdStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID));
+
+        // initialize the prepared statements
+        $this->attributeLabelByEntityTypeIdAndAttributeCodeAndStoreIdStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_LABEL_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID));
     }
 
     /**
@@ -63,6 +74,8 @@ class AttributeLabelRepository extends AbstractRepository implements AttributeLa
      * @param integer $storeId       The store ID of the EAV attribute label to return
      *
      * @return array The EAV attribute label
+     * @deprecated Since 2.0.2
+     * @see \TechDivision\Import\Attribute\Repositories\AttributeLabelRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreId()
      */
     public function findOneByAttributeCodeAndStoreId($attributeCode, $storeId)
     {
@@ -76,5 +89,29 @@ class AttributeLabelRepository extends AbstractRepository implements AttributeLa
         // load and return the EAV attribute label with the passed params
         $this->attributeLabelByAttributeCodeAndStoreIdStmt->execute($params);
         return $this->attributeLabelByAttributeCodeAndStoreIdStmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Return's the EAV attribute label with the passed attribute code and store ID.
+     *
+     * @param integer $entityTypeId  The ID of the EAV entity attribute to return the label for
+     * @param string  $attributeCode The attribute code of the EAV attribute label to return
+     * @param integer $storeId       The store ID of the EAV attribute label to return
+     *
+     * @return array The EAV attribute label
+     */
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreId($entityTypeId, $attributeCode, $storeId)
+    {
+
+        // initialize the params
+        $params = array(
+            MemberNames::ENTITY_TYPE_ID => $entityTypeId,
+            MemberNames::ATTRIBUTE_CODE => $attributeCode,
+            MemberNames::STORE_ID       => $storeId
+        );
+
+        // load and return the EAV attribute label with the passed params
+        $this->attributeLabelByEntityTypeIdAndAttributeCodeAndStoreIdStmt->execute($params);
+        return $this->attributeLabelByEntityTypeIdAndAttributeCodeAndStoreIdStmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

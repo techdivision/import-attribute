@@ -2,7 +2,7 @@
 
 ## Bugfixes
 
-* None
+* Fixed invalid loader functionality for attributes by adding entity_type_id parameter to methods and SQLs
 
 ## Features
 

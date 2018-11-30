@@ -109,6 +109,8 @@ class AttributeOptionSwatchRepository extends AbstractRepository implements Attr
      * @param string  $type          The type of the attribute option swatch to load
      *
      * @return array The EAV attribute option swatch
+     * @deprecated Since 2.0.2
+     * @see \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType()
      */
     public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type)
     {

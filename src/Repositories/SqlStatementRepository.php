@@ -85,6 +85,14 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
               WHERE t2.attribute_code = :attribute_code
                 AND t1.attribute_id = t2.attribute_id
                 AND t1.store_id = :store_id',
+        SqlStatementKeys::ATTRIBUTE_LABEL_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID =>
+            'SELECT t1.*
+               FROM eav_attribute_label t1,
+                    eav_attribute t2
+              WHERE t2.attribute_code = :attribute_code
+                AND t2.entity_type_id = :entity_type_id
+                AND t1.attribute_id = t2.attribute_id
+                AND t1.store_id = :store_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE =>
             'SELECT t2.*
                FROM eav_attribute t1,

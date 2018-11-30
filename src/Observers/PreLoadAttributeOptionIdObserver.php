@@ -80,12 +80,14 @@ class PreLoadAttributeOptionIdObserver extends AbstractAttributeImportObserver
             return;
         }
 
+        // load the entity type ID for the value from the system configuration
+        $entityTypeId = $this->getEntityTypeId();
+
         // load the ID of the admin store
         $storeId = $this->getStoreId(StoreViewCodes::ADMIN);
 
         // load the EAV attribute option with the passed value
-        $attributeOption = $this->getAttributeBunchProcessor()
-                                ->loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+        $attributeOption = $this->loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
 
         // preserve the attribute ID for the passed EAV attribute option
         $this->preLoadOptionId($attributeOption);
@@ -114,5 +116,20 @@ class PreLoadAttributeOptionIdObserver extends AbstractAttributeImportObserver
     protected function preLoadOptionId(array $attributeOption)
     {
         return $this->getSubject()->preLoadOptionId($attributeOption);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID, code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    protected function loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)
+    {
+        return $this->getAttributeBunchProcessor()->loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
     }
 }

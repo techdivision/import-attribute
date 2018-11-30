@@ -45,6 +45,9 @@ class AttributeLabelUpdateObserver extends AttributeLabelObserver
     protected function initializeAttribute(array $attr)
     {
 
+        // load the entity type ID for the value from the system configuration
+        $entityTypeId = $this->getEntityTypeId();
+
         // load value, store ID
         $storeId = $attr[MemberNames::STORE_ID];
 
@@ -52,7 +55,7 @@ class AttributeLabelUpdateObserver extends AttributeLabelObserver
         $attributeCode = $this->getValue(ColumnKeys::ATTRIBUTE_CODE);
 
         // query whether or not an attribute label
-        if ($attributeLabel = $this->loadAttributeLabelByAttributeCodeAndStoreId($attributeCode, $storeId)) {
+        if ($attributeLabel = $this->loadAttributeLabelByEntityTypeIdAndAttributeCodeAndStoreId($entityTypeId, $attributeCode, $storeId)) {
             return $this->mergeEntity($attributeLabel, $attr);
         }
 
@@ -63,13 +66,14 @@ class AttributeLabelUpdateObserver extends AttributeLabelObserver
     /**
      * Return's the EAV attribute label with the passed attribute code and store ID.
      *
+     * @param integer $entityTypeId  The ID of the EAV entity attribute to return the label for
      * @param string  $attributeCode The attribute code of the EAV attribute label to return
      * @param integer $storeId       The store ID of the EAV attribute label to return
      *
      * @return array The EAV attribute label
      */
-    protected function loadAttributeLabelByAttributeCodeAndStoreId($attributeCode, $storeId)
+    public function loadAttributeLabelByEntityTypeIdAndAttributeCodeAndStoreId($entityTypeId, $attributeCode, $storeId)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeLabelByAttributeCodeAndStoreId($attributeCode, $storeId);
+        return $this->getAttributeBunchProcessor()->loadAttributeLabelByEntityTypeIdAndAttributeCodeAndStoreId($entityTypeId, $attributeCode, $storeId);
     }
 }

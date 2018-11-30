@@ -85,7 +85,7 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
     {
 
         // load the attribute ID
-        $attribute = $this->loadAttributeByAttributeCode($this->getValue(ColumnKeys::ATTRIBUTE_CODE));
+        $attribute = $this->loadAttributeByEntityTypeIdAndAttributeCode($this->getEntityTypeId(), $this->getValue(ColumnKeys::ATTRIBUTE_CODE));
         $attributeId = $attribute[MemberNames::ATTRIBUTE_ID];
 
         // load the sort order
@@ -148,15 +148,16 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
     }
 
     /**
-     * Load's and return's the EAV attribute with the passed code.
+     * Return's the EAV attribute with the passed entity type ID and code.
      *
-     * @param string $attributeCode The code of the EAV attribute to load
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
      *
      * @return array The EAV attribute
      */
-    protected function loadAttributeByAttributeCode($attributeCode)
+    public function loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeByAttributeCode($attributeCode);
+        return $this->getAttributeBunchProcessor()->loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode);
     }
 
     /**

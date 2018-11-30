@@ -33,11 +33,12 @@ interface SwatchTypeLoaderInterface
 {
 
     /**
-     * The attribute code to load the swatch type for.
+     * Returns the swatch type for the attribute with the passed code and entity type ID.
      *
-     * @param string $attributeCode The attribute code
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return the swatch type for
+     * @param string  $attributeCode The attribute code
      *
      * @return string|null The swatch type (either one of 'text' or 'visual') or NULL, if the attribute is NOT a swatch type
      */
-    public function loadSwatchType($attributeCode);
+    public function loadSwatchType($entityTypeId, $attributeCode);
 }

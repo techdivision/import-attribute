@@ -45,7 +45,7 @@ class AttributeUpdateObserver extends AttributeObserver
     {
 
         // try to load the EAV attribute with the attribute code
-        if ($attribute = $this->loadAttributeByAttributeCode($attr[MemberNames::ATTRIBUTE_CODE])) {
+        if ($attribute = $this->loadAttributeByEntityTypeIdAndAttributeCode($this->getEntityTypeId(), $attr[MemberNames::ATTRIBUTE_CODE])) {
             return $this->mergeEntity($attribute, $attr);
         }
 
@@ -54,14 +54,15 @@ class AttributeUpdateObserver extends AttributeObserver
     }
 
     /**
-     * Load's and return's the EAV attribute with the passed code.
+     * Return's the EAV attribute with the passed entity type ID and code.
      *
-     * @param string $attributeCode The code of the EAV attribute to load
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
      *
      * @return array The EAV attribute
      */
-    protected function loadAttributeByAttributeCode($attributeCode)
+    protected function loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode)
     {
-        return $this->getAttributeBunchProcessor()->loadAttributeByAttributeCode($attributeCode);
+        return $this->getAttributeBunchProcessor()->loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode);
     }
 }

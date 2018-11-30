@@ -68,6 +68,13 @@ class SqlStatementKeys extends \TechDivision\Import\Utils\SqlStatementKeys
     const ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID = 'attribute_label.by.attribute_code.and.store_id';
 
     /**
+     * The SQL statement to load the EAV attribute label by its entity type ID, attribute code and store ID.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_LABEL_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID = 'attribute_label.by.entity_type_id.and.attribute_code.and.store_id';
+
+    /**
      * The SQL statement to load the EAV attribute option by its entity type ID, attribute code, store ID and value.
      *
      * @var string

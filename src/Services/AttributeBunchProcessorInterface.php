@@ -82,6 +82,13 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function getEntityAttributeRepository();
 
     /**
+     * Returns the EAV entity type repository.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface The repository instance
+     */
+    public function getEntityTypeRepository();
+
+    /**
      * Return's the attribute action instance.
      *
      * @return \TechDivision\Import\Attribute\Actions\AttributeActionInterface The attribute action instance
@@ -136,7 +143,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @param string $attributeCode The code of the EAV attribute to load
      *
      * @return array The EAV attribute
-     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeByEntityTypeIdAndAttributeCode() instead
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeByEntityTypeIdAndAttributeCode() instead
      */
     public function loadAttributeByAttributeCode($attributeCode);
 
@@ -158,7 +165,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @param string  $value         The value of the attribute option to load
      *
      * @return array The EAV attribute option
-     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
      */
     public function loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
 
@@ -170,7 +177,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @param string  $value         The value of the attribute option to load
      *
      * @return array The EAV attribute option value
-     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
      */
     public function loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
 
@@ -193,7 +200,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @param string  $type          The type of the attribute option swatch to load
      *
      * @return array The EAV attribute option swatch
-     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\ExtendedAttributeBunchProcessorInterface::loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
+     * @deprecated Since 2.0.2, use \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValue() instead
      */
     public function loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type);
 
@@ -227,6 +234,75 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return array The EAV entity attribute
      */
     public function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+
+    /**
+     * Return's an EAV entity type with the passed entity type code.
+     *
+     * @param string $entityTypeCode The code of the entity type to return
+     *
+     * @return array The entity type with the passed entity type code
+     */
+    public function loadEntityTypeByEntityTypeCode($entityTypeCode);
+
+    /**
+     * Return's the EAV attribute with the passed entity type ID and code.
+     *
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
+     *
+     * @return array The EAV attribute
+     */
+    public function loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode);
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID, code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID and code, store ID, swatch and type.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $swatch        The swatch of the attribute option to load
+     * @param string  $type          The swatch type of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndType($entityTypeId, $attributeCode, $storeId, $swatch, $type);
+
+    /**
+     * Load's and return's the EAV attribute option value with the passed entity type ID, code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option value for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option value
+     */
+    public function loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
+
+    /**
+     * Load's and return's the EAV attribute option swatch with the passed entity type ID, code, store ID, value and type.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option swatch for
+     * @param string  $attributeCode The code of the EAV attribute option swatch to load
+     * @param integer $storeId       The store ID of the attribute option swatch to load
+     * @param string  $value         The value of the attribute option swatch to load
+     * @param string  $type          The type of the attribute option swatch to load
+     *
+     * @return array The EAV attribute option swatch
+     */
+    public function loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type);
 
     /**
      * Persist's the passed EAV attribute data and return's the ID.

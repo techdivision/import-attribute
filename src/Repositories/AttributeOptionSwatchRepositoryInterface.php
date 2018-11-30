@@ -35,6 +35,16 @@ interface AttributeOptionSwatchRepositoryInterface extends RepositoryInterface
 {
 
     /**
+     * Load's and return's the EAV attribute option swatch with the passed option ID and store ID
+     *
+     * @param string  $optionId The option ID of the attribute option swatch to load
+     * @param integer $storeId  The store ID of the attribute option swatch to load
+     *
+     * @return array The EAV attribute option swatch
+     */
+    public function findOneByOptionIdAndStoreId($optionId, $storeId);
+
+    /**
      * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
      *
      * @param string  $attributeCode The code of the EAV attribute option swatch to load
@@ -47,12 +57,15 @@ interface AttributeOptionSwatchRepositoryInterface extends RepositoryInterface
     public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type);
 
     /**
-     * Load's and return's the EAV attribute option swatch with the passed option ID and store ID
+     * Load's and return's the EAV attribute option swatch with the passed entity type ID, code, store ID, value and type.
      *
-     * @param string  $optionId The option ID of the attribute option swatch to load
-     * @param integer $storeId  The store ID of the attribute option swatch to load
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option swatch for
+     * @param string  $attributeCode The code of the EAV attribute option swatch to load
+     * @param integer $storeId       The store ID of the attribute option swatch to load
+     * @param string  $value         The value of the attribute option swatch to load
+     * @param string  $type          The type of the attribute option swatch to load
      *
      * @return array The EAV attribute option swatch
      */
-    public function findOneByOptionIdAndStoreId($optionId, $storeId);
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type);
 }

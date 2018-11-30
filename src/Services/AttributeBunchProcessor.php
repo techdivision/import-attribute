@@ -35,6 +35,7 @@ use TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface;
 use TechDivision\Import\Attribute\Actions\CatalogAttributeActionInterface;
 use TechDivision\Import\Attribute\Actions\AttributeOptionValueActionInterface;
 use TechDivision\Import\Attribute\Actions\AttributeOptionSwatchActionInterface;
+use TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface;
 
 /**
  * The attribute bunch processor implementation.
@@ -105,6 +106,13 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     protected $entityAttributeRepository;
 
     /**
+     * The EAV entity type repository instance.
+     *
+     * @var \TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface
+     */
+    protected $entityTypeRepository;
+
+    /**
      * The attribute action instance.
      *
      * @var \TechDivision\Import\Attribute\Actions\AttributeActionInterface
@@ -164,6 +172,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepositoryInterface $attributeOptionSwatchRepository   The attribute repository swatch instance
      * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepositoryInterface      $catalogAttributeRepository        The catalog attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepositoryInterface       $entityAttributeRepository         The entity attribute repository instance
+     * @param \TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface         $entityTypeRepository              The entity type repository instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeActionInterface                      $attributeAction                   The attribute action instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeLabelActionInterface                 $attributeLabelAction              The attribute label action instance
      * @param \TechDivision\Import\Attribute\Actions\AttributeOptionActionInterface                $attributeOptionAction             The attribute option action instance
@@ -181,6 +190,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         AttributeOptionSwatchRepositoryInterface $attributeOptionSwatchRepository,
         CatalogAttributeRepositoryInterface $catalogAttributeRepository,
         EntityAttributeRepositoryInterface $entityAttributeRepository,
+        EavEntityTypeRepositoryInterface $entityTypeRepository,
         AttributeActionInterface $attributeAction,
         AttributeLabelActionInterface $attributeLabelAction,
         AttributeOptionActionInterface $attributeOptionAction,
@@ -197,6 +207,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         $this->setAttributeOptionSwatchRepository($attributeOptionSwatchRepository);
         $this->setCatalogAttributeRepository($catalogAttributeRepository);
         $this->setEntityAttributeRepository($entityAttributeRepository);
+        $this->setEntityTypeRepository($entityTypeRepository);
         $this->setAttributeAction($attributeAction);
         $this->setAttributeLabelAction($attributeLabelAction);
         $this->setAttributeOptionAction($attributeOptionAction);
@@ -424,6 +435,28 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     public function getEntityAttributeRepository()
     {
         return $this->entityAttributeRepository;
+    }
+
+    /**
+     * Sets the EAV entity type repository.
+     *
+     * @param \TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface $entitTypeRepository The repository instance
+     *
+     * @return void
+     */
+    public function setEntityTypeRepository(EavEntityTypeRepositoryInterface $entitTypeRepository)
+    {
+        $this->entityTypeRepository = $entitTypeRepository;
+    }
+
+    /**
+     * Returns the EAV entity type repository.
+     *
+     * @return \TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface The repository instance
+     */
+    public function getEntityTypeRepository()
+    {
+        return $this->entityTypeRepository;
     }
 
     /**
@@ -703,6 +736,93 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     public function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
     {
         return $this->getEntityAttributeRepository()->findOneByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+    }
+
+    /**
+     * Return's an EAV entity type with the passed entity type code.
+     *
+     * @param string $entityTypeCode The code of the entity type to return
+     *
+     * @return array The entity type with the passed entity type code
+     */
+    public function loadEntityTypeByEntityTypeCode($entityTypeCode)
+    {
+        return $this->getEntityTypeRepository()->findOneByEntityTypeCode($entityTypeCode);
+    }
+
+    /**
+     * Return's the EAV attribute with the passed entity type ID and code.
+     *
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
+     *
+     * @return array The EAV attribute
+     */
+    public function loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode)
+    {
+        return $this->getAttributeRepository()->findOneByEntityIdAndAttributeCode($entityTypeId, $attributeCode);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID, code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)
+    {
+        return $this->getAttributeOptionRepository()->findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID and code, store ID, swatch and type.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $swatch        The swatch of the attribute option to load
+     * @param string  $type          The swatch type of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndType($entityTypeId, $attributeCode, $storeId, $swatch, $type)
+    {
+        return $this->getAttributeOptionRepostory()->findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndType($entityTypeId, $attributeCode, $storeId, $swatch, $type);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option value with the passed code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load th option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option value
+     */
+    public function loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)
+    {
+        return $this->getEavAttributeOptionValueRepository()->findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load th option for
+     * @param string  $attributeCode The code of the EAV attribute option swatch to load
+     * @param integer $storeId       The store ID of the attribute option swatch to load
+     * @param string  $value         The value of the attribute option swatch to load
+     * @param string  $type          The type of the attribute option swatch to load
+     *
+     * @return array The EAV attribute option swatch
+     */
+    public function loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type)
+    {
+        return $this->getAttributeOptionSwatchRepository()->findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type);
     }
 
     /**

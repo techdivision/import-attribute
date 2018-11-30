@@ -44,6 +44,20 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
     protected $attributeOptionByAttributeCodeAndStoreIdAndValueStmt;
 
     /**
+     * The prepared statement to load an existing EAV attribute option by its entity type ID, attribute code, store ID and value.
+     *
+     * @var \PDOStatement
+     */
+    protected $attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValueStmt;
+
+    /**
+     * The prepared statement to load an existing EAV attribute option by its entity type ID, attribute code, store ID and swatch.
+     *
+     * @var \PDOStatement
+     */
+    protected $attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt;
+
+    /**
      * Initializes the repository's prepared statements.
      *
      * @return void
@@ -54,6 +68,14 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
         // initialize the prepared statements
         $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
+
+        // initialize the prepared statements
+        $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValueStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
+
+        // initialize the prepared statements
+        $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE));
     }
 
     /**
@@ -78,5 +100,59 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
         // load and return the EAV attribute option with the passed parameters
         $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt->execute($params);
         return $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID and code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value)
+    {
+
+        // the parameters of the EAV attribute option to load
+        $params = array(
+            MemberNames::ENTITY_TYPE_ID => $entityTypeId,
+            MemberNames::ATTRIBUTE_CODE => $attributeCode,
+            MemberNames::STORE_ID       => $storeId,
+            MemberNames::VALUE          => $value
+        );
+
+        // load and return the EAV attribute option with the passed parameters
+        $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValueStmt->execute($params);
+        return $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValueStmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID and code, store ID, swatch and type.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $swatch        The swatch of the attribute option to load
+     * @param string  $type          The swatch type of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndType($entityTypeId, $attributeCode, $storeId, $swatch, $type)
+    {
+
+        // the parameters of the EAV attribute option to load
+        $params = array(
+            MemberNames::ENTITY_TYPE_ID => $entityTypeId,
+            MemberNames::ATTRIBUTE_CODE => $attributeCode,
+            MemberNames::STORE_ID       => $storeId,
+            MemberNames::VALUE          => $swatch,
+            MemberNames::TYPE           => $type
+        );
+
+        // load and return the EAV attribute option with the passed parameters
+        $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt->execute($params);
+        return $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

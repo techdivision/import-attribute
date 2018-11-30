@@ -44,4 +44,29 @@ interface AttributeOptionRepositoryInterface extends RepositoryInterface
      * @return array The EAV attribute option
      */
     public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID and code, store ID and value.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $value         The value of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValue($entityTypeId, $attributeCode, $storeId, $value);
+
+    /**
+     * Load's and return's the EAV attribute option with the passed entity type ID and code, store ID and swatch.
+     *
+     * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option for
+     * @param string  $attributeCode The code of the EAV attribute option to load
+     * @param integer $storeId       The store ID of the attribute option to load
+     * @param string  $swatch        The swatch of the attribute option to load
+     * @param string  $type          The swatch type of the attribute option to load
+     *
+     * @return array The EAV attribute option
+     */
+    public function findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndType($entityTypeId, $attributeCode, $storeId, $swatch, $type);
 }

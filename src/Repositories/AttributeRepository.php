@@ -44,6 +44,13 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
     protected $attributeByAttributeCodeStmt;
 
     /**
+     * The prepared statement to load an existing EAV attribute by its entity type ID and attribute code.
+     *
+     * @var \PDOStatement
+     */
+    protected $attributeByEntityTypeIdAndAttributeCodeStmt;
+
+    /**
      * Initializes the repository's prepared statements.
      *
      * @return void
@@ -54,6 +61,10 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
         // initialize the prepared statements
         $this->attributeByAttributeCodeStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_BY_ATTRIBUTE_CODE));
+
+        // initialize the prepared statements
+        $this->attributeByEntityTypeAndAttributeCodeStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE));
     }
 
     /**
@@ -68,5 +79,27 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
         // load and return the EAV attribute with the passed code
         $this->attributeByAttributeCodeStmt->execute(array(MemberNames::ATTRIBUTE_CODE => $attributeCode));
         return $this->attributeByAttributeCodeStmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Return's the EAV attribute with the passed entity type ID and code.
+     *
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
+     *
+     * @return array The EAV attribute
+     */
+    public function findOneByEntityIdAndAttributeCode($entityTypeId, $attributeCode)
+    {
+
+        // initialize the params
+        $params = array(
+            MemberNames::ENTITY_TYPE_ID => $entityTypeId,
+            MemberNames::ATTRIBUTE_CODE => $attributeCode
+        );
+
+        // load and return the EAV attribute with the passed params
+        $this->attributeByEntityTypeAndAttributeCodeStmt->execute($params);
+        return $this->attributeByEntityTypeAndAttributeCodeStmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

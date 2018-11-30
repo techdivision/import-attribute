@@ -1,3 +1,13 @@
+# Version 4.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring callbacks integration of version 3.1.0
+
 # Version 3.1.0
 
 ## Bugfixes

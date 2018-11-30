@@ -42,4 +42,14 @@ interface AttributeRepositoryInterface extends RepositoryInterface
      * @return array The EAV attribute
      */
     public function findOneByAttributeCode($attributeCode);
+
+    /**
+     * Return's the EAV attribute with the passed entity type ID and code.
+     *
+     * @param integer $entityTypeId  The entity type ID of the EAV attribute to return
+     * @param string  $attributeCode The code of the EAV attribute to return
+     *
+     * @return array The EAV attribute
+     */
+    public function findOneByEntityIdAndAttributeCode($entityTypeId, $attributeCode);
 }

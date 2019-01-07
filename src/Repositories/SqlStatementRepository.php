@@ -156,17 +156,6 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND attribute_id = :attribute_id
                 AND attribute_set_id = :attribute_set_id
                 AND attribute_group_id = :attribute_group_id',
-        SqlStatementKeys::EAV_ATTRIBUTE_OPTION_VALUE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE =>
-            'SELECT t3.*
-               FROM eav_attribute t1,
-                    eav_attribute_option t2,
-                    eav_attribute_option_value t3
-              WHERE t1.attribute_code = :attribute_code
-                AND t1.entity_type_id = :entity_type_id
-                AND t3.store_id = :store_id
-                AND t3.value = :value
-                AND t2.attribute_id = t1.attribute_id
-                AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE =>
             'SELECT t3.*
                FROM eav_attribute t1,
@@ -179,10 +168,11 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t3.type = :type
                 AND t2.attribute_id = t1.attribute_id
                 AND t2.option_id = t3.option_id',
-        SqlStatementKeys::EAV_ENTITY_TYPE_BY_ENTITY_TYPE_CODE =>
+        SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_ID_ORDER_BY_SORT_ORDER_DESC =>
             'SELECT *
-               FROM eav_entity_type
-              WHERE entity_type_code = :entity_type_code',
+               FROM eav_attribute_option
+              WHERE attribute_id = :attribute_id
+           ORDER BY sort_order DESC',
         SqlStatementKeys::CREATE_ATTRIBUTE =>
             'INSERT
                INTO eav_attribute

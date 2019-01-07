@@ -99,7 +99,6 @@ class AttributeObserver extends AbstractAttributeImportObserver
         $sourceModel = $this->getValue(ColumnKeys::SOURCE_MODEL);
         $isRequired = $this->getValue(ColumnKeys::IS_REQUIRED, 0);
         $isUserDefined = $this->getValue(ColumnKeys::IS_USER_DEFINED, 1);
-        $defaultValue = $this->getValue(ColumnKeys::DEFAULT_VALUE);
         $isUnique = $this->getValue(ColumnKeys::IS_UNIQUE, 0);
         $note = $this->getValue(ColumnKeys::NOTE);
 
@@ -119,7 +118,7 @@ class AttributeObserver extends AbstractAttributeImportObserver
                 MemberNames::SOURCE_MODEL    => $sourceModel,
                 MemberNames::IS_REQUIRED     => $isRequired,
                 MemberNames::IS_USER_DEFINED => $isUserDefined,
-                MemberNames::DEFAULT_VALUE   => $defaultValue,
+                MemberNames::DEFAULT_VALUE   => null,
                 MemberNames::IS_UNIQUE       => $isUnique,
                 MemberNames::NOTE            => $note
             )

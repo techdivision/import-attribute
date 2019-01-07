@@ -66,11 +66,41 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
             return;
         }
 
-        // prepare the EAV entity attribue values
-        $entityAttribute = $this->initializeAttribute($this->prepareAttributes());
+        // load the last attribute ID
+        $this->attributeId = $this->getLastAttributeId();
 
-        // insert the EAV entity attribute
-        $this->persistEntityAttribute($entityAttribute);
+        // map the entity type code to the ID
+        $entityType = $this->getEntityType($this->entityTypeCode = $this->getValue(ColumnKeys::ENTITY_TYPE_CODE));
+        $this->entityTypeId = $entityType[MemberNames::ENTITY_TYPE_ID];
+
+        // load the sort order for the attribute
+        $this->sortOrder = $this->getValue(ColumnKeys::SORT_ORDER, 0);
+
+        // explode the attribute set + group names
+        $attributeSetNames = $this->getValue(ColumnKeys::ATTRIBUTE_SET_NAME, array(), array($this, 'explode'));
+        $attributeGroupNames = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME, array(), array($this, 'explode'));
+
+        // make sure we've the same number of attribute sets/gropus
+        if (sizeof($attributeSetNames) !== sizeof($attributeGroupNames)) {
+            throw new \Exception(sprintf('Size of attribute names doesn\'t match size of attribute groups'));
+        }
+
+        // iterate over the attribute names and create the attribute entities therefore
+        foreach ($attributeSetNames as $key => $attributeSetName) {
+            // load the attribute set ID
+            $attributeSet = $this->getAttributeSetByAttributeSetNameAndEntityTypeCode($attributeSetName, $this->entityTypeCode);
+
+            // initialize the values to create the attribute entity
+            $this->attributeSetId = $attributeSet[MemberNames::ATTRIBUTE_SET_ID];
+            $this->attributeSetName = $attributeSetName;
+            $this->attributeGroupName = $attributeGroupNames[$key];
+
+            // prepare the EAV entity attribue values
+            $entityAttribute = $this->initializeAttribute($this->prepareAttributes());
+
+            // insert the EAV entity attribute
+            $this->persistEntityAttribute($entityAttribute);
+        }
     }
 
     /**
@@ -81,32 +111,24 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
     protected function prepareAttributes()
     {
 
-        // load the last attribute ID
-        $attributeId = $this->getLastAttributeId();
-
-        // map the entity type code to the ID
-        $entityType = $this->getEntityType($entityTypeCode = $this->getValue(ColumnKeys::ENTITY_TYPE_CODE));
-        $entityTypeId = $entityType[MemberNames::ENTITY_TYPE_ID];
-
-        // load the attribute set ID
-        $attributeSet = $this->getAttributeSetByAttributeSetNameAndEntityTypeCode($attributeSetName = $this->getValue(ColumnKeys::ATTRIBUTE_SET_NAME), $entityTypeCode);
-        $attributeSetId = $attributeSet[MemberNames::ATTRIBUTE_SET_ID];
+        // load the attribute group ID
+        $attributeGroup = $this->getAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName(
+            $this->entityTypeCode,
+            $this->attributeSetName,
+            $this->attributeGroupName
+        );
 
         // load the attribute group ID
-        $attributeGroup = $this->getAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME));
         $attributeGroupId = $attributeGroup[MemberNames::ATTRIBUTE_GROUP_ID];
-
-        // load the sort order for the attribute
-        $sortOrder = $this->getValue(ColumnKeys::SORT_ORDER, 0);
 
         // return the prepared product
         return $this->initializeEntity(
             array(
-                MemberNames::ATTRIBUTE_ID       => $attributeId,
-                MemberNames::ENTITY_TYPE_ID     => $entityTypeId,
-                MemberNames::ATTRIBUTE_SET_ID   => $attributeSetId,
-                MemberNames::ATTRIBUTE_GROUP_ID => $attributeGroupId,
-                MemberNames::SORT_ORDER         => $sortOrder
+                MemberNames::ATTRIBUTE_ID       => $this->attributeId,
+                MemberNames::ENTITY_TYPE_ID     => $this->entityTypeId,
+                MemberNames::ATTRIBUTE_SET_ID   => $this->attributeSetId,
+                MemberNames::SORT_ORDER         => $this->sortOrder,
+                MemberNames::ATTRIBUTE_GROUP_ID => $attributeGroupId
             )
         );
     }

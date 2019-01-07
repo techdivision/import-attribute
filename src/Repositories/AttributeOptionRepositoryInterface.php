@@ -71,4 +71,13 @@ interface AttributeOptionRepositoryInterface extends RepositoryInterface
      * @return array The EAV attribute option
      */
     public function findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndType($entityTypeId, $attributeCode, $storeId, $swatch, $type);
+
+    /**
+     * Returns the EAV attribute option of attribute with the passed ID with the highest sort order.
+     *
+     * @param integer $attributeId The ID of the attribute to return the EAV option with the highest sort order for
+     *
+     * @return array|null The EAV attribute option with the highest sort order
+     */
+    public function findOneByAttributeIdAndHighestSortOrder($attributeId);
 }

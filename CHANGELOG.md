@@ -1,3 +1,14 @@
+# Version 5.0.0
+
+## Bugfixes
+
+* Fixed invalid assignment of attributes to multiple attribute sets/groups
+
+## Features
+
+* Add missing sort order when dynamically creating attribute options
+* Switch to latest techdivision/import 6.0.* version as dependency
+
 # Version 4.0.0
 
 ## Bugfixes

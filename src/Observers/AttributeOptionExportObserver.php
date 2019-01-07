@@ -80,6 +80,7 @@ class AttributeOptionExportObserver extends AbstractAttributeExportObserver
                 array(
                     ColumnKeys::ATTRIBUTE_CODE  => $this->getValue(ColumnKeys::ATTRIBUTE_CODE),
                     ColumnKeys::VALUE           => $attributeOptionValue,
+                    ColumnKeys::DEFAULT_VALUE   => $this->getValue(ColumnKeys::DEFAULT_VALUE),
                     ColumnKeys::SORT_ORDER      => isset($attributeOptionSortOrder[$key]) ? $attributeOptionSortOrder[$key] : 0,
                     ColumnKeys::SWATCH_TYPE     => isset($optionSwatch[ColumnKeys::TYPE]) ? $optionSwatch[ColumnKeys::TYPE] : null,
                     ColumnKeys::SWATCH_VALUE    => isset($optionSwatch[ColumnKeys::VALUE]) ? $optionSwatch[ColumnKeys::VALUE] : null
@@ -87,6 +88,7 @@ class AttributeOptionExportObserver extends AbstractAttributeExportObserver
                 array(
                     ColumnKeys::ATTRIBUTE_CODE  => ColumnKeys::ATTRIBUTE_CODE,
                     ColumnKeys::VALUE           => ColumnKeys::VALUE,
+                    ColumnKeys::DEFAULT_VALUE   => ColumnKeys::DEFAULT_VALUE,
                     ColumnKeys::SORT_ORDER      => ColumnKeys::ATTRIBUTE_OPTION_SORT_ORDER,
                     ColumnKeys::SWATCH_TYPE     => ColumnKeys::ATTRIBUTE_OPTION_SWATCH,
                     ColumnKeys::SWATCH_VALUE    => ColumnKeys::ATTRIBUTE_OPTION_SWATCH

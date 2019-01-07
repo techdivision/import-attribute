@@ -58,6 +58,13 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
     protected $attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt;
 
     /**
+     * The prepared statement to load the EAV attribute option with the given attribute ID and the highest sort order.
+     *
+     * @var \PDOStatement
+     */
+    protected $attributeOptionByAttributeIdOrderBySortOrderDescStmt;
+
+    /**
      * Initializes the repository's prepared statements.
      *
      * @return void
@@ -68,14 +75,12 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
         // initialize the prepared statements
         $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
-
-        // initialize the prepared statements
         $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValueStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
-
-        // initialize the prepared statements
         $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE));
+        $this->attributeOptionByAttributeIdOrderBySortOrderDescStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_ID_ORDER_BY_SORT_ORDER_DESC));
     }
 
     /**
@@ -156,5 +161,20 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
         // load and return the EAV attribute option with the passed parameters
         $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt->execute($params);
         return $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Returns the EAV attribute option of attribute with the passed ID with the highest sort order.
+     *
+     * @param integer $attributeId The ID of the attribute to return the EAV option with the highest sort order for
+     *
+     * @return array|null The EAV attribute option with the highest sort order
+     */
+    public function findOneByAttributeIdAndHighestSortOrder($attributeId)
+    {
+
+        // load and return the EAV attribute option with the passed parameters
+        $this->attributeOptionByAttributeIdOrderBySortOrderDescStmt->execute(array(MemberNames::ATTRIBUTE_ID => $attributeId));
+        return $this->attributeOptionByAttributeIdOrderBySortOrderDescStmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

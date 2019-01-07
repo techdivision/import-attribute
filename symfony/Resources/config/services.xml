@@ -18,10 +18,6 @@
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
-        <service id="import_attribute.repository.attribute.option.value" class="TechDivision\Import\Attribute\Repositories\EavAttributeOptionValueRepository">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
         <service id="import_attribute.repository.attribute.option.swatch" class="TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
@@ -31,10 +27,6 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
         <service id="import_attribute.repository.entity.attribute" class="TechDivision\Import\Attribute\Repositories\EntityAttributeRepository">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.repository.entity.type" class="TechDivision\Import\Attribute\Repositories\EavEntityTypeRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
@@ -215,17 +207,20 @@
         <service id="import_attribute.observer.entity.attribute.update" class="TechDivision\Import\Attribute\Observers\EntityAttributeUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
+        <service id="import_attribute.observer.attribute.option.default" class="TechDivision\Import\Attribute\Observers\AttributeDefaultOptionObserver">
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
 
         <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\AttributeBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.attribute"/>
             <argument type="service" id="import_attribute.repository.attribute.label"/>
             <argument type="service" id="import_attribute.repository.attribute.option"/>
-            <argument type="service" id="import_attribute.repository.attribute.option.value"/>
+            <argument type="service" id="import.repository.eav.attribute.option.value"/>
             <argument type="service" id="import_attribute.repository.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.repository.catalog.attribute"/>
             <argument type="service" id="import_attribute.repository.entity.attribute"/>
-            <argument type="service" id="import_attribute.repository.entity.type"/>
+            <argument type="service" id="import.repository.eav.entity.type"/>
             <argument type="service" id="import_attribute.action.attribute"/>
             <argument type="service" id="import_attribute.action.attribute.label"/>
             <argument type="service" id="import_attribute.action.attribute.option"/>

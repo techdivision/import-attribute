@@ -56,7 +56,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     /**
      * Return's the repository to access EAV attribute option values.
      *
-     * @return \TechDivision\Import\Attribute\Repositories\EavAttributeOptionValueRepositoryInterface The repository instance
+     * @return \TechDivision\Import\Repositories\EavAttributeOptionValueRepositoryInterface The repository instance
      */
     public function getEavAttributeOptionValueRepository();
 
@@ -84,7 +84,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     /**
      * Returns the EAV entity type repository.
      *
-     * @return \TechDivision\Import\Attribute\Repositories\EavEntityTypeRepositoryInterface The repository instance
+     * @return \TechDivision\Import\Repositories\EavEntityTypeRepositoryInterface The repository instance
      */
     public function getEntityTypeRepository();
 
@@ -320,6 +320,15 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      * @return array The EAV attribute option swatch
      */
     public function loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type);
+
+    /**
+     * Returns the EAV attribute option of attribute with the passed ID with the highest sort order.
+     *
+     * @param integer $attributeId The ID of the attribute to return the EAV option with the highest sort order for
+     *
+     * @return array|null The EAV attribute option with the highest sort order
+     */
+    public function loadAttributeOptionByAttributeIdAndHighestSortOrder($attributeId);
 
     /**
      * Persist's the passed EAV attribute data and return's the ID.

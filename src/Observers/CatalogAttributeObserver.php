@@ -193,7 +193,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     {
 
         // serialize the additional data value if available
-        if (isset($attr[MemberNames::ADDITIONAL_DATA]) && is_array($attr[MemberNames::ADDITIONAL_DATA])) {
+        if (isset($attr[MemberNames::ADDITIONAL_DATA]) && $attr[MemberNames::ADDITIONAL_DATA] !== null) {
             $attr[MemberNames::ADDITIONAL_DATA] = json_encode($attr[MemberNames::ADDITIONAL_DATA]);
         }
 

@@ -96,6 +96,13 @@ class SqlStatementKeys extends \TechDivision\Import\Utils\SqlStatementKeys
     const ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE = 'attribute_option.by.attribute_code.and.store_id.and.value';
 
     /**
+     * The SQL statement to load the EAV attribute option with the attribute with the given ID and the highest sort order.
+     *
+     * @var string
+     */
+    const ATTRIBUTE_OPTION_BY_ATTRIBUTE_ID_ORDER_BY_SORT_ORDER_DESC = 'attribute_option.by.attribute_id.order_by.sort_order.desc';
+
+    /**
      * The SQL statement to load the EAV attribute option swtach by its attribute code, store ID, value and type.
      *
      * @var string
@@ -129,20 +136,6 @@ class SqlStatementKeys extends \TechDivision\Import\Utils\SqlStatementKeys
      * @var string
      */
     const ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID = 'entity_attribute.by.attribute_id.and.attribute_set_id.and.attribute_group_id';
-
-    /**
-     * The SQL statement to load the EAV attribute option value by its entity type ID, attribute code, store ID and value.
-     *
-     * @var string
-     */
-    const EAV_ATTRIBUTE_OPTION_VALUE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE = 'eav_attribute_option_value.by.entity_type_id.and.attribute_code.and.store_id.and.value';
-
-    /**
-     * The SQL statement to load the EAV attribute option value by its entity type ID, attribute code, store ID and value.
-     *
-     * @var string
-     */
-    const EAV_ENTITY_TYPE_BY_ENTITY_TYPE_CODE = 'eav_entity_type.by.entity_type_code';
 
     /**
      * The SQL statement to create a new EAV attribute.

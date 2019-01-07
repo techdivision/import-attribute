@@ -299,11 +299,19 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
         // load the attribute ID
         $attribute = $this->loadAttributeByEntityTypeIdAndAttributeCode($entityTypeId, $attributeCode);
 
+        // initialize the sort order
+        $sortOrder = 0;
+
+        // try to load the option with the highest sort order and raise it by one if available
+        if ($attributeOption = $this->loadAttributeOptionByAttributeIdAndHighestSortOrder($attributeId = $attribute[MemberNames::ATTRIBUTE_ID])) {
+            $sortOrder = (integer) $attributeOption[MemberNames::SORT_ORDER] + 1;
+        }
+
         // return the prepared attribute option
         return $this->initializeEntity(
             array(
-                MemberNames::ATTRIBUTE_ID  => $attribute[MemberNames::ATTRIBUTE_ID],
-                MemberNames::SORT_ORDER    => 0
+                MemberNames::ATTRIBUTE_ID => $attributeId,
+                MemberNames::SORT_ORDER   => $sortOrder
             )
         );
     }
@@ -323,9 +331,9 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
         // return the prepared option value
         return $this->initializeEntity(
             array(
-                MemberNames::OPTION_ID  => $optionId,
-                MemberNames::STORE_ID   => $storeId,
-                MemberNames::VALUE      => $value
+                MemberNames::OPTION_ID => $optionId,
+                MemberNames::STORE_ID  => $storeId,
+                MemberNames::VALUE     => $value
             )
         );
     }
@@ -346,10 +354,10 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
         // return the prepared option swatch
         return $this->initializeEntity(
             array(
-                MemberNames::OPTION_ID  => $optionId,
-                MemberNames::STORE_ID   => $storeId,
-                MemberNames::VALUE      => $value,
-                MemberNames::TYPE       => $type
+                MemberNames::OPTION_ID => $optionId,
+                MemberNames::STORE_ID  => $storeId,
+                MemberNames::VALUE     => $value,
+                MemberNames::TYPE      => $type
             )
         );
     }
@@ -463,6 +471,18 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     protected function loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type)
     {
         return $this->getAttributeBunchProcessor()->loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType($entityTypeId, $attributeCode, $storeId, $value, $type);
+    }
+
+    /**
+     * Returns the EAV attribute option of attribute with the passed ID with the highest sort order.
+     *
+     * @param integer $attributeId The ID of the attribute to return the EAV option with the highest sort order for
+     *
+     * @return array|null The EAV attribute option with the highest sort order
+     */
+    protected function loadAttributeOptionByAttributeIdAndHighestSortOrder($attributeId)
+    {
+        return $this->getAttributeBunchProcessor()->loadAttributeOptionByAttributeIdAndHighestSortOrder($attributeId);
     }
 
     /**

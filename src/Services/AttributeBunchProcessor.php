@@ -744,6 +744,19 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
+     * Return's the EAV entity attribute with the passed attribute and attribute set ID.
+     *
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)
+    {
+        return $this->getEntityAttributeRepository()->findOneByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
+    }
+
+    /**
      * Return's the EAV entity attribute with the passed entity type, attribute, attribute set and attribute group ID.
      *
      * @param integer $entityTypeId     The ID of the EAV entity attribute's entity type to return
@@ -753,9 +766,9 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      *
      * @return array The EAV entity attribute
      */
-    public function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
+    public function loadEntityAttributeByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
     {
-        return $this->getEntityAttributeRepository()->findOneByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+        return $this->getEntityAttributeRepository()->findOneByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
     }
 
     /**

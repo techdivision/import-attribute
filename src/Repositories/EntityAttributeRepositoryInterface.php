@@ -35,6 +35,16 @@ interface EntityAttributeRepositoryInterface extends RepositoryInterface
 {
 
     /**
+     * Return's the EAV entity attribute with the passed attribute + attribute set ID.
+     *
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function findOneByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
+
+    /**
      * Return's the EAV entity attribute with the passed entity type, attribute, attribute set and attribute group ID.
      *
      * @param integer $entityTypeId     The ID of the EAV entity attribute's entity type to return
@@ -44,5 +54,5 @@ interface EntityAttributeRepositoryInterface extends RepositoryInterface
      *
      * @return array The EAV entity attribute
      */
-    public function findOneByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+    public function findOneByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
 }

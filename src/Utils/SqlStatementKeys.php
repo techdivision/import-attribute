@@ -131,11 +131,18 @@ class SqlStatementKeys extends \TechDivision\Import\Utils\SqlStatementKeys
     const CATALOG_ATTRIBUTE_BY_ATTRIBUTE_CODE_AND_ENTITY_TYPE_ID = 'catalog_attribute.by.attribute_code.and.entity_type_id';
 
     /**
-     * The SQL statement to load the EAV entity attribute by its attribute ID, attribute set ID and attribute group ID.
+     * The SQL statement to load the EAV entity attribute by its attribute and attribute set ID.
      *
      * @var string
      */
-    const ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID = 'entity_attribute.by.attribute_id.and.attribute_set_id.and.attribute_group_id';
+    const ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID = 'entity_attribute.by.attribute_id.and.attribute_set_id';
+
+    /**
+     * The SQL statement to load the EAV entity attribute by its entity type, attribute, attribute set and attribute group ID.
+     *
+     * @var string
+     */
+    const ENTITY_ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID = 'entity_attribute.by.entity_type_id.and.attribute_id.and.attribute_set_id.and.attribute_group_id';
 
     /**
      * The SQL statement to create a new EAV attribute.

@@ -1,3 +1,13 @@
+# Version 6.0.0
+
+## Bugfixes
+
+* Fixed invalid of update functionality when assigning attribute groups
+
+## Features
+
+* None
+
 # Version 5.0.0
 
 ## Bugfixes

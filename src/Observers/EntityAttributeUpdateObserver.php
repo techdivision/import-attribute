@@ -44,14 +44,12 @@ class EntityAttributeUpdateObserver extends EntityAttributeObserver
     protected function initializeAttribute(array $attr)
     {
 
-        // load the attributes
-        $entityTypeId = $attr[MemberNames::ENTITY_TYPE_ID];
+        // load the attribute + attribute set ID
         $attributeId = $attr[MemberNames::ATTRIBUTE_ID];
         $attributeSetId = $attr[MemberNames::ATTRIBUTE_SET_ID];
-        $attributeGroupId = $attr[MemberNames::ATTRIBUTE_GROUP_ID];
 
         // try to load the entity attribute with the IDs
-        if ($entityAttribute = $this->loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)) {
+        if ($entityAttribute = $this->loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)) {
             return $this->mergeEntity($entityAttribute, $attr);
         }
 
@@ -60,17 +58,15 @@ class EntityAttributeUpdateObserver extends EntityAttributeObserver
     }
 
     /**
-     * Return's the EAV entity attribute with the passed entity type, attribute, attribute set and attribute group ID.
+     * Return's the EAV entity attribute with the passed attribute and attribute set ID.
      *
-     * @param integer $entityTypeId     The ID of the EAV entity attribute's entity type to return
-     * @param integer $attributeId      The ID of the EAV entity attribute's attribute to return
-     * @param integer $attributeSetId   The ID of the EAV entity attribute's attribute set to return
-     * @param integer $attributeGroupId The ID of the EAV entity attribute's attribute group to return
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
      *
      * @return array The EAV entity attribute
      */
-    protected function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
+    public function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)
     {
-        return $this->getAttributeBunchProcessor()->loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+        return $this->getAttributeBunchProcessor()->loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
     }
 }

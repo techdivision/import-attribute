@@ -241,6 +241,16 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     public function loadCatalogAttribute($attributeId);
 
     /**
+     * Return's the EAV entity attribute with the passed attribute and attribute set ID.
+     *
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
+
+    /**
      * Return's the EAV entity attribute with the passed entity type, attribute, attribute set and attribute group ID.
      *
      * @param integer $entityTypeId     The ID of the EAV entity attribute's entity type to return
@@ -250,7 +260,7 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
      *
      * @return array The EAV entity attribute
      */
-    public function loadEntityAttributeByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
+    public function loadEntityAttributeByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId);
 
     /**
      * Return's an EAV entity type with the passed entity type code.

@@ -37,11 +37,18 @@ class EntityAttributeRepository extends AbstractRepository implements EntityAttr
 {
 
     /**
-     * The prepared statement to load an existing EAV entity attribute by its attribute, attribut set and attribute group ID.
+     * The prepared statement to load an existing EAV entity attribute by its attribut and attribut set ID.
      *
      * @var \PDOStatement
      */
-    protected $entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt;
+    protected $entityAttributeByAttributeIdAndAttributeSetIdStmt;
+
+    /**
+     * The prepared statement to load an existing EAV entity attribute by its entity type, attribute, attribut set and attribute group ID.
+     *
+     * @var \PDOStatement
+     */
+    protected $entityAttributeByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt;
 
     /**
      * Initializes the repository's prepared statements.
@@ -52,8 +59,32 @@ class EntityAttributeRepository extends AbstractRepository implements EntityAttr
     {
 
         // initialize the prepared statements
-        $this->entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt =
-            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID));
+        $this->entityAttributeByAttributeIdAndAttributeSetIdStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID));
+        $this->entityAttributeByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt =
+            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ENTITY_ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID));
+    }
+
+    /**
+     * Return's the EAV entity attribute with the passed attribute + attribute set ID.
+     *
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function findOneByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)
+    {
+
+        // initialize the params
+        $params = array(
+            MemberNames::ATTRIBUTE_ID       => $attributeId,
+            MemberNames::ATTRIBUTE_SET_ID   => $attributeSetId
+        );
+
+        // load and return the EAV entity attribute with the passed params
+        $this->entityAttributeByAttributeIdAndAttributeSetIdStmt->execute($params);
+        return $this->entityAttributeByAttributeIdAndAttributeSetIdStmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -66,7 +97,7 @@ class EntityAttributeRepository extends AbstractRepository implements EntityAttr
      *
      * @return array The EAV entity attribute
      */
-    public function findOneByEntityTypeAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
+    public function findOneByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupId($entityTypeId, $attributeId, $attributeSetId, $attributeGroupId)
     {
 
         // initialize the params
@@ -78,7 +109,7 @@ class EntityAttributeRepository extends AbstractRepository implements EntityAttr
         );
 
         // load and return the EAV entity attribute with the passed params
-        $this->entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt->execute($params);
-        return $this->entityAttributeByAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt->fetch(\PDO::FETCH_ASSOC);
+        $this->entityAttributeByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt->execute($params);
+        return $this->entityAttributeByEntityTypeIdAndAttributeIdAndAttributeSetIdAndAttributeGroupIdStmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

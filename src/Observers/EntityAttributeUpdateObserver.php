@@ -65,7 +65,7 @@ class EntityAttributeUpdateObserver extends EntityAttributeObserver
      *
      * @return array The EAV entity attribute
      */
-    public function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)
+    protected function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)
     {
         return $this->getAttributeBunchProcessor()->loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
     }

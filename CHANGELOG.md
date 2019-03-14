@@ -1,3 +1,13 @@
+# Version 7.0.0
+
+## Bugfixes
+
+* Change method visibility EntityAttributeUpdateObserver::loadEntityAttributeByAttributeIdAndAttributeSetId() from public to protected
+
+## Features
+
+* None
+
 # Version 6.0.0
 
 ## Bugfixes

@@ -58,9 +58,9 @@ class AttributeOptionExportObserver extends AbstractAttributeExportObserver
         $artefacts = array();
 
         // load the attribute option values/positions
-        $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), array($this, 'explode'));
-        $attributeOptionSortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SORT_ORDER, array(), array($this, 'explode'));
-        $attributeOptionSwatch = $this->explode($this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SWATCH), $this->getMultipleValueDelimiter());
+        $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), function($value) { return $this->explode($value, $this->getMultipleFieldDelimiter()); });
+        $attributeOptionSortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SORT_ORDER, array(), function($value) { return $this->explode($value, $this->getMultipleFieldDelimiter()); });
+        $attributeOptionSwatch = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SWATCH, array(), function($value) { return $this->explode($value, $this->getMultipleValueDelimiter()); });
 
         // iterate over the attribute option values and export them
         foreach ($attributeOptionValues as $key => $attributeOptionValue) {

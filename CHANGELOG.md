@@ -1,3 +1,13 @@
+# Version 7.0.1
+
+## Bugfixes
+
+* Fixed #41
+
+## Features
+
+* None
+
 # Version 7.0.0
 
 ## Bugfixes

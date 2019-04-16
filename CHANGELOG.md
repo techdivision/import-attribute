@@ -1,3 +1,13 @@
+# Version 9.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Make Actions and ActionInterfaces deprecated, replace DI configuration with GenericAction + GenericIdentifierAction
+
 # Version 8.0.0
 
 ## Bugfixes

@@ -12,7 +12,7 @@
  * PHP version 5
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
- * @copyright 2016 TechDivision GmbH <info@techdivision.com>
+ * @copyright 2019 TechDivision GmbH <info@techdivision.com>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
@@ -24,7 +24,7 @@ namespace TechDivision\Import\Attribute\Services;
  * Interface for a attribute bunch processor.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
- * @copyright 2016 TechDivision GmbH <info@techdivision.com>
+ * @copyright 2019 TechDivision GmbH <info@techdivision.com>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
@@ -91,21 +91,21 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     /**
      * Return's the attribute action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\AttributeActionInterface The attribute action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute action instance
      */
     public function getAttributeAction();
 
     /**
      * Return's the attribute label action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\AttributeActionInterface The attribute label action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute label action instance
      */
     public function getAttributeLabelAction();
 
     /**
      * Return's the attribute option action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionActionInterface The attribute option action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute option action instance
      */
     public function getAttributeOptionAction();
 
@@ -119,21 +119,21 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     /**
      * Return's the attribute option swatch action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\AttributeOptionSwatchActionInterface The attribute option swatch action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute option swatch action instance
      */
     public function getAttributeOptionSwatchAction();
 
     /**
      * Return's the catalog attribute action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\CatalogAttributeActionInterface The catalog attribute action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The catalog attribute action instance
      */
     public function getCatalogAttributeAction();
 
     /**
      * Return's the entity attribute action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface The entity attribute action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
      */
     public function getEntityAttributeAction();
 

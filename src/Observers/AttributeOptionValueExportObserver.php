@@ -61,7 +61,9 @@ class AttributeOptionValueExportObserver extends AbstractAttributeExportObserver
         $artefacts = array();
 
         // load the attribute option values for the custom store views
-        $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), function($value) { return $this->explode($value, $this->getMultipleFieldDelimiter()); });
+        $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), function ($value) {
+            return $this->explode($value, $this->getMultipleFieldDelimiter());
+        });
 
         // iterate over the attribute option values and export them
         foreach ($attributeOptionValues as $key => $attributeOptionValue) {

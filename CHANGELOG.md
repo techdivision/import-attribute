@@ -1,3 +1,14 @@
+# Version 8.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add composite observers to minimize configuration complexity
+* Switch to latest techdivision/import 7.0.* version as dependency
+
 # Version 7.0.1
 
 ## Bugfixes

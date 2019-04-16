@@ -211,6 +211,171 @@
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
 
+        <!--
+         | The DI configuration for the composite observers of the attribute replace operation.
+         |-->
+        <service id="import_attribute.observer.composite.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.pre.load.attribute.id" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.clear.attribute" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.label" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.entity.attribute" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.catalog.attribute" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.export" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.value.export" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch.export" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.clean.up" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute option replace operation.
+         |-->
+        <service id="import_attribute.observer.composite.option.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.value" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.default" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute option value replace operation.
+         |-->
+        <service id="import_attribute.observer.composite.option.value.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.pre.load.attribute.option.id" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.value" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute option swatch replace operation.
+         |-->
+        <service id="import_attribute.observer.composite.option.swatch.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.pre.load.attribute.option.id" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute add-update operation.
+         |-->
+        <service id="import_attribute.observer.composite.add_update" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.label.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.entity.attribute.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.catalog.attribute.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.export" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.value.export" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch.export" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.clean.up" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute option add-update operation.
+         |-->
+        <service id="import_attribute.observer.composite.option.add_update" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.value.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.default" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute option value add-update operation.
+         |-->
+        <service id="import_attribute.observer.composite.option.value.add_update" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.pre.load.attribute.option.id" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.value.update" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute option swatch add-update operation.
+         |-->
+        <service id="import_attribute.observer.composite.option.swatch.add_update" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.pre.load.attribute.option.id" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch.update" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute delete operation.
+         |-->
+        <service id="import_attribute.observer.composite.delete" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute.observer.pre.load.attribute.id" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.clear.attribute" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.clean.up" type="service"/>
+            </call>
+        </service>
+
         <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\AttributeBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.attribute"/>

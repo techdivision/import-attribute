@@ -18,19 +18,6 @@
       ]
     }
   ],
-  "listeners" : [
-    {
-      "app.set.up" : [
-        "import.listener.render.ansi.art",
-        "import.listener.initialize.registry"
-      ]
-    },
-    {
-      "app.tear.down" : [
-        "import.listener.clear.registry"
-      ]
-    }
-  ],
   "databases": [
   ],
   "loggers": [

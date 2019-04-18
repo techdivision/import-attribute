@@ -1,3 +1,13 @@
+# Version 9.0.1
+
+## Bugfixes
+
+* Update default configuration files with listeners
+
+## Features
+
+* None
+
 # Version 9.0.0
 
 ## Bugfixes

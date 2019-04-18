@@ -18,6 +18,19 @@
       ]
     }
   ],
+  "listeners" : [
+    {
+      "app.set.up" : [
+        "import.listener.render.ansi.art",
+        "import.listener.initialize.registry"
+      ]
+    },
+    {
+      "app.tear.down" : [
+        "import.listener.clear.registry"
+      ]
+    }
+  ],
   "databases": [
   ],
   "loggers": [
@@ -33,9 +46,9 @@
             "params" : [
               {
                 "format": "[%datetime%] %channel%.%level_name%: %message% %context% %extra%",
-                "dateFormat": "Y-m-d H:i:s",
-                "allowInlineLineBreaks": true,
-                "ignoreEmptyContextAndExtra": false
+                "date-format": "Y-m-d H:i:s",
+                "allow-inline-line-breaks": true,
+                "ignore-empty-context-and-extra": false
               }
             ]
           }
@@ -56,7 +69,9 @@
             {
               "id": "import.subject.move.files",
               "identifier": "move-files",
-              "prefix": "attribute-import",
+              "file-resolver": {
+                "prefix": "attribute-import"
+              },
               "ok-file-needed": true
             },
             {

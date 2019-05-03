@@ -1,3 +1,13 @@
+# Version 10.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to latest techdivision/import 8.0.* version as dependency
+
 # Version 9.0.2
 
 ## Bugfixes

@@ -22,8 +22,8 @@ namespace TechDivision\Import\Attribute\Subjects;
 
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\RegistryKeys;
-use TechDivision\Import\Subjects\ExportableSubjectInterface;
 use TechDivision\Import\Subjects\ExportableTrait;
+use TechDivision\Import\Subjects\ExportableSubjectInterface;
 
 /**
  * The subject implementation that handles the business logic to persist attributes.
@@ -90,7 +90,7 @@ class BunchSubject extends AbstractAttributeSubject implements BunchSubjectInter
     {
 
         // load the status of the actual import
-        $status = $this->getRegistryProcessor()->getAttribute($serial);
+        $status = $this->getRegistryProcessor()->getAttribute(RegistryKeys::STATUS);
 
         // load the global data we've prepared initially
         $this->attributeSets = $status[RegistryKeys::GLOBAL_DATA][RegistryKeys::ATTRIBUTE_SETS];
@@ -118,7 +118,7 @@ class BunchSubject extends AbstractAttributeSubject implements BunchSubjectInter
 
         // update the status
         $registryProcessor->mergeAttributesRecursive(
-            $serial,
+            RegistryKeys::STATUS,
             array(
                 RegistryKeys::PRE_LOADED_ATTRIBUTE_IDS => $this->preLoadedAttributeIds,
             )

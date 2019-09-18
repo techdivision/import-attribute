@@ -41,7 +41,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
      */
     private $statements = array(
         SqlStatementKeys::ATTRIBUTE =>
-            'SELECT * FROM eav_attribute WHERE attribute_id = :attribute_id',
+            'SELECT * FROM ${table:eav_attribute} WHERE attribute_id = :attribute_id',
         SqlStatementKeys::CATALOG_ATTRIBUTE =>
             'SELECT attribute_id,
                     frontend_input_renderer,
@@ -67,37 +67,37 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     is_filterable_in_grid,
                     search_weight,
                     additional_data
-               FROM catalog_eav_attribute
+               FROM ${table:catalog_eav_attribute}
               WHERE attribute_id = :attribute_id',
         SqlStatementKeys::ATTRIBUTE_BY_ATTRIBUTE_CODE =>
             'SELECT *
-               FROM eav_attribute
+               FROM ${table:eav_attribute}
               WHERE attribute_code = :attribute_code',
         SqlStatementKeys::ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE =>
             'SELECT *
-               FROM eav_attribute
+               FROM ${table:eav_attribute}
               WHERE entity_type_id = :entity_type_id
                 AND attribute_code = :attribute_code',
         SqlStatementKeys::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID =>
             'SELECT t1.*
-               FROM eav_attribute_label t1,
-                    eav_attribute t2
+               FROM ${table:eav_attribute_label} t1,
+                    ${table:eav_attribute} t2
               WHERE t2.attribute_code = :attribute_code
                 AND t1.attribute_id = t2.attribute_id
                 AND t1.store_id = :store_id',
         SqlStatementKeys::ATTRIBUTE_LABEL_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID =>
             'SELECT t1.*
-               FROM eav_attribute_label t1,
-                    eav_attribute t2
+               FROM ${table:eav_attribute_label} t1,
+                    ${table:eav_attribute} t2
               WHERE t2.attribute_code = :attribute_code
                 AND t2.entity_type_id = :entity_type_id
                 AND t1.attribute_id = t2.attribute_id
                 AND t1.store_id = :store_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE =>
             'SELECT t2.*
-               FROM eav_attribute t1,
-                    eav_attribute_option t2,
-                    eav_attribute_option_value t3
+               FROM ${table:eav_attribute} t1,
+                    ${table:eav_attribute_option} t2,
+                    ${table:eav_attribute_option_value} t3
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t3.store_id = :store_id
@@ -106,9 +106,9 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE =>
             'SELECT t2.*
-               FROM eav_attribute t1,
-                    eav_attribute_option t2,
-                    eav_attribute_option_value t3
+               FROM ${table:eav_attribute} t1,
+                    ${table:eav_attribute_option} t2,
+                    ${table:eav_attribute_option_value} t3
               WHERE t1.attribute_code = :attribute_code
                 AND t3.store_id = :store_id
                 AND t3.value = :value
@@ -116,9 +116,9 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE =>
             'SELECT t2.*
-               FROM eav_attribute t1,
-                    eav_attribute_option t2,
-                    eav_attribute_option_swatch t3
+               FROM ${table:eav_attribute} t1,
+                    ${table:eav_attribute_option} t2,
+                    ${table:eav_attribute_option_swatch} t3
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t3.store_id = :store_id
@@ -128,9 +128,9 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE =>
             'SELECT t3.*
-               FROM eav_attribute t1,
-                    eav_attribute_option t2,
-                    eav_attribute_option_swatch t3
+               FROM ${table:eav_attribute} t1,
+                    ${table:eav_attribute_option} t2,
+                    ${table:eav_attribute_option_swatch} t3
               WHERE t1.attribute_code = :attribute_code
                 AND t3.store_id = :store_id
                 AND t3.value = :value
@@ -139,33 +139,33 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID =>
             'SELECT t1.*
-               FROM eav_attribute_option_swatch t1
+               FROM ${table:eav_attribute_option_swatch} t1
               WHERE t1.store_id = :store_id
                 AND t1.option_id = :option_id',
         SqlStatementKeys::CATALOG_ATTRIBUTE_BY_ATTRIBUTE_CODE_AND_ENTITY_TYPE_ID =>
             'SELECT t2.*
-               FROM eav_attribute t1
-         INNER JOIN catalog_eav_attribute t2
+               FROM ${table:eav_attribute} t1
+         INNER JOIN ${table:catalog_eav_attribute} t2
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t2.attribute_id = t1.attribute_id',
         SqlStatementKeys::ENTITY_ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_ID =>
             'SELECT *
-               FROM eav_entity_attribute
+               FROM ${table:eav_entity_attribute}
               WHERE entity_type_id = :entity_type_id
                 AND attribute_id = :attribute_id
                 AND attribute_set_id = :attribute_set_id
                 AND attribute_group_id = :attribute_group_id',
         SqlStatementKeys::ENTITY_ATTRIBUTE_BY_ATTRIBUTE_ID_AND_ATTRIBUTE_SET_ID =>
             'SELECT *
-               FROM eav_entity_attribute
+               FROM ${table:eav_entity_attribute}
               WHERE attribute_id = :attribute_id
                 AND attribute_set_id = :attribute_set_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE =>
             'SELECT t3.*
-               FROM eav_attribute t1,
-                    eav_attribute_option t2,
-                    eav_attribute_option_swatch t3
+               FROM ${table:eav_attribute} t1,
+                    ${table:eav_attribute_option} t2,
+                    ${table:eav_attribute_option_swatch} t3
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t3.store_id = :store_id
@@ -175,12 +175,12 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_ID_ORDER_BY_SORT_ORDER_DESC =>
             'SELECT *
-               FROM eav_attribute_option
+               FROM ${table:eav_attribute_option}
               WHERE attribute_id = :attribute_id
            ORDER BY sort_order DESC',
         SqlStatementKeys::CREATE_ATTRIBUTE =>
             'INSERT
-               INTO eav_attribute
+               INTO ${table:eav_attribute}
                     (entity_type_id,
                      attribute_code,
                      attribute_model,
@@ -215,7 +215,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                      :note)',
         SqlStatementKeys::CREATE_ENTITY_ATTRIBUTE =>
             'INSERT
-               INTO eav_entity_attribute
+               INTO ${table:eav_entity_attribute}
                     (entity_type_id,
                      attribute_id,
                      attribute_set_id,
@@ -228,7 +228,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                      :sort_order)',
         SqlStatementKeys::CREATE_ATTRIBUTE_LABEL =>
             'INSERT
-               INTO eav_attribute_label
+               INTO ${table:eav_attribute_label}
                     (attribute_id,
                      store_id,
                      value)
@@ -237,14 +237,14 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                      :value)',
         SqlStatementKeys::CREATE_ATTRIBUTE_OPTION =>
             'INSERT
-               INTO eav_attribute_option
+               INTO ${table:eav_attribute_option}
                     (attribute_id,
                      sort_order)
              VALUES (:attribute_id,
                      :sort_order)',
         SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_VALUE =>
             'INSERT
-               INTO eav_attribute_option_value
+               INTO ${table:eav_attribute_option_value}
                     (option_id,
                      store_id,
                      value)
@@ -253,7 +253,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                      :value)',
         SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_SWATCH =>
             'INSERT
-               INTO eav_attribute_option_swatch
+               INTO ${table:eav_attribute_option_swatch}
                     (option_id,
                      store_id,
                      value,
@@ -263,9 +263,9 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     :value,
                     :type)',
         SqlStatementKeys::CREATE_CATALOG_ATTRIBUTE =>
-            'INSERT INTO catalog_eav_attribute (%s) VALUES (:%s)',
+            'INSERT INTO ${table:catalog_eav_attribute} (%s) VALUES (:%s)',
         SqlStatementKeys::UPDATE_ATTRIBUTE =>
-            'UPDATE eav_attribute
+            'UPDATE ${table:eav_attribute}
                 SET entity_type_id = :entity_type_id,
                     attribute_code = :attribute_code,
                     attribute_model = :attribute_model,
@@ -284,9 +284,9 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     note = :note
               WHERE attribute_id = :attribute_id',
         SqlStatementKeys::UPDATE_CATALOG_ATTRIBUTE =>
-            'UPDATE catalog_eav_attribute SET %s WHERE attribute_id = :%s',
+            'UPDATE ${table:catalog_eav_attribute} SET %s WHERE attribute_id = :%s',
         SqlStatementKeys::UPDATE_ENTITY_ATTRIBUTE =>
-            'UPDATE eav_entity_attribute
+            'UPDATE ${table:eav_entity_attribute}
                 SET entity_type_id = :entity_type_id,
                     attribute_id = :attribute_id,
                     attribute_set_id = :attribute_set_id,
@@ -294,59 +294,59 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     sort_order = :sort_order
               WHERE entity_attribute_id = :entity_attribute_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_LABEL =>
-            'UPDATE eav_attribute_label
+            'UPDATE ${table:eav_attribute_label}
                 SET attribute_id = :attribute_id,
                     store_id = :store_id,
                     value = :value
               WHERE attribute_label_id = :attribute_label_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION =>
-            'UPDATE eav_attribute_option
+            'UPDATE ${table:eav_attribute_option}
                 SET attribute_id = :attribute_id,
                     sort_order = :sort_order
               WHERE option_id = :option_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_VALUE =>
-            'UPDATE eav_attribute_option_value
+            'UPDATE ${table:eav_attribute_option_value}
                 SET option_id = :option_id,
                     store_id = :store_id,
                     value = :value
               WHERE value_id = :value_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_SWATCH =>
-            'UPDATE eav_attribute_option_swatch
+            'UPDATE ${table:eav_attribute_option_swatch}
                 SET option_id = :option_id,
                     store_id = :store_id,
                     value = :value,
                     type = :type
               WHERE swatch_id = :swatch_id',
         SqlStatementKeys::DELETE_ATTRIBUTE =>
-            'DELETE FROM eav_attribute WHERE attribute_id = :attribute_id',
+            'DELETE FROM ${table:eav_attribute} WHERE attribute_id = :attribute_id',
         SqlStatementKeys::DELETE_ENTITY_ATTRIBUTE =>
-            'DELETE FROM eav_entity_attribute WHERE entity_attribute_id = :entity_attribute_id',
+            'DELETE FROM ${table:eav_entity_attribute} WHERE entity_attribute_id = :entity_attribute_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_LABEL =>
-            'DELETE FROM eav_attribute_label WHERE attribute_label_id = :attribute_label_id',
+            'DELETE FROM ${table:eav_attribute_label} WHERE attribute_label_id = :attribute_label_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_OPTION =>
-            'DELETE FROM eav_attribute_option WHERE option_id = :option_id',
+            'DELETE FROM ${table:eav_attribute_option} WHERE option_id = :option_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_OPTION_VALUE =>
-            'DELETE FROM eav_attribute_option_value WHERE value_id = :value_id',
+            'DELETE FROM ${table:eav_attribute_option_value} WHERE value_id = :value_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_OPTION_SWATCH =>
-            'DELETE FROM eav_attribute_option_swatch WHERE swatch_id = :swatch_id',
+            'DELETE FROM ${table:eav_attribute_option_swatch} WHERE swatch_id = :swatch_id',
         SqlStatementKeys::DELETE_CATALOG_ATTRIBUTE =>
-            'DELETE FROM catalog_eav_attribute WHERE attribute_id = :attribute_id',
+            'DELETE FROM ${table:catalog_eav_attribute} WHERE attribute_id = :attribute_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_BY_ATTRIBUTE_CODE =>
-            'DELETE FROM eav_attribute WHERE attribute_code = :attribute_code'
+            'DELETE FROM ${table:eav_attribute} WHERE attribute_code = :attribute_code'
     );
 
     /**
-     * Initialize the the SQL statements.
+     * Initializes the SQL statement repository with the primary key and table prefix utility.
+     *
+     * @param \IteratorAggregate<\TechDivision\Import\Utils\SqlCompilerInterface> $compilers The array with the compiler instances
      */
-    public function __construct()
+    public function __construct(\IteratorAggregate $compilers)
     {
 
-        // call the parent constructor
-        parent::__construct();
+        // pass primary key + table prefix utility to parent instance
+        parent::__construct($compilers);
 
-        // merge the class statements
-        foreach ($this->statements as $key => $statement) {
-            $this->preparedStatements[$key] = $statement;
-        }
+        // compile the SQL statements
+        $this->compile($this->statements);
     }
 }

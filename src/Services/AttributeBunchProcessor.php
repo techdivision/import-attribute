@@ -608,35 +608,6 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
-     * Load's and return's the EAV attribute with the passed code.
-     *
-     * @param string $attributeCode The code of the EAV attribute to load
-     *
-     * @return array The EAV attribute
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeByEntityTypeIdAndAttributeCode()
-     */
-    public function loadAttributeByAttributeCode($attributeCode)
-    {
-        return $this->getAttributeRepository()->findOneByAttributeCode($attributeCode);
-    }
-
-    /**
-     * Return's the EAV attribute label with the passed attribute code and store ID.
-     *
-     * @param string  $attributeCode The attribute code of the EAV attribute label to return
-     * @param integer $storeId       The store ID of the EAV attribute label to return
-     *
-     * @return array The EAV attribute label
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeLabelByEntityTypeIdAndAttributeCodeAndStoreId()
-     */
-    public function loadAttributeLabelByAttributeCodeAndStoreId($attributeCode, $storeId)
-    {
-        return $this->getAttributeLabelRepository()->findOneByAttributeCodeAndStoreId($attributeCode, $storeId);
-    }
-
-    /**
      * Return's the EAV attribute label with the passed attribute code and store ID.
      *
      * @param integer $entityTypeId  The ID of the EAV entity attribute to return the label for
@@ -651,38 +622,6 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     }
 
     /**
-     * Load's and return's the EAV attribute option with the passed code, store ID and value.
-     *
-     * @param string  $attributeCode The code of the EAV attribute option to load
-     * @param integer $storeId       The store ID of the attribute option to load
-     * @param string  $value         The value of the attribute option to load
-     *
-     * @return array The EAV attribute option
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValue()
-     */
-    public function loadAttributeOptionByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
-    {
-        return $this->getAttributeOptionRepository()->findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
-    }
-
-    /**
-     * Load's and return's the EAV attribute option value with the passed code, store ID and value.
-     *
-     * @param string  $attributeCode The code of the EAV attribute option to load
-     * @param integer $storeId       The store ID of the attribute option to load
-     * @param string  $value         The value of the attribute option to load
-     *
-     * @return array The EAV attribute option value
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeOptionValueByEntityTypeIdAndAttributeCodeAndStoreIdAndValue()
-     */
-    public function loadAttributeOptionValueByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
-    {
-        return $this->getEavAttributeOptionValueRepository()->findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value);
-    }
-
-    /**
      * Load's and return's the EAV attribute option value with the passed option ID and store ID.
      *
      * @param string  $optionId The option ID
@@ -693,23 +632,6 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     public function loadAttributeOptionValueByOptionIdAndStoreId($optionId, $storeId)
     {
         return $this->getEavAttributeOptionValueRepository()->findOneByOptionIdAndStoreId($optionId, $storeId);
-    }
-
-    /**
-     * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
-     *
-     * @param string  $attributeCode The code of the EAV attribute option swatch to load
-     * @param integer $storeId       The store ID of the attribute option swatch to load
-     * @param string  $value         The value of the attribute option swatch to load
-     * @param string  $type          The type of the attribute option swatch to load
-     *
-     * @return array The EAV attribute option swatch
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface::loadAttributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValue()
-     */
-    public function loadAttributeOptionSwatchByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type)
-    {
-        return $this->getAttributeOptionSwatchRepository()->findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type);
     }
 
     /**

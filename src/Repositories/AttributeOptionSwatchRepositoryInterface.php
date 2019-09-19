@@ -45,20 +45,6 @@ interface AttributeOptionSwatchRepositoryInterface extends RepositoryInterface
     public function findOneByOptionIdAndStoreId($optionId, $storeId);
 
     /**
-     * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
-     *
-     * @param string  $attributeCode The code of the EAV attribute option swatch to load
-     * @param integer $storeId       The store ID of the attribute option swatch to load
-     * @param string  $value         The value of the attribute option swatch to load
-     * @param string  $type          The type of the attribute option swatch to load
-     *
-     * @return array The EAV attribute option swatch
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType()
-     */
-    public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type);
-
-    /**
      * Load's and return's the EAV attribute option swatch with the passed entity type ID, code, store ID, value and type.
      *
      * @param string  $entityTypeId  The entity type ID of the EAV attribute to load the option swatch for

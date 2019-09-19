@@ -47,25 +47,11 @@ class SqlStatementKeys extends \TechDivision\Import\Utils\SqlStatementKeys
     const CATALOG_ATTRIBUTE = 'catalog_attribute';
 
     /**
-     * The SQL statement to load the EAV attribute by its attribute code.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_BY_ATTRIBUTE_CODE = 'attribute.by.attribute_code';
-
-    /**
      * The SQL statement to load the EAV attribute by its entity type ID and attribute code.
      *
      * @var string
      */
     const ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE = 'attribute.by.entity_type_id.and.attribute_code';
-
-    /**
-     * The SQL statement to load the EAV attribute label by its attribute code and store ID.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID = 'attribute_label.by.attribute_code.and.store_id';
 
     /**
      * The SQL statement to load the EAV attribute label by its entity type ID, attribute code and store ID.
@@ -89,25 +75,11 @@ class SqlStatementKeys extends \TechDivision\Import\Utils\SqlStatementKeys
     const ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE = 'attribute_option.by.entity_type_id.and.attribute_code.and.store_id.and.swatch.and.type';
 
     /**
-     * The SQL statement to load the EAV attribute option by its attribute code, store ID and value.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE = 'attribute_option.by.attribute_code.and.store_id.and.value';
-
-    /**
      * The SQL statement to load the EAV attribute option with the attribute with the given ID and the highest sort order.
      *
      * @var string
      */
     const ATTRIBUTE_OPTION_BY_ATTRIBUTE_ID_ORDER_BY_SORT_ORDER_DESC = 'attribute_option.by.attribute_id.order_by.sort_order.desc';
-
-    /**
-     * The SQL statement to load the EAV attribute option swtach by its attribute code, store ID, value and type.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE = 'attribute_option_swatch.by.attribute_code.and.store_id.and.value.and.type';
 
     /**
      * The SQL statement to load the EAV attribute option swtach by its entity type ID, attribute code, store ID, value and type.

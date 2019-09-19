@@ -48,13 +48,6 @@ class AttributeOptionSwatchRepository extends AbstractRepository implements Attr
      *
      * @var \PDOStatement
      */
-    protected $attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt;
-
-    /**
-     * The prepared statement to load an existing EAV attribute option swatch by its attribute code, store ID. value and type.
-     *
-     * @var \PDOStatement
-     */
     protected $attributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndTypeStmt;
 
     /**
@@ -68,10 +61,6 @@ class AttributeOptionSwatchRepository extends AbstractRepository implements Attr
         // initialize the prepared statements
         $this->attributeOptionSwatchByOptionIdAndStoreIdStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_OPTION_ID_AND_STORE_ID));
-
-        // initialize the prepared statements
-        $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt =
-            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE));
 
         // initialize the prepared statements
         $this->attributeOptionSwatchByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndTypeStmt =
@@ -98,34 +87,6 @@ class AttributeOptionSwatchRepository extends AbstractRepository implements Attr
         // load and return the EAV attribute option swatch with the passed parameters
         $this->attributeOptionSwatchByOptionIdAndStoreIdStmt->execute($params);
         return $this->attributeOptionSwatchByOptionIdAndStoreIdStmt->fetch(\PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Load's and return's the EAV attribute option swatch with the passed code, store ID, value and type.
-     *
-     * @param string  $attributeCode The code of the EAV attribute option swatch to load
-     * @param integer $storeId       The store ID of the attribute option swatch to load
-     * @param string  $value         The value of the attribute option swatch to load
-     * @param string  $type          The type of the attribute option swatch to load
-     *
-     * @return array The EAV attribute option swatch
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValueAndType()
-     */
-    public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value, $type)
-    {
-
-        // the parameters of the EAV attribute option to load
-        $params = array(
-            MemberNames::ATTRIBUTE_CODE => $attributeCode,
-            MemberNames::STORE_ID       => $storeId,
-            MemberNames::VALUE          => $value,
-            MemberNames::TYPE           => $type
-        );
-
-        // load and return the EAV attribute option swatch with the passed parameters
-        $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt->execute($params);
-        return $this->attributeOptionSwatchByAttributeCodeAndStoreIdAndValueAndTypeStmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**

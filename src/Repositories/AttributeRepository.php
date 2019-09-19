@@ -37,13 +37,6 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
 {
 
     /**
-     * The prepared statement to load an existing EAV attribute by its attribute code.
-     *
-     * @var \PDOStatement
-     */
-    protected $attributeByAttributeCodeStmt;
-
-    /**
      * The prepared statement to load an existing EAV attribute by its entity type ID and attribute code.
      *
      * @var \PDOStatement
@@ -59,28 +52,8 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
     {
 
         // initialize the prepared statements
-        $this->attributeByAttributeCodeStmt =
-            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_BY_ATTRIBUTE_CODE));
-
-        // initialize the prepared statements
         $this->attributeByEntityTypeAndAttributeCodeStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE));
-    }
-
-    /**
-     * Return's the EAV attribute with the passed code.
-     *
-     * @param string $attributeCode The code of the EAV attribute to return
-     *
-     * @return array The EAV attribute
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Repositories\AttributeRepositoryInterface::findOneByEntityIdAndAttributeCode()
-     */
-    public function findOneByAttributeCode($attributeCode)
-    {
-        // load and return the EAV attribute with the passed code
-        $this->attributeByAttributeCodeStmt->execute(array(MemberNames::ATTRIBUTE_CODE => $attributeCode));
-        return $this->attributeByAttributeCodeStmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**

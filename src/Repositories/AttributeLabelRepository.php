@@ -37,13 +37,6 @@ class AttributeLabelRepository extends AbstractRepository implements AttributeLa
 {
 
     /**
-     * The prepared statement to load an existing EAV attribute label by its attribute code and store ID.
-     *
-     * @var \PDOStatement
-     */
-    protected $attributeLabelByAttributeCodeAndStoreIdStmt;
-
-    /**
      * The prepared statement to load an existing EAV attribute label by its entity type ID, attribute code and store ID.
      *
      * @var \PDOStatement
@@ -59,36 +52,8 @@ class AttributeLabelRepository extends AbstractRepository implements AttributeLa
     {
 
         // initialize the prepared statements
-        $this->attributeLabelByAttributeCodeAndStoreIdStmt =
-            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID));
-
-        // initialize the prepared statements
         $this->attributeLabelByEntityTypeIdAndAttributeCodeAndStoreIdStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_LABEL_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID));
-    }
-
-    /**
-     * Return's the EAV attribute label with the passed attribute code and store ID.
-     *
-     * @param string  $attributeCode The attribute code of the EAV attribute label to return
-     * @param integer $storeId       The store ID of the EAV attribute label to return
-     *
-     * @return array The EAV attribute label
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Repositories\AttributeLabelRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreId()
-     */
-    public function findOneByAttributeCodeAndStoreId($attributeCode, $storeId)
-    {
-
-        // initialize the params
-        $params = array(
-            MemberNames::ATTRIBUTE_CODE => $attributeCode,
-            MemberNames::STORE_ID       => $storeId
-        );
-
-        // load and return the EAV attribute label with the passed params
-        $this->attributeLabelByAttributeCodeAndStoreIdStmt->execute($params);
-        return $this->attributeLabelByAttributeCodeAndStoreIdStmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**

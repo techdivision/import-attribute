@@ -37,13 +37,6 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
 {
 
     /**
-     * The prepared statement to load an existing EAV attribute option by its attribute code, store ID and value.
-     *
-     * @var \PDOStatement
-     */
-    protected $attributeOptionByAttributeCodeAndStoreIdAndValueStmt;
-
-    /**
      * The prepared statement to load an existing EAV attribute option by its entity type ID, attribute code, store ID and value.
      *
      * @var \PDOStatement
@@ -73,40 +66,12 @@ class AttributeOptionRepository extends AbstractRepository implements AttributeO
     {
 
         // initialize the prepared statements
-        $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt =
-            $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
         $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndValueStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE));
         $this->attributeOptionByEntityTypeIdAndAttributeCodeAndStoreIdAndSwatchAndTypeStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE));
         $this->attributeOptionByAttributeIdOrderBySortOrderDescStmt =
             $this->getConnection()->prepare($this->loadStatement(SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_ID_ORDER_BY_SORT_ORDER_DESC));
-    }
-
-    /**
-     * Load's and return's the EAV attribute option with the passed code, store ID and value.
-     *
-     * @param string  $attributeCode The code of the EAV attribute option to load
-     * @param integer $storeId       The store ID of the attribute option to load
-     * @param string  $value         The value of the attribute option to load
-     *
-     * @return array The EAV attribute option
-     * @deprecated Since 2.0.2
-     * @see \TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterface::findOneByEntityTypeIdAndAttributeCodeAndStoreIdAndValue()
-     */
-    public function findOneByAttributeCodeAndStoreIdAndValue($attributeCode, $storeId, $value)
-    {
-
-        // the parameters of the EAV attribute option to load
-        $params = array(
-            MemberNames::ATTRIBUTE_CODE => $attributeCode,
-            MemberNames::STORE_ID       => $storeId,
-            MemberNames::VALUE          => $value
-        );
-
-        // load and return the EAV attribute option with the passed parameters
-        $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt->execute($params);
-        return $this->attributeOptionByAttributeCodeAndStoreIdAndValueStmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**

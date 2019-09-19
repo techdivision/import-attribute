@@ -69,22 +69,11 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     additional_data
                FROM ${table:catalog_eav_attribute}
               WHERE attribute_id = :attribute_id',
-        SqlStatementKeys::ATTRIBUTE_BY_ATTRIBUTE_CODE =>
-            'SELECT *
-               FROM ${table:eav_attribute}
-              WHERE attribute_code = :attribute_code',
         SqlStatementKeys::ATTRIBUTE_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE =>
             'SELECT *
                FROM ${table:eav_attribute}
               WHERE entity_type_id = :entity_type_id
                 AND attribute_code = :attribute_code',
-        SqlStatementKeys::ATTRIBUTE_LABEL_BY_ATTRIBUTE_CODE_AND_STORE_ID =>
-            'SELECT t1.*
-               FROM ${table:eav_attribute_label} t1,
-                    ${table:eav_attribute} t2
-              WHERE t2.attribute_code = :attribute_code
-                AND t1.attribute_id = t2.attribute_id
-                AND t1.store_id = :store_id',
         SqlStatementKeys::ATTRIBUTE_LABEL_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID =>
             'SELECT t1.*
                FROM ${table:eav_attribute_label} t1,
@@ -104,16 +93,6 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                 AND t3.value = :value
                 AND t2.attribute_id = t1.attribute_id
                 AND t2.option_id = t3.option_id',
-        SqlStatementKeys::ATTRIBUTE_OPTION_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE =>
-            'SELECT t2.*
-               FROM ${table:eav_attribute} t1,
-                    ${table:eav_attribute_option} t2,
-                    ${table:eav_attribute_option_value} t3
-              WHERE t1.attribute_code = :attribute_code
-                AND t3.store_id = :store_id
-                AND t3.value = :value
-                AND t2.attribute_id = t1.attribute_id
-                AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE =>
             'SELECT t2.*
                FROM ${table:eav_attribute} t1,
@@ -121,17 +100,6 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     ${table:eav_attribute_option_swatch} t3
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
-                AND t3.store_id = :store_id
-                AND t3.value = :value
-                AND t3.type = :type
-                AND t2.attribute_id = t1.attribute_id
-                AND t2.option_id = t3.option_id',
-        SqlStatementKeys::ATTRIBUTE_OPTION_SWATCH_BY_ATTRIBUTE_CODE_AND_STORE_ID_AND_VALUE_AND_TYPE =>
-            'SELECT t3.*
-               FROM ${table:eav_attribute} t1,
-                    ${table:eav_attribute_option} t2,
-                    ${table:eav_attribute_option_swatch} t3
-              WHERE t1.attribute_code = :attribute_code
                 AND t3.store_id = :store_id
                 AND t3.value = :value
                 AND t3.type = :type

@@ -61,19 +61,6 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
     protected $defaultEntityTypeCode;
 
     /**
-     * Mapping for the virtual entity type code to the real Magento 2 EAV entity type code.
-     *
-     * @var array
-     */
-    protected $entityTypeCodeMappings = array(
-        EntityTypeCodes::EAV_ATTRIBUTE             => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::CATALOG_PRODUCT           => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::CATALOG_CATEGORY          => EntityTypeCodes::CATALOG_CATEGORY,
-        EntityTypeCodes::CATALOG_PRODUCT_PRICE     => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::CATALOG_PRODUCT_INVENTORY => EntityTypeCodes::CATALOG_PRODUCT
-    );
-
-    /**
      * Intializes the previously loaded global data for exactly one bunch.
      *
      * @param string $serial The serial of the actual import
@@ -90,7 +77,7 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
         $this->entityTypes = $status[RegistryKeys::GLOBAL_DATA][RegistryKeys::ENTITY_TYPES];
 
         // initialize the default entity type code with the value from the configuration
-        $this->defaultEntityTypeCode = $this->entityTypeCodeMappings[$this->getConfiguration()->getConfiguration()->getEntityTypeCode()];
+        $this->defaultEntityTypeCode = $this->getEntityTypeCode();
 
         // prepare the callbacks
         parent::setUp($serial);

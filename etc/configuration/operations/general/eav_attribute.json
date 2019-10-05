@@ -1,0 +1,179 @@
+{
+  "shortcuts": {
+    "general": {
+      "eav_attribute": {
+        "delete": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/delete",
+          "general/general/archive-artefacts"
+        ],
+        "replace": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/replace",
+          "general/general/archive-artefacts"
+        ],
+        "add-update": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/add-update",
+          "general/general/archive-artefacts"
+        ]
+      }
+    }
+  },
+  "operations": {
+    "general": {
+      "eav_attribute": [
+        {
+          "name": "delete",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
+                {
+                  "id": "import_attribute.subject.bunch",
+                  "file-resolver": {
+                    "prefix": "attribute-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.delete"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "replace",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
+                {
+                  "id": "import_attribute.subject.bunch",
+                  "file-resolver": {
+                    "prefix": "attribute-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.replace"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "import_attribute.subject.option",
+                  "file-resolver": {
+                    "prefix": "option-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.option.replace"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "import_attribute.subject.option",
+                  "file-resolver": {
+                    "prefix": "option-value-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.option.value.replace"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "import_attribute.subject.option",
+                  "file-resolver": {
+                    "prefix": "option-swatch-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.option.swatch.replace"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "add-update",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
+                {
+                  "id": "import_attribute.subject.bunch",
+                  "file-resolver": {
+                    "prefix": "attribute-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.add_update"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "import_attribute.subject.option",
+                  "file-resolver": {
+                    "prefix": "option-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.option.add_update"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "import_attribute.subject.option",
+                  "file-resolver": {
+                    "prefix": "option-value-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.option.value.add_update"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "import_attribute.subject.option",
+                  "file-resolver": {
+                    "prefix": "option-swatch-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.option.swatch.add_update"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

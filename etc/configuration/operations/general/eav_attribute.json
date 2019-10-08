@@ -3,22 +3,28 @@
     "general": {
       "eav_attribute": {
         "delete": [
+          "general/general/initialize",
           "general/general/global-data",
           "general/general/move-files",
           "general/eav_attribute/delete",
-          "general/general/archive-artefacts"
+          "general/general/archive-artefacts",
+          "general/general/clean-up"
         ],
         "replace": [
+          "general/general/initialize",
           "general/general/global-data",
           "general/general/move-files",
           "general/eav_attribute/replace",
-          "general/general/archive-artefacts"
+          "general/general/archive-artefacts",
+          "general/general/clean-up"
         ],
         "add-update": [
+          "general/general/initialize",
           "general/general/global-data",
           "general/general/move-files",
           "general/eav_attribute/add-update",
-          "general/general/archive-artefacts"
+          "general/general/archive-artefacts",
+          "general/general/clean-up"
         ]
       }
     }

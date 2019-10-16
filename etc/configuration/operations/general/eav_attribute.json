@@ -15,6 +15,9 @@
           "general/general/global-data",
           "general/general/move-files",
           "general/eav_attribute/replace",
+          "general/eav_attribute/replace.options",
+          "general/eav_attribute/replace.option-values",
+          "general/eav_attribute/replace.swatch-values",
           "general/general/archive-artefacts",
           "general/general/clean-up"
         ],
@@ -23,6 +26,9 @@
           "general/general/global-data",
           "general/general/move-files",
           "general/eav_attribute/add-update",
+          "general/eav_attribute/add-update.options",
+          "general/eav_attribute/add-update.option-values",
+          "general/eav_attribute/add-update.swatch-values",
           "general/general/archive-artefacts",
           "general/general/clean-up"
         ]
@@ -73,7 +79,17 @@
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "replace.options",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
                 {
                   "id": "import_attribute.subject.option",
                   "file-resolver": {
@@ -86,7 +102,17 @@
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "replace.option-values",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
                 {
                   "id": "import_attribute.subject.option",
                   "file-resolver": {
@@ -99,7 +125,17 @@
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "replace.swatch-values",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
                 {
                   "id": "import_attribute.subject.option",
                   "file-resolver": {
@@ -135,7 +171,17 @@
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "add-update.options",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
                 {
                   "id": "import_attribute.subject.option",
                   "file-resolver": {
@@ -148,7 +194,17 @@
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "add-update.option-values",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
                 {
                   "id": "import_attribute.subject.option",
                   "file-resolver": {
@@ -161,7 +217,17 @@
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "add-update.swatch-values",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "subjects": [
                 {
                   "id": "import_attribute.subject.option",
                   "file-resolver": {

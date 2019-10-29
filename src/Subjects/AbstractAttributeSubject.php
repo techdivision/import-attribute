@@ -20,11 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
-use TechDivision\Import\Subjects\AbstractSubject;
-use TechDivision\Import\Subjects\EntitySubjectInterface;
 use TechDivision\Import\Utils\RegistryKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Utils\EntityTypeCodes;
+use TechDivision\Import\Subjects\AbstractSubject;
+use TechDivision\Import\Subjects\EntitySubjectInterface;
 
 /**
  * The abstract product subject implementation that provides basic attribute
@@ -45,13 +44,6 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
      * @var array
      */
     protected $entityTypes = array();
-
-    /**
-     * Mappings for attribute code => CSV column header.
-     *
-     * @var array
-     */
-    protected $headerMappings = array();
 
     /**
      * The default entity type code.

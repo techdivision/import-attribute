@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * TechDivision\Import\Attribute\Callbacks\AttributeGroupNamesValidatorCallback
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * PHP version 5
+ *
+ * @author    Tim Wagner <t.wagner@techdivision.com>
+ * @copyright 2019 TechDivision GmbH <info@techdivision.com>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/techdivision/import-product
+ * @link      http://www.techdivision.com
+ */
+
+namespace TechDivision\Import\Attribute\Callbacks;
+
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Callbacks\IndexedArrayValidatorCallback;
+
+/**
+ * A callback implementation that validates the attribute group names in an attribute import.
+ *
+ * @author    Tim Wagner <t.wagner@techdivision.com>
+ * @copyright 2019 TechDivision GmbH <info@techdivision.com>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/techdivision/import-product
+ * @link      http://www.techdivision.com
+ */
+class AttributeGroupNamesValidatorCallback extends IndexedArrayValidatorCallback
+{
+
+    /**
+     * Returns the validations for the attribute with the passed code.
+     *
+     * @param string|null $attributeCode The code of the attribute to return the validations for
+     *
+     * @return array The allowed values for the attribute with the passed code
+     */
+    protected function getValidations($attributeCode = null, $entityTypeCode = null)
+    {
+
+        // load the validations for the given entity type code
+        $validations = parent::getValidations($entityTypeCode);
+
+        // query whether or not validations for the passed attribute code has been specified
+        if (isset($validations[$attributeCode])) {
+            return $validations[$attributeCode];
+        }
+
+        // return an empty array, if NOT
+        return array();
+    }
+
+    /**
+     * Will be invoked by the observer it has been registered for.
+     *
+     * @param string|null $attributeCode  The code of the attribute that has to be validated
+     * @param string|null $attributeValue The attribute value to be validated
+     *
+     * @return mixed The modified value
+     */
+    public function handle($attributeCode = null, $attributeValue = null)
+    {
+
+        // load the subject instance
+        $subject = $this->getSubject();
+
+        // explode the attribute group names
+        if ($this->isNullable($attributeGroupNames = $subject->explode($attributeValue))) {
+            return;
+        }
+
+        // load the attribute set names of attribute groups that has to be validated
+        $attributeSetNames = $subject->getValue(ColumnKeys::ATTRIBUTE_SET_NAME, array(), array($subject, 'explode'));
+
+        // iterate over the attribute set names to load the available attribute group names therefore
+        foreach ($attributeSetNames as $attributeSetName) {
+            // load the validations for the attribute set with the given name
+            $validations = $this->getValidations($attributeSetName, $subject->getValue(ColumnKeys::ENTITY_TYPE_CODE));
+
+            // iterate over the attribute group names and validate them
+            foreach ($attributeGroupNames as $attributeGroupName) {
+                // query whether or not the value is valid
+                if (in_array($attributeGroupName, $validations)) {
+                    continue;
+                }
+
+                // throw an exception if the value is NOT in the array
+                throw new \InvalidArgumentException(
+                    sprintf('Found invalid attribute group name "%s"', $attributeGroupName)
+                );
+            }
+        }
+    }
+}

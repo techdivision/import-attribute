@@ -214,6 +214,25 @@
         </service>
 
         <!--
+         | The DI configuration for the callbacks.
+         |-->
+        <service id="import_attribute.callback.attribute.set.name.validator" class="TechDivision\Import\Attribute\Callbacks\AttributeSetNamesValidatorCallback">
+            <argument type="service" id="import.loader.attribute.set.name"/>
+        </service>
+        <service id="import_attribute.callback.attribute.group.name.validator" class="TechDivision\Import\Attribute\Callbacks\AttributeGroupNamesValidatorCallback">
+            <argument type="service" id="import.loader.attribute.group.name"/>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the validation operation.
+         |-->
+        <service id="import_attribute.observer.composite.base.validate" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import.observer.generic.validator" type="service"/>
+            </call>
+        </service>
+
+        <!--
          | The DI configuration for the composite observers of the attribute replace operation.
          |-->
         <service id="import_attribute.observer.composite.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">

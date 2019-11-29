@@ -30,6 +30,58 @@
     "general": {
       "eav_attribute": [
         {
+          "name": "validate",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "listeners": [
+                {
+                  "plugin.process.success": [
+                    "import.listener.stop.validation"
+                  ]
+                }
+              ],
+              "subjects": [
+                {
+                  "id": "import.subject.validator",
+                  "create-imported-file": false,
+                  "file-resolver": {
+                    "prefix": "attribute-import"
+                  },
+                  "listeners": [
+                    {
+                      "subject.artefact.header.row.process.start": [
+                        "import.listener.validate.header.row"
+                      ]
+                    }
+                  ],
+                  "params" : {
+                    "custom-validations" : {
+                      "attribute_code": [ "/^\\w+$/" ]
+                    }
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.base.validate"
+                      ]
+                    }
+                  ],
+                  "callbacks": [
+                    {
+                      "store_view_code": [ "import.callback.store.view.code.validator" ],
+                      "attribute_code": [ "import.callback.custom.regex.validator" ],
+                      "entity_type_code": [ "import.callback.entity.type.code.validator" ],
+                      "attribute_set_name": [ "import_attribute.callback.attribute.set.name.validator" ],
+                      "attribute_group_name": [ "import_attribute.callback.attribute.group.name.validator" ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "name": "delete",
           "plugins": [
             {

@@ -2,6 +2,11 @@
   "shortcuts": {
     "general": {
       "eav_attribute": {
+        "validate": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/validate"
+        ],
         "delete": [
           "general/general/global-data",
           "general/general/move-files",

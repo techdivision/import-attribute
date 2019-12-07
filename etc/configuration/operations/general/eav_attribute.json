@@ -87,6 +87,43 @@
           ]
         },
         {
+          "name": "convert",
+          "plugins": [
+            {
+              "id": "import_converter.plugin.exportable.converter.generic",
+              "params": {
+                "exportable-artefact-types": [
+                  "option-import"
+                ]
+              },
+              "listeners": [
+                {
+                  "plugin.export.start": [
+                    "import_converter_product_attribute.listeners.reduce.attribute.option.value"
+                  ]
+                }
+              ],
+              "subjects": [
+                {
+                  "id": "import_converter_product_attribute.subject.converter",
+                  "create-imported-file": false,
+                  "file-resolver": {
+                    "prefix": "product-import"
+                  },
+                  "observers": [
+                    {
+                      "import": [
+                        "import.observer.additional.attribute",
+                        "import_converter_product_attribute.observer.product.to.attribute.option.value"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "name": "delete",
           "plugins": [
             {

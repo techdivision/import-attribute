@@ -1,43 +1,10 @@
 {
-  "shortcuts": {
-    "general": {
-      "eav_attribute": {
-        "validate": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute/validate"
-        ],
-        "delete": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute/delete"
-        ],
-        "replace": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute/replace",
-          "general/eav_attribute/replace.options",
-          "general/eav_attribute/replace.option-values",
-          "general/eav_attribute/replace.swatch-values"
-        ],
-        "add-update": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute/add-update",
-          "general/eav_attribute/add-update.options",
-          "general/eav_attribute/add-update.option-values",
-          "general/eav_attribute/add-update.swatch-values"
-        ]
-      }
-    }
-  },
   "operations": {
     "general": {
-      "eav_attribute": [
-        {
-          "name": "validate",
-          "plugins": [
-            {
+      "eav_attribute": {
+        "validate": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "listeners": [
                 {
@@ -84,12 +51,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "convert",
-          "plugins": [
-            {
+        "convert": {
+          "plugins": {
+            "converter": {
               "id": "import_converter.plugin.exportable.converter.generic",
               "params": {
                 "exportable-artefact-types": [
@@ -121,12 +87,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "delete",
-          "plugins": [
-            {
+        "delete": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -144,12 +109,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "replace",
-          "plugins": [
-            {
+        "replace": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -167,12 +131,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "replace.options",
-          "plugins": [
-            {
+        "replace.options": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -190,12 +153,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "replace.option-values",
-          "plugins": [
-            {
+        "replace.option-values": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -213,12 +175,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "replace.swatch-values",
-          "plugins": [
-            {
+        "replace.swatch-values": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -236,12 +197,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "add-update",
-          "plugins": [
-            {
+        "add-update": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -259,12 +219,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "add-update.options",
-          "plugins": [
-            {
+        "add-update.options": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -282,12 +241,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "add-update.option-values",
-          "plugins": [
-            {
+        "add-update.option-values": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -305,12 +263,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "add-update.swatch-values",
-          "plugins": [
-            {
+        "add-update.swatch-values": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -328,9 +285,9 @@
                 }
               ]
             }
-          ]
+          }
         }
-      ]
+      }
     }
   }
 }

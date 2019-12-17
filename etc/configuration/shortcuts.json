@@ -1,0 +1,34 @@
+{
+  "shortcuts": {
+    "general": {
+      "eav_attribute": {
+        "validate": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/validate"
+        ],
+        "delete": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/delete"
+        ],
+        "replace": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/replace",
+          "general/eav_attribute/replace.options",
+          "general/eav_attribute/replace.option-values",
+          "general/eav_attribute/replace.swatch-values"
+        ],
+        "add-update": [
+          "general/general/global-data",
+          "general/general/move-files",
+          "general/eav_attribute/add-update",
+          "general/eav_attribute/add-update.options",
+          "general/eav_attribute/add-update.option-values",
+          "general/eav_attribute/add-update.swatch-values"
+        ]
+      }
+    }
+  }
+}

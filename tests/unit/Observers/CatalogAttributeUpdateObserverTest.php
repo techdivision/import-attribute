@@ -20,9 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use PHPUnit\Framework\TestCase;
+use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Utils\EntityStatus;
 
 /**
  * Test class for the catalog attribute update observer implementation.
@@ -33,7 +34,7 @@ use TechDivision\Import\Utils\EntityStatus;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
+class CatalogAttributeUpdateObserverTest extends TestCase
 {
 
     /**
@@ -55,7 +56,7 @@ class CatalogAttributeUpdateObserverTest extends \PHPUnit_Framework_TestCase
      * This method is called before a test is executed.
      *
      * @return void
-     * @see \PHPUnit_Framework_TestCase::setUp()
+     * @see \PHPUnit\Framework\TestCase::setUp()
      */
     protected function setUp()
     {

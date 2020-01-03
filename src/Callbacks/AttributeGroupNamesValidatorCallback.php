@@ -38,7 +38,8 @@ class AttributeGroupNamesValidatorCallback extends IndexedArrayValidatorCallback
     /**
      * Returns the validations for the attribute with the passed code.
      *
-     * @param string|null $attributeCode The code of the attribute to return the validations for
+     * @param string|null $attributeCode  The code of the attribute to return the validations for
+     * @param string|null $entityTypeCode The entity type code used to return the validations
      *
      * @return array The allowed values for the attribute with the passed code
      */

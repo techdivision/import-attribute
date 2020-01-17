@@ -90,7 +90,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t3.store_id = :store_id
-                AND t3.value = :value
+                AND t3.value = BINARY :value
                 AND t2.attribute_id = t1.attribute_id
                 AND t2.option_id = t3.option_id',
         SqlStatementKeys::ATTRIBUTE_OPTION_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_CODE_AND_STORE_ID_AND_SWATCH_AND_TYPE =>
@@ -101,7 +101,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t3.store_id = :store_id
-                AND t3.value = :value
+                AND t3.value = BINARY :value
                 AND t3.type = :type
                 AND t2.attribute_id = t1.attribute_id
                 AND t2.option_id = t3.option_id',
@@ -137,7 +137,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
               WHERE t1.attribute_code = :attribute_code
                 AND t1.entity_type_id = :entity_type_id
                 AND t3.store_id = :store_id
-                AND t3.value = :value
+                AND t3.value = BINARY :value
                 AND t3.type = :type
                 AND t2.attribute_id = t1.attribute_id
                 AND t2.option_id = t3.option_id',

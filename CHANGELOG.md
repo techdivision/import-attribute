@@ -1,3 +1,13 @@
+# Version 16.0.1
+
+## Bugfixes
+
+* Fixed techdivision/import-attribute#47
+
+## Features
+
+* None
+
 # Version 16.0.0
 
 ## Bugfixes

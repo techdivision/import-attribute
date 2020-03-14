@@ -27,13 +27,7 @@
         "psr-4": {
             "TechDivision\\Import\\Attribute\\": [
                 "src/",
-                "symfony/"
-            ]
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "TechDivision\\Import\\Attribute\\": [
+                "symfony/",
                 "tests/unit/"
             ]
         }

@@ -1,3 +1,13 @@
+# Version 17.0.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove extract dev autoloading
+
 # Version 17.0.2
 
 ## Bugfixes

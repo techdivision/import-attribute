@@ -22,7 +22,6 @@ namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
-use TechDivision\Import\Attribute\Utils\MemberNames;
 
 /**
  * Observer that update's the attribute options found in the additional CSV file.
@@ -35,29 +34,6 @@ use TechDivision\Import\Attribute\Utils\MemberNames;
  */
 class AttributeOptionUpdateObserver extends AttributeOptionObserver
 {
-
-    /**
-     * Merge's and return's the entity with the passed attributes and set's the
-     * passed status.
-     *
-     * @param array       $entity        The entity to merge the attributes into
-     * @param array       $attr          The attributes to be merged
-     * @param string|null $changeSetName The change set name to use
-     *
-     * @return array The merged entity
-     */
-    protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
-    {
-
-        // query whether or not the sort order has been specified, if not use the value of the
-        // existing entity. This allows the customer to change the order in the Magento backend
-        if ($this->hasValue(ColumnKeys::SORT_ORDER) === false) {
-            $attr[MemberNames::SORT_ORDER] = $entity[MemberNames::SORT_ORDER];
-        }
-
-        // invoke the parent method and return the merged entity
-        return parent::mergeEntity($entity, $attr, $changeSetName);
-    }
 
     /**
      * Initialize the EAV attribute option with the passed attributes and returns an instance.

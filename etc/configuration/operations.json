@@ -143,6 +143,11 @@
                   "file-resolver": {
                     "prefix": "option-import"
                   },
+                  "params": {
+                    "copy-images": false,
+                    "media-directory" : "pub/media/attribute/swatch",
+                    "images-file-directory" : "var/importexport/media/attribute/swatch"
+                  },
                   "observers": [
                     {
                       "import": [
@@ -230,6 +235,11 @@
                   "id": "import_attribute.subject.option",
                   "file-resolver": {
                     "prefix": "option-import"
+                  },
+                  "params": {
+                    "copy-images": false,
+                    "media-directory" : "pub/media/attribute/swatch",
+                    "images-file-directory" : "var/importexport/media/attribute/swatch"
                   },
                   "observers": [
                     {

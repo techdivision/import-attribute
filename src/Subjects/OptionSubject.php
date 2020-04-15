@@ -20,7 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
+use TechDivision\Import\Attribute\Utils\ConfigurationKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Subjects\FileUploadSubjectInterface;
+use TechDivision\Import\Subjects\FileUploadTrait;
 
 /**
  * The subject implementation that handles the business logic to persist attribute options.
@@ -31,8 +34,15 @@ use TechDivision\Import\Attribute\Utils\MemberNames;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInterface
+class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInterface, FileUploadSubjectInterface
 {
+
+    /**
+     * The trait that provides file upload functionality.
+     *
+     * @var \TechDivision\Import\Subjects\FileUploadTrait
+     */
+    use FileUploadTrait;
 
     /**
      * The ID of the option that has been created recently.
@@ -47,6 +57,38 @@ class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInt
      * @var array
      */
     protected $attributeCodeValueOptionIdMapping = array();
+
+    /**
+     * Initializes the previously loaded global data for exactly one bunch.
+     *
+     * @param string $serial The serial of the actual import
+     *
+     * @return void
+     */
+    public function setUp($serial)
+    {
+
+        // initialize media directory => can be absolute or relative
+        if ($this->getConfiguration()->hasParam(ConfigurationKeys::MEDIA_DIRECTORY)) {
+            $this->setMediaDir(
+                $this->resolvePath(
+                    $this->getConfiguration()->getParam(ConfigurationKeys::MEDIA_DIRECTORY)
+                )
+            );
+        }
+
+        // initialize images directory => can be absolute or relative
+        if ($this->getConfiguration()->hasParam(ConfigurationKeys::IMAGES_FILE_DIRECTORY)) {
+            $this->setImagesFileDir(
+                $this->resolvePath(
+                    $this->getConfiguration()->getParam(ConfigurationKeys::IMAGES_FILE_DIRECTORY)
+                )
+            );
+        }
+
+        // prepare the callbacks
+        parent::setUp($serial);
+    }
 
     /**
      * Map's the passed attribue code and value to the option ID that has been created recently.

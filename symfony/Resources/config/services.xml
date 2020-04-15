@@ -203,6 +203,9 @@
         <service id="import_attribute.observer.attribute.option.swatch.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
+        <service id="import_attribute.observer.attribute.option.swatch.file_upload" class="TechDivision\Import\Attribute\Observers\AttributeOptionSwatchFileUploadObserver">
+            <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+        </service>
         <service id="import_attribute.observer.entity.attribute" class="TechDivision\Import\Attribute\Observers\EntityAttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
         </service>
@@ -284,6 +287,9 @@
             <call method="addObserver">
                 <argument id="import_attribute.observer.attribute.option.default" type="service"/>
             </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch.file_upload" type="service"/>
+            </call>
         </service>
 
         <!--
@@ -355,6 +361,9 @@
             </call>
             <call method="addObserver">
                 <argument id="import_attribute.observer.attribute.option.default" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute.observer.attribute.option.swatch.file_upload" type="service"/>
             </call>
         </service>
 

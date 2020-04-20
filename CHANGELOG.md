@@ -1,7 +1,12 @@
 # Version 18.0.0
 
+## Bugfixes
+
+* None
+
 ## Features
 
+* Add #PAC-85
 * Add techdivision/import-attribute#46 (Possibility to import files for option swatch)
 
 # Version 17.0.3

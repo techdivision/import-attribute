@@ -23,7 +23,7 @@ namespace TechDivision\Import\Attribute\Callbacks;
 use Doctrine\Common\Collections\Collection;
 use TechDivision\Import\SystemLoggerTrait;
 use TechDivision\Import\Utils\EntityStatus;
-use TechDivision\Import\ConfigurationInterface;
+use TechDivision\Import\Configuration\ConfigurationInterface;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
@@ -63,14 +63,14 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     /**
      * The configuration instance.
      *
-     * @var \TechDivision\Import\ConfigurationInterface
+     * @var \TechDivision\Import\Configuration\ConfigurationInterface
      */
     protected $configuration;
 
     /**
      * Initialize the handler with the passed logger collection, swatch type loader and attribute bunch processor instance.
      *
-     * @param \TechDivision\Import\ConfigurationInterface                              $configuration      The configuration instance
+     * @param \TechDivision\Import\Configuration\ConfigurationInterface                $configuration      The configuration instance
      * @param \Doctrine\Common\Collections\Collection                                  $systemLoggers      The collection containing the system loggers
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeProcessor The attribute bunch processor instance
      * @param \TechDivision\Import\Attribute\Callbacks\SwatchTypeLoaderInterface       $swatchTypeLoader   The swatch type loader instance
@@ -110,7 +110,7 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
     /**
      * Returns the configuration instance.
      *
-     * @return \TechDivision\Import\ConfigurationInterface The configuration instance
+     * @return \TechDivision\Import\Configuration\ConfigurationInterface The configuration instance
      */
     protected function getConfiguration()
     {

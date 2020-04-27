@@ -2,6 +2,10 @@
   "shortcuts": {
     "general": {
       "eav_attribute": {
+        "convert": [
+          "general/general/global-data",
+          "general/eav_attribute/convert"
+        ],
         "validate": [
           "general/general/global-data",
           "general/general/move-files",

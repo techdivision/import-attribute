@@ -1,6 +1,6 @@
 {
     "name": "techdivision/import-attribute",
-    "description": "M2IF library providing basic Magento 2 attribute import functionality",
+    "description": "Pacemaker library providing basic Magento 2 attribute import functionality",
     "license": "OSL-3.0",
     "require": {
         "php": ">=7.1.0",

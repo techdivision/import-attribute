@@ -24,6 +24,8 @@ use TechDivision\Import\Utils\RegistryKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Subjects\AbstractSubject;
 use TechDivision\Import\Subjects\EntitySubjectInterface;
+use TechDivision\Import\Subjects\CleanUpColumnsSubjectInterface;
+use TechDivision\Import\Attribute\Utils\ConfigurationKeys;
 
 /**
  * The abstract product subject implementation that provides basic attribute
@@ -35,7 +37,7 @@ use TechDivision\Import\Subjects\EntitySubjectInterface;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-abstract class AbstractAttributeSubject extends AbstractSubject implements AttributeSubjectInterface, EntitySubjectInterface
+abstract class AbstractAttributeSubject extends AbstractSubject implements AttributeSubjectInterface, EntitySubjectInterface, CleanUpColumnsSubjectInterface
 {
 
     /**
@@ -144,5 +146,26 @@ abstract class AbstractAttributeSubject extends AbstractSubject implements Attri
 
         // return the entity type ID
         return $entityType[MemberNames::ENTITY_TYPE_ID];
+    }
+
+    /**
+     * Merge the columns from the configuration with all image type columns to define which
+     * columns should be cleaned-up.
+     *
+     * @return array The columns that has to be cleaned-up
+     */
+    public function getCleanUpColumns()
+    {
+
+        // initialize the array for the columns that has to be cleaned-up
+        $cleanUpColumns = array();
+
+        // query whether or not an array has been specified in the configuration
+        if ($this->getConfiguration()->hasParam(ConfigurationKeys::CLEAN_UP_EMPTY_COLUMNS)) {
+            $cleanUpColumns = $this->getConfiguration()->getParam(ConfigurationKeys::CLEAN_UP_EMPTY_COLUMNS);
+        }
+
+        // return the array with the column names
+        return $cleanUpColumns;
     }
 }

@@ -297,4 +297,11 @@ class MemberNames extends \TechDivision\Import\Utils\MemberNames
      * @var string
      */
     const ATTRIBUTE_GROUP_ID = 'attribute_group_id';
+
+    /**
+     * Name for the member 'swatch_id'.
+     *
+     * @var string
+     */
+    const SWATCH_ID = 'swatch_id';
 }

@@ -20,9 +20,13 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Utils\BackendTypeKeys;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Observers\AttributeLoaderInterface;
+use TechDivision\Import\Observers\DynamicAttributeObserverInterface;
 
 /**
  * Observer that create's the attribute options found in the additional CSV file.
@@ -33,7 +37,7 @@ use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class AttributeOptionObserver extends AbstractAttributeImportObserver
+class AttributeOptionObserver extends AbstractAttributeImportObserver implements DynamicAttributeObserverInterface
 {
 
     /**
@@ -44,13 +48,31 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
     protected $attributeBunchProcessor;
 
     /**
+     * The attribute loader instance.
+     *
+     * @var \TechDivision\Import\Observers\AttributeLoaderInterface
+     */
+    protected $attributeLoader;
+
+    /**
+     * Initialize the dedicated column.
+     *
+     * @var array
+     */
+    protected $columns = array(MemberNames::SORT_ORDER => array(ColumnKeys::SORT_ORDER, BackendTypeKeys::BACKEND_TYPE_INT));
+
+    /**
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Observers\AttributeLoaderInterface                  $attributeLoader         The attribute loader instance
      */
-    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
-    {
+    public function __construct(
+        AttributeBunchProcessorInterface $attributeBunchProcessor,
+        AttributeLoaderInterface $attributeLoader = null
+    ) {
         $this->attributeBunchProcessor = $attributeBunchProcessor;
+        $this->attributeLoader = $attributeLoader;
     }
 
     /**
@@ -70,10 +92,21 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
         $this->prepareStoreViewCode();
 
         // prepare the attribue values
-        $attributeOption = $this->initializeAttribute($this->prepareAttributes());
+        $attributeOption = $this->initializeAttribute($this->prepareDynamicAttributes());
 
         // insert the attribute option and set the option ID
         $this->setLastOptionId($this->persistAttributeOption($attributeOption));
+    }
+
+    /**
+     * Appends the dynamic to the static attributes for the EAV attribute
+     * and returns them.
+     *
+     * @return array The array with all available attributes
+     */
+    protected function prepareDynamicAttributes()
+    {
+        return array_merge($this->prepareAttributes(), $this->attributeLoader ? $this->attributeLoader->load($this, $this->columns) : array());
     }
 
     /**
@@ -88,16 +121,24 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver
         $attribute = $this->loadAttributeByEntityTypeIdAndAttributeCode($this->getEntityTypeId(), $this->getValue(ColumnKeys::ATTRIBUTE_CODE));
         $attributeId = $attribute[MemberNames::ATTRIBUTE_ID];
 
-        // load the sort order
-        $sortOrder = $this->getValue(ColumnKeys::SORT_ORDER);
-
         // return the prepared attribute option
         return $this->initializeEntity(
-            array(
-                MemberNames::ATTRIBUTE_ID  => $attributeId,
-                MemberNames::SORT_ORDER    => $sortOrder
+            $this->loadRawEntity(
+                array(MemberNames::ATTRIBUTE_ID => $attributeId)
             )
         );
+    }
+
+    /**
+     * Load's and return's a raw customer entity without primary key but the mandatory members only and nulled values.
+     *
+     * @param array $data An array with data that will be used to initialize the raw entity with
+     *
+     * @return array The initialized entity
+     */
+    protected function loadRawEntity(array $data = array())
+    {
+        return $this->getAttributeBunchProcessor()->loadRawEntity(EntityTypeCodes::EAV_ATTRIBUTE_OPTION, $data);
     }
 
     /**

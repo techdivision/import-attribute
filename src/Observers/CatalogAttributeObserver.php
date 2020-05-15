@@ -23,6 +23,7 @@ namespace TechDivision\Import\Attribute\Observers;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
 
 /**
  * Observer that create's the EAV catalog attribute itself.
@@ -48,7 +49,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      *
      * @var array
      */
-    protected $swatchTypes = array('text', 'visual');
+    protected $swatchTypes = array('text', 'visual', 'image');
 
     /**
      * The attribute processor instance.
@@ -179,7 +180,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         }
 
         // return the prepared product
-        return $this->initializeEntity($attr);
+        return $this->initializeEntity($this->loadRawEntity($attr));
     }
 
     /**
@@ -199,6 +200,18 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
 
         // return the attribute
         return $attr;
+    }
+
+    /**
+     * Load's and return's a raw customer entity without primary key but the mandatory members only and nulled values.
+     *
+     * @param array $data An array with data that will be used to initialize the raw entity with
+     *
+     * @return array The initialized entity
+     */
+    protected function loadRawEntity(array $data = array())
+    {
+        return $this->getAttributeBunchProcessor()->loadRawEntity(EntityTypeCodes::CATALOG_EAV_ATTRIBUTE, $data);
     }
 
     /**

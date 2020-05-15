@@ -121,6 +121,9 @@
                   "file-resolver": {
                     "prefix": "attribute-import"
                   },
+                  "params": {
+                    "clean-up-empty-columns": []
+                  },
                   "observers": [
                     {
                       "import": [
@@ -144,7 +147,10 @@
                     "prefix": "option-import"
                   },
                   "params": {
-                    "copy-images": false
+                    "copy-images": false,
+                    "media-directory" : "pub/media/attribute/swatch",
+                    "images-file-directory" : "var/importexport/media/attribute/swatch",
+                    "clean-up-empty-columns": []
                   },
                   "observers": [
                     {
@@ -212,6 +218,9 @@
                   "file-resolver": {
                     "prefix": "attribute-import"
                   },
+                  "params": {
+                    "clean-up-empty-columns": []
+                  },
                   "observers": [
                     {
                       "import": [
@@ -235,7 +244,10 @@
                     "prefix": "option-import"
                   },
                   "params": {
-                    "copy-images": false
+                    "copy-images": false,
+                    "media-directory" : "pub/media/attribute/swatch",
+                    "images-file-directory" : "var/importexport/media/attribute/swatch",
+                    "clean-up-empty-columns": []
                   },
                   "observers": [
                     {

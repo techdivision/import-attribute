@@ -24,6 +24,7 @@ use PHPUnit\Framework\TestCase;
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
 
 /**
  * Test class for the catalog attribute observer implementation.
@@ -158,8 +159,8 @@ class CatalogAttributeObserverTest extends TestCase
 
         // initialize the expected entity that should be persisted
         $expectedEntity = array(
-            MemberNames::ATTRIBUTE_ID                  => $lastAttributeId,
-            EntityStatus::MEMBER_NAME                  => EntityStatus::STATUS_CREATE
+            MemberNames::ATTRIBUTE_ID => $lastAttributeId,
+            EntityStatus::MEMBER_NAME => EntityStatus::STATUS_CREATE
         );
 
         // mock the method that persists the entity
@@ -167,6 +168,10 @@ class CatalogAttributeObserverTest extends TestCase
                                  ->method('persistCatalogAttribute')
                                  ->with($expectedEntity)
                                  ->willReturn(null);
+        $this->mockBunchProcessor->expects($this->once())
+                                 ->method('loadRawEntity')
+                                 ->with(EntityTypeCodes::CATALOG_EAV_ATTRIBUTE, array(MemberNames::ATTRIBUTE_ID => $lastAttributeId))
+                                 ->willReturn($expectedEntity);
 
         // invoke the handle method
         $this->assertSame($row, $this->observer->handle($mockSubject));

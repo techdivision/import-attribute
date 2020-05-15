@@ -30,6 +30,7 @@ use TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterfac
 use TechDivision\Import\Attribute\Repositories\EntityAttributeRepositoryInterface;
 use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepositoryInterface;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepositoryInterface;
+use TechDivision\Import\Loaders\LoaderInterface;
 
 /**
  * The attribute bunch processor implementation.
@@ -156,6 +157,13 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     protected $entityAttributeAction;
 
     /**
+     * The raw entity loader instance.
+     *
+     * @var \TechDivision\Import\Loaders\LoaderInterface
+     */
+    protected $rawEntityLoader;
+
+    /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
      * @param \TechDivision\Import\Connection\ConnectionInterface                                  $connection                        The connection to use
@@ -174,6 +182,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Actions\ActionInterface                                         $attributeOptionSwatchAction       The attribute option swatch action instance
      * @param \TechDivision\Import\Actions\ActionInterface                                         $catalogAttributeAction            The catalog attribute action instance
      * @param \TechDivision\Import\Actions\ActionInterface                                         $entityAttributeAction             The entity attribute action instance
+     * @param \TechDivision\Import\Loaders\LoaderInterface                                         $rawEntityLoader                   The raw entity loader instance
      */
     public function __construct(
         ConnectionInterface $connection,
@@ -191,7 +200,8 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         ActionInterface $attributeOptionValueAction,
         ActionInterface $attributeOptionSwatchAction,
         ActionInterface $catalogAttributeAction,
-        ActionInterface $entityAttributeAction
+        ActionInterface $entityAttributeAction,
+        LoaderInterface $rawEntityLoader
     ) {
         $this->setConnection($connection);
         $this->setAttributeRepository($attributeRepository);
@@ -209,6 +219,29 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
         $this->setAttributeOptionSwatchAction($attributeOptionSwatchAction);
         $this->setCatalogAttributeAction($catalogAttributeAction);
         $this->setEntityAttributeAction($entityAttributeAction);
+        $this->setRawEntityLoader($rawEntityLoader);
+    }
+
+    /**
+     * Set's the raw entity loader instance.
+     *
+     * @param \TechDivision\Import\Loaders\LoaderInterface $rawEntityLoader The raw entity loader instance to set
+     *
+     * @return void
+     */
+    public function setRawEntityLoader(LoaderInterface $rawEntityLoader)
+    {
+        $this->rawEntityLoader = $rawEntityLoader;
+    }
+
+    /**
+     * Return's the raw entity loader instance.
+     *
+     * @return \TechDivision\Import\Loaders\LoaderInterface The raw entity loader instance
+     */
+    public function getRawEntityLoader()
+    {
+        return $this->rawEntityLoader;
     }
 
     /**
@@ -605,6 +638,19 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     public function getEntityAttributeAction()
     {
         return $this->entityAttributeAction;
+    }
+
+    /**
+     * Load's and return's a raw entity without primary key but the mandatory members only and nulled values.
+     *
+     * @param string $entityTypeCode The entity type code to return the raw entity for
+     * @param array  $data           An array with data that will be used to initialize the raw entity with
+     *
+     * @return array The initialized entity
+     */
+    public function loadRawEntity($entityTypeCode, array $data = array())
+    {
+        return $this->getRawEntityLoader()->load($entityTypeCode, $data);
     }
 
     /**

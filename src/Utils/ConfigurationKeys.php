@@ -19,7 +19,7 @@ namespace TechDivision\Import\Attribute\Utils;
  * @link      https://github.com/techdivision/import-product
  * @link      https://www.techdivision.com
  */
-class ConfigurationKeys
+class ConfigurationKeys extends \TechDivision\Import\Utils\ConfigurationKeys
 {
 
     /**

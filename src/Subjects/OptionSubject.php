@@ -20,10 +20,12 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
-use TechDivision\Import\Attribute\Utils\ConfigurationKeys;
+use TechDivision\Import\Utils\BackendTypeKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Subjects\FileUploadSubjectInterface;
+use TechDivision\Import\Attribute\Utils\ConfigurationKeys;
 use TechDivision\Import\Subjects\FileUploadTrait;
+use TechDivision\Import\Subjects\FileUploadSubjectInterface;
+use TechDivision\Import\Subjects\CastValueSubjectInterface;
 
 /**
  * The subject implementation that handles the business logic to persist attribute options.
@@ -34,7 +36,7 @@ use TechDivision\Import\Subjects\FileUploadTrait;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInterface, FileUploadSubjectInterface
+class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInterface, FileUploadSubjectInterface, CastValueSubjectInterface
 {
 
     /**
@@ -68,22 +70,27 @@ class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInt
     public function setUp($serial)
     {
 
+        // initialize the flag whether to copy images or not
+        if ($this->getConfiguration()->hasParam(ConfigurationKeys::COPY_IMAGES)) {
+            $this->setCopyImages($this->getConfiguration()->getParam(ConfigurationKeys::COPY_IMAGES));
+        }
+
         // initialize media directory => can be absolute or relative
         if ($this->getConfiguration()->hasParam(ConfigurationKeys::MEDIA_DIRECTORY)) {
-            $this->setMediaDir(
-                $this->resolvePath(
-                    $this->getConfiguration()->getParam(ConfigurationKeys::MEDIA_DIRECTORY)
-                )
-            );
+            try {
+                $this->setMediaDir($this->resolvePath($this->getConfiguration()->getParam(ConfigurationKeys::MEDIA_DIRECTORY)));
+            } catch (\InvalidArgumentException $iae) {
+                $this->getSystemLogger()->warning($iae);
+            }
         }
 
         // initialize images directory => can be absolute or relative
         if ($this->getConfiguration()->hasParam(ConfigurationKeys::IMAGES_FILE_DIRECTORY)) {
-            $this->setImagesFileDir(
-                $this->resolvePath(
-                    $this->getConfiguration()->getParam(ConfigurationKeys::IMAGES_FILE_DIRECTORY)
-                )
-            );
+            try {
+                $this->setImagesFileDir($this->resolvePath($this->getConfiguration()->getParam(ConfigurationKeys::IMAGES_FILE_DIRECTORY)));
+            } catch (\InvalidArgumentException $iae) {
+                $this->getSystemLogger()->warning($iae);
+            }
         }
 
         // prepare the callbacks
@@ -158,5 +165,39 @@ class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInt
     public function preLoadOptionId(array $attributeOption)
     {
         $this->setLastOptionId($attributeOption[MemberNames::OPTION_ID]);
+    }
+
+    /**
+     * Cast's the passed value based on the backend type information.
+     *
+     * @param string $backendType The backend type to cast to
+     * @param mixed  $value       The value to be casted
+     *
+     * @return mixed The casted value
+     */
+    public function castValueByBackendType($backendType, $value)
+    {
+
+        // cast the value to a valid timestamp
+        if ($backendType === BackendTypeKeys::BACKEND_TYPE_DATETIME) {
+            return $this->getDateConverter()->convert($value);
+        }
+
+        // cast the value to a string that represents the float/decimal value, because
+        // PHP will cast float values implicitly to the system locales format when
+        // rendering as string, e. g. with echo
+        if ($backendType === BackendTypeKeys::BACKEND_TYPE_FLOAT ||
+            $backendType === BackendTypeKeys::BACKEND_TYPE_DECIMAL
+        ) {
+            return (string) $this->getNumberConverter()->parse($value);
+        }
+
+        // cast the value to an integer
+        if ($backendType === BackendTypeKeys::BACKEND_TYPE_INT) {
+            return (integer) $value;
+        }
+
+        // we don't need to cast strings
+        return $value;
     }
 }

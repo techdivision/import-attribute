@@ -47,7 +47,7 @@ class CatalogAttributeUpdateObserverTest extends TestCase
     /**
      * The mock bunch processor instance.
      *
-     * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $mockBunchProcessor;
 
@@ -198,7 +198,10 @@ class CatalogAttributeUpdateObserverTest extends TestCase
                                  ->method('persistCatalogAttribute')
                                  ->with($expectedEntity)
                                  ->willReturn(null);
-
+        // mock the method that loads the raw entity
+        $this->mockBunchProcessor->expects($this->once())
+                                 ->method('loadRawEntity')
+                                 ->willReturnArgument(1);
         // invoke the handle method
         $this->assertSame($row, $this->observer->handle($mockSubject));
     }
@@ -453,6 +456,10 @@ class CatalogAttributeUpdateObserverTest extends TestCase
                                  ->method('persistCatalogAttribute')
                                  ->with($expectedEntity)
                                  ->willReturn(null);
+        // mock the method that loads the raw entity
+        $this->mockBunchProcessor->expects($this->once())
+                                 ->method('loadRawEntity')
+                                 ->willReturnArgument(1);
 
         // invoke the handle method
         $this->assertSame($row, $this->observer->handle($mockSubject));

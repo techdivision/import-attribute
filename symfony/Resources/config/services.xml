@@ -187,9 +187,11 @@
         </service>
         <service id="import_attribute.observer.attribute.option" class="TechDivision\Import\Attribute\Observers\AttributeOptionObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import.observer.dynamic.attribute.loader"/>
         </service>
         <service id="import_attribute.observer.attribute.option.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import.observer.dynamic.attribute.loader"/>
         </service>
         <service id="import_attribute.observer.attribute.option.value" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
@@ -406,6 +408,12 @@
             </call>
         </service>
 
+        <service id="import_attribute.loader.raw.entity" class="TechDivision\Import\Attribute\Loaders\RawEntityLoader">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import.loader.column.metadata"/>
+            <argument type="service" id="import.loader.raw.entity"/>
+        </service>
+
         <service id="import_attribute.processor.attribute.bunch" class="TechDivision\Import\Attribute\Services\AttributeBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.attribute"/>
@@ -423,6 +431,7 @@
             <argument type="service" id="import_attribute.action.attribute.option.swatch"/>
             <argument type="service" id="import_attribute.action.catalog.attribute"/>
             <argument type="service" id="import_attribute.action.entity.attribute"/>
+            <argument type="service" id="import_attribute.loader.raw.entity"/>
         </service>
 
         <service id="import_attribute.subject.bunch" class="TechDivision\Import\Attribute\Subjects\BunchSubject" shared="false">

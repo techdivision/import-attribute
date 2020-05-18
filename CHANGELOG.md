@@ -1,3 +1,13 @@
+# Version 19.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Replace default SQL statement compiler with dynamic compiler implementation
+
 # Version 19.0.0
 
 ## Bugfixes

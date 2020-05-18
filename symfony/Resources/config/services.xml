@@ -5,8 +5,29 @@
 
     <services>
 
+        <!--
+         | The DI utility configuration
+         |-->
+        <service id="import_attribute_set.util.sql.compilers" class="\ArrayObject">
+            <call method="append">
+                <argument id="import.util.primary.key" type="service"/>
+            </call>
+            <call method="append">
+                <argument id="import.util.table.prefix" type="service"/>
+            </call>
+            <call method="append">
+                <argument id="import.util.column.names" type="service"/>
+            </call>
+            <call method="append">
+                <argument id="import.util.column.placeholders" type="service"/>
+            </call>
+            <call method="append">
+                <argument id="import.util.column.values" type="service"/>
+            </call>
+        </service>
+
         <service id="import_attribute.repository.sql.statement" class="TechDivision\Import\Attribute\Repositories\SqlStatementRepository">
-            <argument type="service" id="import.util.sql.compilers"/>
+            <argument type="service" id="import_attribute_set.util.sql.compilers"/>
         </service>
         <service id="import_attribute.repository.attribute" class="TechDivision\Import\Attribute\Repositories\AttributeRepository">
             <argument type="service" id="connection"/>

@@ -204,12 +204,9 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                      :store_id,
                      :value)',
         SqlStatementKeys::CREATE_ATTRIBUTE_OPTION =>
-            'INSERT
-               INTO ${table:eav_attribute_option}
-                    (attribute_id,
-                     sort_order)
-             VALUES (:attribute_id,
-                     :sort_order)',
+            'INSERT ${table:eav_attribute_option}
+                    (${column-names:eav_attribute_option})
+             VALUES (${column-placeholders:eav_attribute_option})',
         SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_VALUE =>
             'INSERT
                INTO ${table:eav_attribute_option_value}
@@ -269,8 +266,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
               WHERE attribute_label_id = :attribute_label_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION =>
             'UPDATE ${table:eav_attribute_option}
-                SET attribute_id = :attribute_id,
-                    sort_order = :sort_order
+                SET ${column-values:eav_attribute_option}
               WHERE option_id = :option_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_VALUE =>
             'UPDATE ${table:eav_attribute_option_value}

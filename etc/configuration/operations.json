@@ -121,9 +121,6 @@
                   "file-resolver": {
                     "prefix": "attribute-import"
                   },
-                  "params": {
-                    "clean-up-empty-columns": []
-                  },
                   "observers": [
                     {
                       "import": [

@@ -1,3 +1,13 @@
+# Version 19.1.1
+
+## Bugfixes
+
+* Fixed invalid Symfony DI configuration for SQL compilers
+
+## Features
+
+* None
+
 # Version 19.1.0
 
 ## Bugfixes

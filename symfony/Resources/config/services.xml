@@ -8,7 +8,7 @@
         <!--
          | The DI utility configuration
          |-->
-        <service id="import_attribute_set.util.sql.compilers" class="\ArrayObject">
+        <service id="import_attribute.util.sql.compilers" class="\ArrayObject">
             <call method="append">
                 <argument id="import.util.primary.key" type="service"/>
             </call>
@@ -27,7 +27,7 @@
         </service>
 
         <service id="import_attribute.repository.sql.statement" class="TechDivision\Import\Attribute\Repositories\SqlStatementRepository">
-            <argument type="service" id="import_attribute_set.util.sql.compilers"/>
+            <argument type="service" id="import_attribute.util.sql.compilers"/>
         </service>
         <service id="import_attribute.repository.attribute" class="TechDivision\Import\Attribute\Repositories\AttributeRepository">
             <argument type="service" id="connection"/>

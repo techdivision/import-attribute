@@ -76,7 +76,8 @@ class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInt
         }
 
         // initialize the flag whether to override images or not
-        // TODO: Create new constant ConfigurationKeys::OVERRIDE_IMAGES for future release
+        // @todo https://github.com/techdivision/import/issues/181
+        //       Create new constant ConfigurationKeys::OVERRIDE_IMAGES for future release
         if ($this->getConfiguration()->hasParam('override-images')) {
             $this->setOverrideImages($this->getConfiguration()->getParam('override-images'));
         }

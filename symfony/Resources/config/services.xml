@@ -6,28 +6,47 @@
     <services>
 
         <!--
-         | The DI utility configuration
+         | The DI configuration for the entity mergers
          |-->
-        <service id="import_attribute.util.sql.compilers" class="\ArrayObject">
+        <service id="import_attribute.loader.header.mapping.attribute.option" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
+            <argument type="service" id="import.loader.header.mapping"/>
+            <argument type="constant">TechDivision\Import\Attribute\Utils\EntityTypeCodes::EAV_ATTRIBUTE_OPTION</argument>
+        </service>
+        <service id="import_attribute.loader.header.mapping.entity.attribute" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
+            <argument type="service" id="import.loader.header.mapping"/>
+            <argument type="constant">TechDivision\Import\Attribute\Utils\EntityTypeCodes::EAV_ENTITY_ATTRIBUTTE</argument>
+        </service>
+        <service id="import_attribute.loader.header.mapping.catalog.attribute" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
+            <argument type="service" id="import.loader.header.mapping"/>
+            <argument type="constant">TechDivision\Import\Attribute\Utils\EntityTypeCodes::CATALOG_EAV_ATTRIBUTE</argument>
+        </service>
+        <service id="import_attribute.entity.merger.empty.columns.attribute.option" class="TechDivision\Import\Observers\EntityMergers\CleanUpColumnsEntityMerger">
+            <argument type="service" id="import_attribute.loader.header.mapping.attribute.option"/>
+        </service>
+        <service id="import_attribute.entity.merger.empty.columns.entity.attribute" class="TechDivision\Import\Observers\EntityMergers\CleanUpColumnsEntityMerger">
+            <argument type="service" id="import_attribute.loader.header.mapping.entity.attribute"/>
+        </service>
+        <service id="import_attribute.entity.merger.empty.columns.catalog.attribute" class="TechDivision\Import\Observers\EntityMergers\CleanUpColumnsEntityMerger">
+            <argument type="service" id="import_attribute.loader.header.mapping.catalog.attribute"/>
+        </service>
+        <service id="import_attribute.entity.merger.composite.attribute.option" class="TechDivision\Import\Observers\EntityMergers\GenericCompositeEntityMerger">
             <call method="append">
-                <argument id="import.util.primary.key" type="service"/>
+                <argument type="service" id="import_attribute.entity.merger.empty.columns.attribute.option"/>
             </call>
+        </service>
+        <service id="import_attribute.entity.merger.composite.entity.attribute" class="TechDivision\Import\Observers\EntityMergers\GenericCompositeEntityMerger">
             <call method="append">
-                <argument id="import.util.table.prefix" type="service"/>
+                <argument type="service" id="import_attribute.entity.merger.empty.columns.entity.attribute"/>
             </call>
+        </service>
+        <service id="import_attribute.entity.merger.composite.catalog.attribute" class="TechDivision\Import\Observers\EntityMergers\GenericCompositeEntityMerger">
             <call method="append">
-                <argument id="import.util.column.names" type="service"/>
-            </call>
-            <call method="append">
-                <argument id="import.util.column.placeholders" type="service"/>
-            </call>
-            <call method="append">
-                <argument id="import.util.column.values" type="service"/>
+                <argument type="service" id="import_attribute.entity.merger.empty.columns.catalog.attribute"/>
             </call>
         </service>
 
         <service id="import_attribute.repository.sql.statement" class="TechDivision\Import\Attribute\Repositories\SqlStatementRepository">
-            <argument type="service" id="import_attribute.util.sql.compilers"/>
+            <argument type="service" id="import.util.sql.compilers"/>
         </service>
         <service id="import_attribute.repository.attribute" class="TechDivision\Import\Attribute\Repositories\AttributeRepository">
             <argument type="service" id="connection"/>
@@ -81,10 +100,12 @@
         <service id="import_attribute.action.processor.attribute.option.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionCreateProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionUpdateProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
         </service>
         <service id="import_attribute.action.processor.attribute.option.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionDeleteProcessor">
             <argument type="service" id="connection"/>
@@ -117,10 +138,12 @@
         <service id="import_attribute.action.processor.catalog.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeCreateProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
         </service>
         <service id="import_attribute.action.processor.catalog.attribute.update" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeUpdateProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
         </service>
         <service id="import_attribute.action.processor.catalog.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeDeleteProcessor">
             <argument type="service" id="connection"/>
@@ -199,9 +222,11 @@
         </service>
         <service id="import_attribute.observer.catalog.attribute" class="TechDivision\Import\Attribute\Observers\CatalogAttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import_attribute.entity.merger.composite.catalog.attribute"/>
         </service>
         <service id="import_attribute.observer.catalog.attribute.update" class="TechDivision\Import\Attribute\Observers\CatalogAttributeUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import_attribute.entity.merger.composite.catalog.attribute"/>
         </service>
         <service id="import_attribute.observer.clear.attribute" class="TechDivision\Import\Attribute\Observers\ClearAttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
@@ -209,10 +234,12 @@
         <service id="import_attribute.observer.attribute.option" class="TechDivision\Import\Attribute\Observers\AttributeOptionObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
             <argument type="service" id="import.observer.dynamic.attribute.loader"/>
+            <argument type="service" id="import_attribute.entity.merger.composite.attribute.option"/>
         </service>
         <service id="import_attribute.observer.attribute.option.update" class="TechDivision\Import\Attribute\Observers\AttributeOptionUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
             <argument type="service" id="import.observer.dynamic.attribute.loader"/>
+            <argument type="service" id="import_attribute.entity.merger.composite.attribute.option"/>
         </service>
         <service id="import_attribute.observer.attribute.option.value" class="TechDivision\Import\Attribute\Observers\AttributeOptionValueObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
@@ -231,9 +258,11 @@
         </service>
         <service id="import_attribute.observer.entity.attribute" class="TechDivision\Import\Attribute\Observers\EntityAttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import_attribute.entity.merger.composite.entity.attribute"/>
         </service>
         <service id="import_attribute.observer.entity.attribute.update" class="TechDivision\Import\Attribute\Observers\EntityAttributeUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
+            <argument type="service" id="import_attribute.entity.merger.composite.entity.attribute"/>
         </service>
         <service id="import_attribute.observer.attribute.option.default" class="TechDivision\Import\Attribute\Observers\AttributeDefaultOptionObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>

@@ -40,6 +40,13 @@ class EntityTypeCodes extends \TechDivision\Import\Utils\EntityTypeCodes
     const EAV_ATTRIBUTE_OPTION = 'eav_attribute_option';
 
     /**
+     * Key for the product entity 'eav_entity_attribute'.
+     *
+     * @var string
+     */
+    const EAV_ENTITY_ATTRIBUTTE = 'eav_entity_attribute';
+
+    /**
      * Key for the product entity 'catalog_eav_attribute'.
      *
      * @var string

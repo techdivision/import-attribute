@@ -20,10 +20,13 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
+use TechDivision\Import\Observers\StateDetectorInterface;
+use TechDivision\Import\Observers\EntityMergers\EntityMergerInterface;
 
 /**
  * Observer that create's the EAV catalog attribute itself.
@@ -57,6 +60,13 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
      */
     protected $attributeBunchProcessor;
+
+    /**
+     * The collection with entity merger instances.
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $entityMergers;
 
     /**
      * The array with the possible column names.
@@ -93,10 +103,21 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface       $entityMerger            The entity merger instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
-    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
-    {
+    public function __construct(
+        AttributeBunchProcessorInterface $attributeBunchProcessor,
+        EntityMergerInterface $entityMerger = null,
+        StateDetectorInterface $stateDetector = null
+    ) {
+
+        // initialize the bunch processor and the entity merger instance
         $this->attributeBunchProcessor = $attributeBunchProcessor;
+        $this->entityMerger = $entityMerger;
+
+        // pass the state detector to the parent method
+        parent::__construct($stateDetector);
     }
 
     /**
@@ -114,6 +135,26 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
 
         // initialize and persist the EAV catalog attribute
         $this->persistCatalogAttribute($this->initializeAttribute($this->prepareAttributes()));
+    }
+
+    /**
+     * Merge's and return's the entity with the passed attributes and set's the
+     * passed status.
+     *
+     * @param array       $entity        The entity to merge the attributes into
+     * @param array       $attr          The attributes to be merged
+     * @param string|null $changeSetName The change set name to use
+     *
+     * @return array The merged entity
+     * @todo https://github.com/techdivision/import/issues/179
+     */
+    protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
+    {
+        return array_merge(
+            $entity,
+            $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr,
+            array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $attr, $changeSetName))
+        );
     }
 
     /**

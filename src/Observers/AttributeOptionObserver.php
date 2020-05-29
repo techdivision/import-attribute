@@ -20,13 +20,16 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Utils\BackendTypeKeys;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Observers\StateDetectorInterface;
 use TechDivision\Import\Observers\AttributeLoaderInterface;
 use TechDivision\Import\Observers\DynamicAttributeObserverInterface;
+use TechDivision\Import\Observers\EntityMergers\EntityMergerInterface;
 
 /**
  * Observer that create's the attribute options found in the additional CSV file.
@@ -55,6 +58,13 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
     protected $attributeLoader;
 
     /**
+     * The collection with entity merger instances.
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $entityMergers;
+
+    /**
      * Initialize the dedicated column.
      *
      * @var array
@@ -66,13 +76,23 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
      * @param \TechDivision\Import\Observers\AttributeLoaderInterface                  $attributeLoader         The attribute loader instance
+     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface       $entityMerger            The entity merger instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
     public function __construct(
         AttributeBunchProcessorInterface $attributeBunchProcessor,
-        AttributeLoaderInterface $attributeLoader = null
+        AttributeLoaderInterface $attributeLoader = null,
+        EntityMergerInterface $entityMerger = null,
+        StateDetectorInterface $stateDetector = null
     ) {
+
+            // initialize the bunch processor, the attribute loader and the entity merger instance
         $this->attributeBunchProcessor = $attributeBunchProcessor;
         $this->attributeLoader = $attributeLoader;
+        $this->entityMerger = $entityMerger;
+
+        // pass the state detector to the parent method
+        parent::__construct($stateDetector);
     }
 
     /**
@@ -96,6 +116,26 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
 
         // insert the attribute option and set the option ID
         $this->setLastOptionId($this->persistAttributeOption($attributeOption));
+    }
+
+    /**
+     * Merge's and return's the entity with the passed attributes and set's the
+     * passed status.
+     *
+     * @param array       $entity        The entity to merge the attributes into
+     * @param array       $attr          The attributes to be merged
+     * @param string|null $changeSetName The change set name to use
+     *
+     * @return array The merged entity
+     * @todo https://github.com/techdivision/import/issues/179
+     */
+    protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
+    {
+        return array_merge(
+            $entity,
+            $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr,
+            array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $attr, $changeSetName))
+        );
     }
 
     /**

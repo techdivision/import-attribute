@@ -29,7 +29,9 @@
                   ],
                   "params" : {
                     "custom-validations" : {
-                      "attribute_code": [ "/^\\w+$/" ]
+                      "attribute_code": [ "/^\\w+$/" ],
+                      "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
+                      "frontend_input": [ "text", "select", "textarea", "multiselect", "boolean", "date", "gallery", "price", "media_image", "weight" ]
                     }
                   },
                   "observers": [
@@ -43,9 +45,11 @@
                     {
                       "store_view_code": [ "import.callback.store.view.code.validator" ],
                       "attribute_code": [ "import.callback.custom.regex.validator" ],
-                      "entity_type_code": [ "import.callback.entity.type.code.validator" ],
+                      "entity_type_code": [ "import_attribute.callback.entity.type.code.validator" ],
                       "attribute_set_name": [ "import_attribute.callback.attribute.set.name.validator" ],
-                      "attribute_group_name": [ "import_attribute.callback.attribute.group.name.validator" ]
+                      "attribute_group_name": [ "import_attribute.callback.attribute.group.name.validator" ],
+                      "backend_type": [ "import_attribute.callback.array.validator.backend.type" ],
+                      "frontend_input": [ "import_attribute.callback.array.validator.frontend.input" ]
                     }
                   ]
                 }

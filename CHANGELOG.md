@@ -1,3 +1,13 @@
+# Version 20.1.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Fixed techdivision/import-attribute#52
+
 # Version 20.1.0
 
 ## Bugfixes
@@ -6,7 +16,7 @@
 
 ## Features
 
-* techdivision/import-attribute#51
+* Fixed techdivision/import-attribute#51
 
 # Version 20.0.0
 

@@ -273,27 +273,27 @@
          |-->
         <service id="import_attribute.callback.attribute.set.name.validator" class="TechDivision\Import\Attribute\Callbacks\AttributeSetNamesValidatorCallback">
             <argument type="service" id="import.loader.attribute.set.name"/>
-            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
         <service id="import_attribute.callback.attribute.group.name.validator" class="TechDivision\Import\Attribute\Callbacks\AttributeGroupNamesValidatorCallback">
             <argument type="service" id="import.loader.attribute.group.name"/>
-            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
         <service id="import_attribute.callback.array.validator.backend.type" class="TechDivision\Import\Callbacks\IndexedArrayValidatorCallback">
             <argument type="service" id="import.loader.custom.validations"/>
-            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
         <service id="import_attribute.callback.entity.type.code.validator" class="TechDivision\Import\Callbacks\ArrayValidatorCallback">
             <argument type="service" id="import.loader.entity.type.code"/>
-            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
         <service id="import_attribute.callback.array.validator.frontend.input" class="TechDivision\Import\Callbacks\IndexedArrayValidatorCallback">
             <argument type="service" id="import.loader.custom.validations"/>
-            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
 

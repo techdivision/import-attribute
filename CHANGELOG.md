@@ -1,3 +1,13 @@
+# Version 21.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove stack trace of exception for missing media directories > log a simple debug message instead
+
 # Version 20.1.1
 
 ## Bugfixes

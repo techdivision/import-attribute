@@ -1,3 +1,13 @@
+# Version 20.1.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Use only log message instead of stack trace for missing media directory
+
 # Version 20.1.1
 
 ## Bugfixes

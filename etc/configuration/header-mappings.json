@@ -1,0 +1,9 @@
+{
+  "header-mappings": {
+    "eav_entity_attribute": {
+      "entity_type_code": "entity_type_id",
+      "attribute_set_name": "attribute_set_id",
+      "attribute_group_name": "attribute_group_id"
+    }
+  }
+}

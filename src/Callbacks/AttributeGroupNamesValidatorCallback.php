@@ -81,22 +81,19 @@ class AttributeGroupNamesValidatorCallback extends IndexedArrayValidatorCallback
         $attributeSetNames = $subject->getValue(ColumnKeys::ATTRIBUTE_SET_NAME, array(), array($subject, 'explode'));
 
         // iterate over the attribute set names to load the available attribute group names therefore
-        foreach ($attributeSetNames as $attributeSetName) {
+        foreach ($attributeSetNames as $key => $attributeSetName) {
             // load the validations for the attribute set with the given name
             $validations = $this->getValidations($attributeSetName, $subject->getValue(ColumnKeys::ENTITY_TYPE_CODE));
 
-            // iterate over the attribute group names and validate them
-            foreach ($attributeGroupNames as $attributeGroupName) {
-                // query whether or not the value is valid
-                if (in_array($attributeGroupName, $validations)) {
-                    continue;
-                }
-
-                // throw an exception if the value is NOT in the array
-                throw new \InvalidArgumentException(
-                    sprintf('Found invalid attribute group name "%s"', $attributeGroupName)
-                );
+            // query whether or not the value is valid
+            if (isset($attributeGroupNames[$key]) && in_array($attributeGroupName = $attributeGroupNames[$key], $validations)) {
+                continue;
             }
+
+            // throw an exception if the value is NOT in the array
+            throw new \InvalidArgumentException(
+                sprintf('Found invalid attribute group name "%s"', $attributeGroupName)
+            );
         }
     }
 }

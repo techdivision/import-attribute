@@ -1,3 +1,13 @@
+# Version 20.1.3
+
+## Bugfixes
+
+* Fixed #PAC-243: Fixed issue of attributes that can not be updated
+
+## Features
+
+* Replace warning with stack trace of exception for missing media directories with debug level
+
 # Version 20.1.2
 
 ## Bugfixes

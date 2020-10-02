@@ -2,7 +2,7 @@
 
 ## Bugfixes
 
-* None
+* Fixed #PAC-243: Fixed issue of attributes that can not be updated
 
 ## Features
 

@@ -1,4 +1,4 @@
-# M2IF - Attribute Import
+# Pacemaker - Attribute Import
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/techdivision/import-attribute.svg?style=flat-square)](https://packagist.org/packages/techdivision/import-attribute) 
  [![Total Downloads](https://img.shields.io/packagist/dt/techdivision/import-attribute.svg?style=flat-square)](https://packagist.org/packages/techdivision/import-attribute)

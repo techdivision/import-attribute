@@ -24,6 +24,8 @@ use PHPUnit\Framework\TestCase;
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Observers\EntityMergers\EntityMergerInterface;
+use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * Test class for the catalog attribute update observer implementation.
@@ -52,6 +54,44 @@ class CatalogAttributeUpdateObserverTest extends TestCase
     protected $mockBunchProcessor;
 
     /**
+     * The mock entity merger instance.
+     *
+     * @var \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface
+     */
+    protected $mockEntityMerger;
+
+    /**
+     * The raw entity instance.
+     *
+     * @var array
+     */
+    protected $rawEntity = array(
+        MemberNames::FRONTEND_INPUT_RENDERER       => null,
+        MemberNames::IS_GLOBAL                     => 0,
+        MemberNames::IS_VISIBLE                    => 0,
+        MemberNames::IS_SEARCHABLE                 => 0,
+        MemberNames::IS_FILTERABLE                 => 0,
+        MemberNames::IS_COMPARABLE                 => 0,
+        MemberNames::IS_VISIBLE_ON_FRONT           => 0,
+        MemberNames::IS_HTML_ALLOWED_ON_FRONT      => 0,
+        MemberNames::IS_USED_FOR_PRICE_RULES       => 0,
+        MemberNames::IS_FILTERABLE_IN_SEARCH       => 0,
+        MemberNames::USED_IN_PRODUCT_LISTING       => 0,
+        MemberNames::USED_FOR_SORT_BY              => 0,
+        MemberNames::APPLY_TO                      => null,
+        MemberNames::IS_VISIBLE_IN_ADVANCED_SEARCH => 0,
+        MemberNames::POSITION                      => 0,
+        MemberNames::IS_WYSIWYG_ENABLED            => 0,
+        MemberNames::IS_USED_FOR_PROMO_RULES       => 0,
+        MemberNames::IS_REQUIRED_IN_ADMIN_STORE    => 0,
+        MemberNames::IS_USED_IN_GRID               => 0,
+        MemberNames::IS_VISIBLE_IN_GRID            => 0,
+        MemberNames::IS_FILTERABLE_IN_GRID         => 0,
+        MemberNames::SEARCH_WEIGHT                 => 0,
+        MemberNames::ADDITIONAL_DATA               => null
+    );
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *
@@ -62,12 +102,16 @@ class CatalogAttributeUpdateObserverTest extends TestCase
     {
 
         // mock the attribute bunch processor
-        $this->mockBunchProcessor = $this->getMockBuilder('TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface')
-                                         ->setMethods(get_class_methods('TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface'))
+        $this->mockBunchProcessor = $this->getMockBuilder(AttributeBunchProcessorInterface::class)
+                                         ->setMethods(get_class_methods(AttributeBunchProcessorInterface::class))
                                          ->getMock();
 
+        $this->mockEntityMerger = $this->getMockBuilder(EntityMergerInterface::class)
+                                       ->setMethods(get_class_methods(EntityMergerInterface::class))
+                                       ->getMock();
+
         // the observer instance we want to test
-        $this->observer = new CatalogAttributeUpdateObserver($this->mockBunchProcessor);
+        $this->observer = new CatalogAttributeUpdateObserver($this->mockBunchProcessor, $this->mockEntityMerger);
     }
 
     /**
@@ -78,10 +122,11 @@ class CatalogAttributeUpdateObserverTest extends TestCase
     public function testHandleWithoutAnyFields()
     {
 
+        // create a dummy row for the headers
+        $headers = array('attribute_code' => 0);
+
         // create a dummy CSV file row
-        $row = array(
-            0  => $attributeCode = 'test_attribute_code'
-        );
+        $row = array(0 => $attributeCode = 'test_attribute_code');
 
         // create a mock subject instance
         $mockSubject = $this->getMockBuilder('TechDivision\Import\Attribute\Observers\AttributeSubjectImpl')
@@ -90,64 +135,19 @@ class CatalogAttributeUpdateObserverTest extends TestCase
         $mockSubject->expects($this->once())
                     ->method('getRow')
                     ->willReturn($row);
-        $mockSubject->expects($this->exactly(24))
+        $mockSubject->expects($this->any())
                     ->method('hasHeader')
-                    ->withConsecutive(
-                        array(ColumnKeys::ATTRIBUTE_CODE),
-                        array(ColumnKeys::FRONTEND_INPUT_RENDERER),
-                        array(ColumnKeys::IS_GLOBAL),
-                        array(ColumnKeys::IS_VISIBLE),
-                        array(ColumnKeys::IS_SEARCHABLE),
-                        array(ColumnKeys::IS_FILTERABLE),
-                        array(ColumnKeys::IS_COMPARABLE),
-                        array(ColumnKeys::IS_VISIBLE_ON_FRONT),
-                        array(ColumnKeys::IS_HTML_ALLOWED_ON_FRONT),
-                        array(ColumnKeys::IS_USED_FOR_PRICE_RULES),
-                        array(ColumnKeys::IS_FILTERABLE_IN_SEARCH),
-                        array(ColumnKeys::USED_IN_PRODUCT_LISTING),
-                        array(ColumnKeys::USED_FOR_SORT_BY),
-                        array(ColumnKeys::APPLY_TO),
-                        array(ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH),
-                        array(ColumnKeys::POSITION),
-                        array(ColumnKeys::IS_WYSIWYG_ENABLED),
-                        array(ColumnKeys::IS_USED_FOR_PROMO_RULES),
-                        array(ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE),
-                        array(ColumnKeys::IS_USED_IN_GRID),
-                        array(ColumnKeys::IS_VISIBLE_IN_GRID),
-                        array(ColumnKeys::IS_FILTERABLE_IN_GRID),
-                        array(ColumnKeys::SEARCH_WEIGHT),
-                        array(ColumnKeys::ADDITIONAL_DATA)
-                     )
-                    ->willReturnOnConsecutiveCalls(
-                        true,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    );
-        $mockSubject->expects($this->once())
+                    ->willReturnCallback(function ($key) use ($headers) {
+                        return array_key_exists($key, $headers);
+                    });
+        $mockSubject->expects($this->any())
                     ->method('getHeader')
-                    ->with(ColumnKeys::ATTRIBUTE_CODE)
-                    ->willReturn(0);
+                    ->willReturnCallback(function ($key) use ($headers) {
+                        if (array_key_exists($key, $headers)) {
+                            return $headers[$key];
+                        }
+                        throw new \InvalidArgumentException(sprintf('Header %s is not available', $key));;
+                    });
         $mockSubject->expects($this->once())
                     ->method('hasBeenProcessed')
                     ->with($attributeCode)
@@ -201,7 +201,26 @@ class CatalogAttributeUpdateObserverTest extends TestCase
         // mock the method that loads the raw entity
         $this->mockBunchProcessor->expects($this->once())
                                  ->method('loadRawEntity')
-                                 ->willReturnArgument(1);
+                                 ->willReturn(
+                                     array_merge(
+                                         array(MemberNames::ATTRIBUTE_ID => $lastAttributeId),
+                                         $this->rawEntity
+                                     )
+                                 );
+
+        // mock the entity merger method
+        $this->mockEntityMerger->expects($this->any())
+             ->method('merge')
+             ->willReturnCallback(function ($observer, $entity, $attr) use ($headers) {
+                 foreach (array_keys($attr) as $key) {
+                     if (isset($headers[$key])) {
+                         continue;
+                     }
+                     unset($attr[$key]);
+                 }
+                 return $attr;
+             });
+
         // invoke the handle method
         $this->assertSame($row, $this->observer->handle($mockSubject));
     }
@@ -215,6 +234,34 @@ class CatalogAttributeUpdateObserverTest extends TestCase
     {
 
         // create a dummy CSV file row
+        $headers = array(
+            ColumnKeys::ATTRIBUTE_CODE                => 0,
+            ColumnKeys::FRONTEND_INPUT_RENDERER       => 1,
+            ColumnKeys::IS_GLOBAL                     => 2,
+            ColumnKeys::IS_VISIBLE                    => 3,
+            ColumnKeys::IS_SEARCHABLE                 => 4,
+            ColumnKeys::IS_FILTERABLE                 => 5,
+            ColumnKeys::IS_COMPARABLE                 => 6,
+            ColumnKeys::IS_VISIBLE_ON_FRONT           => 7,
+            ColumnKeys::IS_HTML_ALLOWED_ON_FRONT      => 8,
+            ColumnKeys::IS_USED_FOR_PRICE_RULES       => 9,
+            ColumnKeys::IS_FILTERABLE_IN_SEARCH       => 10,
+            ColumnKeys::USED_IN_PRODUCT_LISTING       => 11,
+            ColumnKeys::USED_FOR_SORT_BY              => 12,
+            ColumnKeys::APPLY_TO                      => 13,
+            ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH => 14,
+            ColumnKeys::POSITION                      => 15,
+            ColumnKeys::IS_WYSIWYG_ENABLED            => 16,
+            ColumnKeys::IS_USED_FOR_PROMO_RULES       => 17,
+            ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE    => 18,
+            ColumnKeys::IS_USED_IN_GRID               => 19,
+            ColumnKeys::IS_VISIBLE_IN_GRID            => 20,
+            ColumnKeys::IS_FILTERABLE_IN_GRID         => 21,
+            ColumnKeys::SEARCH_WEIGHT                 => 22,
+            ColumnKeys::ADDITIONAL_DATA               => 23
+        );
+
+        // create a dummy row for the headers
         $row = array(
             0  => $attributeCode = 'test_attribute_code',
             1  => 'Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Product',
@@ -256,114 +303,9 @@ class CatalogAttributeUpdateObserverTest extends TestCase
         $mockSubject->expects($this->once())
                     ->method('getRow')
                     ->willReturn($row);
-        $mockSubject->expects($this->exactly(71))
-                    ->method('hasHeader')
-                    ->willReturn(true);
         $mockSubject->expects($this->once())
                     ->method('getMultipleValueDelimiter')
                     ->willReturn('|');
-        $mockSubject->expects($this->exactly(48))
-                    ->method('getHeader')
-                    ->withConsecutive(
-                        array(ColumnKeys::ATTRIBUTE_CODE),
-                        array(ColumnKeys::FRONTEND_INPUT_RENDERER),
-                        array(ColumnKeys::FRONTEND_INPUT_RENDERER),
-                        array(ColumnKeys::IS_GLOBAL),
-                        array(ColumnKeys::IS_GLOBAL),
-                        array(ColumnKeys::IS_VISIBLE),
-                        array(ColumnKeys::IS_VISIBLE),
-                        array(ColumnKeys::IS_SEARCHABLE),
-                        array(ColumnKeys::IS_SEARCHABLE),
-                        array(ColumnKeys::IS_FILTERABLE),
-                        array(ColumnKeys::IS_FILTERABLE),
-                        array(ColumnKeys::IS_COMPARABLE),
-                        array(ColumnKeys::IS_COMPARABLE),
-                        array(ColumnKeys::IS_VISIBLE_ON_FRONT),
-                        array(ColumnKeys::IS_VISIBLE_ON_FRONT),
-                        array(ColumnKeys::IS_HTML_ALLOWED_ON_FRONT),
-                        array(ColumnKeys::IS_HTML_ALLOWED_ON_FRONT),
-                        array(ColumnKeys::IS_USED_FOR_PRICE_RULES),
-                        array(ColumnKeys::IS_USED_FOR_PRICE_RULES),
-                        array(ColumnKeys::IS_FILTERABLE_IN_SEARCH),
-                        array(ColumnKeys::IS_FILTERABLE_IN_SEARCH),
-                        array(ColumnKeys::USED_IN_PRODUCT_LISTING),
-                        array(ColumnKeys::USED_IN_PRODUCT_LISTING),
-                        array(ColumnKeys::USED_FOR_SORT_BY),
-                        array(ColumnKeys::USED_FOR_SORT_BY),
-                        array(ColumnKeys::APPLY_TO),
-                        array(ColumnKeys::APPLY_TO),
-                        array(ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH),
-                        array(ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH),
-                        array(ColumnKeys::POSITION),
-                        array(ColumnKeys::POSITION),
-                        array(ColumnKeys::IS_WYSIWYG_ENABLED),
-                        array(ColumnKeys::IS_WYSIWYG_ENABLED),
-                        array(ColumnKeys::IS_USED_FOR_PROMO_RULES),
-                        array(ColumnKeys::IS_USED_FOR_PROMO_RULES),
-                        array(ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE),
-                        array(ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE),
-                        array(ColumnKeys::IS_USED_IN_GRID),
-                        array(ColumnKeys::IS_USED_IN_GRID),
-                        array(ColumnKeys::IS_VISIBLE_IN_GRID),
-                        array(ColumnKeys::IS_VISIBLE_IN_GRID),
-                        array(ColumnKeys::IS_FILTERABLE_IN_GRID),
-                        array(ColumnKeys::IS_FILTERABLE_IN_GRID),
-                        array(ColumnKeys::SEARCH_WEIGHT),
-                        array(ColumnKeys::SEARCH_WEIGHT),
-                        array(ColumnKeys::ADDITIONAL_DATA),
-                        array(ColumnKeys::ATTRIBUTE_OPTION_VALUES),
-                        array(ColumnKeys::ATTRIBUTE_OPTION_SWATCH)
-                     )
-                    ->willReturnOnConsecutiveCalls(
-                        0,
-                        1,
-                        1,
-                        2,
-                        2,
-                        3,
-                        3,
-                        4,
-                        4,
-                        5,
-                        5,
-                        6,
-                        6,
-                        7,
-                        7,
-                        8,
-                        8,
-                        9,
-                        9,
-                        10,
-                        10,
-                        11,
-                        11,
-                        12,
-                        12,
-                        13,
-                        13,
-                        14,
-                        14,
-                        15,
-                        15,
-                        16,
-                        16,
-                        17,
-                        17,
-                        18,
-                        18,
-                        19,
-                        19,
-                        20,
-                        20,
-                        21,
-                        21,
-                        22,
-                        22,
-                        23,
-                        7,
-                        8
-                     );
         $mockSubject->expects($this->once())
                     ->method('hasBeenProcessed')
                     ->with($attributeCode)
@@ -387,6 +329,19 @@ class CatalogAttributeUpdateObserverTest extends TestCase
         $mockSubject->expects($this->once())
                     ->method('getLastAttributeId')
                     ->willReturn($lastAttributeId = 1001);
+        $mockSubject->expects($this->any())
+                    ->method('hasHeader')
+                    ->willReturnCallback(function ($key) use ($headers) {
+                        return array_key_exists($key, $headers);
+                    });
+        $mockSubject->expects($this->any())
+                    ->method('getHeader')
+                    ->willReturnCallback(function ($key) use ($headers) {
+                        if (array_key_exists($key, $headers)) {
+                            return $headers[$key];
+                        }
+                        throw new \InvalidArgumentException(sprintf('Header %s is not available', $key));;
+                    });
 
         // initialize the existing entity
         $existingEntity = array(
@@ -459,8 +414,25 @@ class CatalogAttributeUpdateObserverTest extends TestCase
         // mock the method that loads the raw entity
         $this->mockBunchProcessor->expects($this->once())
                                  ->method('loadRawEntity')
-                                 ->willReturnArgument(1);
+                                 ->willReturn(
+                                     array_merge(
+                                         array(MemberNames::ATTRIBUTE_ID => $lastAttributeId),
+                                         $this->rawEntity
+                                     )
+                                 );
 
+        // mock the entity merger method
+        $this->mockEntityMerger->expects($this->any())
+             ->method('merge')
+             ->willReturnCallback(function ($observer, $entity, $attr) use ($headers) {
+                 foreach (array_keys($attr) as $key) {
+                     if (isset($headers[$key])) {
+                         continue;
+                     }
+                     unset($attr[$key]);
+                 }
+                 return $attr;
+             });
         // invoke the handle method
         $this->assertSame($row, $this->observer->handle($mockSubject));
     }

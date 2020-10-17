@@ -24,8 +24,6 @@ use PHPUnit\Framework\TestCase;
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
-
 /**
  * Test class for the catalog attribute observer implementation.
  *
@@ -51,6 +49,37 @@ class CatalogAttributeObserverTest extends TestCase
      * @var \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface
      */
     protected $mockBunchProcessor;
+
+    /**
+     * The raw entity instance.
+     *
+     * @var array
+     */
+    protected $rawEntity = array(
+        MemberNames::FRONTEND_INPUT_RENDERER       => null,
+        MemberNames::IS_GLOBAL                     => 0,
+        MemberNames::IS_VISIBLE                    => 0,
+        MemberNames::IS_SEARCHABLE                 => 0,
+        MemberNames::IS_FILTERABLE                 => 0,
+        MemberNames::IS_COMPARABLE                 => 0,
+        MemberNames::IS_VISIBLE_ON_FRONT           => 0,
+        MemberNames::IS_HTML_ALLOWED_ON_FRONT      => 0,
+        MemberNames::IS_USED_FOR_PRICE_RULES       => 0,
+        MemberNames::IS_FILTERABLE_IN_SEARCH       => 0,
+        MemberNames::USED_IN_PRODUCT_LISTING       => 0,
+        MemberNames::USED_FOR_SORT_BY              => 0,
+        MemberNames::APPLY_TO                      => null,
+        MemberNames::IS_VISIBLE_IN_ADVANCED_SEARCH => 0,
+        MemberNames::POSITION                      => 0,
+        MemberNames::IS_WYSIWYG_ENABLED            => 0,
+        MemberNames::IS_USED_FOR_PROMO_RULES       => 0,
+        MemberNames::IS_REQUIRED_IN_ADMIN_STORE    => 0,
+        MemberNames::IS_USED_IN_GRID               => 0,
+        MemberNames::IS_VISIBLE_IN_GRID            => 0,
+        MemberNames::IS_FILTERABLE_IN_GRID         => 0,
+        MemberNames::SEARCH_WEIGHT                 => 0,
+        MemberNames::ADDITIONAL_DATA               => null
+    );
 
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -91,10 +120,11 @@ class CatalogAttributeObserverTest extends TestCase
         $mockSubject->expects($this->once())
                     ->method('getRow')
                     ->willReturn($row);
-        $mockSubject->expects($this->exactly(24))
+        $mockSubject->expects($this->exactly(25))
                     ->method('hasHeader')
                     ->withConsecutive(
                         array(ColumnKeys::ATTRIBUTE_CODE),
+                        array(MemberNames::ATTRIBUTE_ID),
                         array(ColumnKeys::FRONTEND_INPUT_RENDERER),
                         array(ColumnKeys::IS_GLOBAL),
                         array(ColumnKeys::IS_VISIBLE),
@@ -143,6 +173,7 @@ class CatalogAttributeObserverTest extends TestCase
                         false,
                         false,
                         false,
+                        false,
                         false
                     );
         $mockSubject->expects($this->once())
@@ -157,21 +188,25 @@ class CatalogAttributeObserverTest extends TestCase
                     ->method('getLastAttributeId')
                     ->willReturn($lastAttributeId = 1001);
 
-        // initialize the expected entity that should be persisted
-        $expectedEntity = array(
-            MemberNames::ATTRIBUTE_ID => $lastAttributeId,
-            EntityStatus::MEMBER_NAME => EntityStatus::STATUS_CREATE
-        );
-
         // mock the method that persists the entity
         $this->mockBunchProcessor->expects($this->once())
                                  ->method('persistCatalogAttribute')
-                                 ->with($expectedEntity)
+                                 ->with(
+                                     array_merge(
+                                         array(MemberNames::ATTRIBUTE_ID => $lastAttributeId),
+                                         $this->rawEntity,
+                                         array(EntityStatus::MEMBER_NAME => EntityStatus::STATUS_CREATE)
+                                     )
+                                 )
                                  ->willReturn(null);
         $this->mockBunchProcessor->expects($this->once())
                                  ->method('loadRawEntity')
-                                 ->with(EntityTypeCodes::CATALOG_EAV_ATTRIBUTE, array(MemberNames::ATTRIBUTE_ID => $lastAttributeId))
-                                 ->willReturn($expectedEntity);
+                                 ->willReturn(
+                                     array_merge(
+                                         array(MemberNames::ATTRIBUTE_ID => $lastAttributeId),
+                                         $this->rawEntity
+                                     )
+                                 );
 
         // invoke the handle method
         $this->assertSame($row, $this->observer->handle($mockSubject));

@@ -6,6 +6,14 @@
     <services>
 
         <!--
+         | The DI configuration for the header mapping loader
+         |-->
+        <service id="import_attribute.loader.header.mapping.catalog.attribute" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
+            <argument type="service" id="import.loader.header.mapping"/>
+            <argument type="constant">TechDivision\Import\Attribute\Utils\EntityTypeCodes::CATALOG_EAV_ATTRIBUTE</argument>
+        </service>
+
+        <!--
          | The DI configuration for the entity mergers
          |-->
         <service id="import_attribute.loader.header.mapping.attribute.option" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
@@ -223,10 +231,12 @@
         <service id="import_attribute.observer.catalog.attribute" class="TechDivision\Import\Attribute\Observers\CatalogAttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
             <argument type="service" id="import_attribute.entity.merger.composite.catalog.attribute"/>
+            <argument type="service" id="import_attribute.loader.header.mapping.catalog.attribute"/>
         </service>
         <service id="import_attribute.observer.catalog.attribute.update" class="TechDivision\Import\Attribute\Observers\CatalogAttributeUpdateObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>
             <argument type="service" id="import_attribute.entity.merger.composite.catalog.attribute"/>
+            <argument type="service" id="import_attribute.loader.header.mapping.catalog.attribute"/>
         </service>
         <service id="import_attribute.observer.clear.attribute" class="TechDivision\Import\Attribute\Observers\ClearAttributeObserver">
             <argument type="service" id="import_attribute.processor.attribute.bunch"/>

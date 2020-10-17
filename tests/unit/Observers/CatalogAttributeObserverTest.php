@@ -24,6 +24,7 @@ use PHPUnit\Framework\TestCase;
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+
 /**
  * Test class for the catalog attribute observer implementation.
  *

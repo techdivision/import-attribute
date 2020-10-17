@@ -2,12 +2,31 @@
 
 ## Bugfixes
 
-* Fixed #PAC-243: Fixed issue of attributes that can not be updated
+* None
 
 ## Features
 
 * Add #PAC-227: Dynamic Handling of columns for import of EAV attributes
-* Remove stack trace of exception for missing media directories > log a simple debug message instead
+
+# Version 20.1.3
+
+## Bugfixes
+
+* Fixed #PAC-243: Fixed issue of attributes that can not be updated
+
+## Features
+
+* Replace warning with stack trace of exception for missing media directories with debug level
+
+# Version 20.1.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Use only log message instead of stack trace for missing media directory
 
 # Version 20.1.1
 

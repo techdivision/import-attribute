@@ -21,12 +21,13 @@
 namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Utils\EntityStatus;
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
-use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
-use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
+use TechDivision\Import\Loaders\LoaderInterface;
 use TechDivision\Import\Observers\StateDetectorInterface;
 use TechDivision\Import\Observers\EntityMergers\EntityMergerInterface;
+use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\EntityTypeCodes;
+use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
 
 /**
  * Observer that create's the EAV catalog attribute itself.
@@ -69,52 +70,38 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
     protected $entityMergers;
 
     /**
-     * The array with the possible column names.
+     * Array with virtual column name mappings (this is a temporary
+     * solution till techdivision/import#179 as been implemented).
      *
      * @var array
+     * @todo https://github.com/techdivision/import/issues/179
      */
-    protected $columnNames = array(
-        ColumnKeys::FRONTEND_INPUT_RENDERER,
-        ColumnKeys::IS_GLOBAL,
-        ColumnKeys::IS_VISIBLE,
-        ColumnKeys::IS_SEARCHABLE,
-        ColumnKeys::IS_FILTERABLE,
-        ColumnKeys::IS_COMPARABLE,
-        ColumnKeys::IS_VISIBLE_ON_FRONT,
-        ColumnKeys::IS_HTML_ALLOWED_ON_FRONT,
-        ColumnKeys::IS_USED_FOR_PRICE_RULES,
-        ColumnKeys::IS_FILTERABLE_IN_SEARCH,
-        ColumnKeys::USED_IN_PRODUCT_LISTING,
-        ColumnKeys::USED_FOR_SORT_BY,
-        ColumnKeys::APPLY_TO,
-        ColumnKeys::IS_VISIBLE_IN_ADVANCED_SEARCH,
-        ColumnKeys::POSITION,
-        ColumnKeys::IS_WYSIWYG_ENABLED,
-        ColumnKeys::IS_USED_FOR_PROMO_RULES,
-        ColumnKeys::IS_REQUIRED_IN_ADMIN_STORE,
-        ColumnKeys::IS_USED_IN_GRID,
-        ColumnKeys::IS_VISIBLE_IN_GRID,
-        ColumnKeys::IS_FILTERABLE_IN_GRID,
-        ColumnKeys::SEARCH_WEIGHT,
-        ColumnKeys::ADDITIONAL_DATA
-    );
+    protected $reverseHeaderMappings = array();
 
     /**
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
      * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface       $entityMerger            The entity merger instance
+     * @param \TechDivision\Import\Loaders\LoaderInterface|null                        $headerMappingLoader     The loader for the virtual mappings
      * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
     public function __construct(
         AttributeBunchProcessorInterface $attributeBunchProcessor,
         EntityMergerInterface $entityMerger = null,
+        LoaderInterface $headerMappingLoader = null,
         StateDetectorInterface $stateDetector = null
     ) {
 
         // initialize the bunch processor and the entity merger instance
         $this->attributeBunchProcessor = $attributeBunchProcessor;
         $this->entityMerger = $entityMerger;
+
+        // initialize the reverse header mappings table > CSV column name
+        $this->reverseHeaderMappings = array_merge(
+            $this->reverseHeaderMappings,
+            $headerMappingLoader ? array_flip($headerMappingLoader->load()) : array()
+        );
 
         // pass the state detector to the parent method
         parent::__construct($stateDetector);
@@ -169,11 +156,17 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         // load the recently created EAV attribute ID
         $attributeId = $this->getLastAttributeId();
 
-        // initialize the attributes
-        $attr = array(MemberNames::ATTRIBUTE_ID => $attributeId);
+        // initialize the attributes with the values from the DB
+        $attr = $this->loadRawEntity(array(MemberNames::ATTRIBUTE_ID => $attributeId));
+
+        // intialize the array with the column names we've to load the data from
+        $columnNames = array_keys($attr);
 
         // iterate over the possible columns and handle the data
-        foreach ($this->columnNames as $columnName) {
+        foreach ($columnNames as $columnName) {
+            // reverse map the table column name to the CSV column name
+            $columnName = isset($this->reverseHeaderMappings[$columnName]) ? $this->reverseHeaderMappings[$columnName] : $columnName;
+
             // query whether or not, the column is available in the CSV file
             if ($this->getSubject()->hasHeader($columnName)) {
                 // custom handling for the additional_data column
@@ -221,7 +214,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         }
 
         // return the prepared product
-        return $this->initializeEntity($this->loadRawEntity($attr));
+        return $this->initializeEntity($attr);
     }
 
     /**

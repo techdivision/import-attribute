@@ -1,3 +1,13 @@
+# Version 21.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add #PAC-227: Dynamic Handling of columns for import of EAV attributes
+
 # Version 20.1.3
 
 ## Bugfixes

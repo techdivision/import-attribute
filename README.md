@@ -1,4 +1,4 @@
-# M2IF - Attribute Import
+# Pacemaker - Attribute Import
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/techdivision/import-attribute.svg?style=flat-square)](https://packagist.org/packages/techdivision/import-attribute) 
  [![Total Downloads](https://img.shields.io/packagist/dt/techdivision/import-attribute.svg?style=flat-square)](https://packagist.org/packages/techdivision/import-attribute)
@@ -7,4 +7,4 @@
  [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/techdivision/import-attribute/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/techdivision/import-attribute/?branch=master)
  [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/techdivision/import-attribute/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/techdivision/import-attribute/?branch=master)
 
-Please visit the M2IF [website](https://m2if.com) for documentation and additional information
+Please visit the Pacemaker [website](https://pacemaker.techdivision.com) or our [documentation](https://docs.met.tdintern.de/pacemaker/1.3/) for additional information

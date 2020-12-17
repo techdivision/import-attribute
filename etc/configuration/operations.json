@@ -29,7 +29,7 @@
                   ],
                   "params" : {
                     "custom-validations" : {
-                      "attribute_code": [ "/^\\w+$/" ],
+                      "attribute_code": [ "/^[A-z][\\w]*$/" ],
                       "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
                       "frontend_input": [ "text", "select", "textarea", "multiselect", "boolean", "date", "gallery", "price", "media_image", "weight" ]
                     }

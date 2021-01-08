@@ -98,49 +98,49 @@ interface AttributeBunchProcessorInterface extends AttributeProcessorInterface
     /**
      * Return's the attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute action instance
      */
     public function getAttributeAction();
 
     /**
      * Return's the attribute label action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute label action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute label action instance
      */
     public function getAttributeLabelAction();
 
     /**
      * Return's the attribute option action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute option action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute option action instance
      */
     public function getAttributeOptionAction();
 
     /**
      * Return's the attribute option value action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute option value action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute option value action instance
      */
     public function getAttributeOptionValueAction();
 
     /**
      * Return's the attribute option swatch action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute option swatch action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute option swatch action instance
      */
     public function getAttributeOptionSwatchAction();
 
     /**
      * Return's the catalog attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The catalog attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The catalog attribute action instance
      */
     public function getCatalogAttributeAction();
 
     /**
      * Return's the entity attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The entity attribute action instance
      */
     public function getEntityAttributeAction();
 

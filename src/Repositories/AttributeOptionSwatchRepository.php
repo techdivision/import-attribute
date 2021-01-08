@@ -22,7 +22,7 @@ namespace TechDivision\Import\Attribute\Repositories;
 
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
-use TechDivision\Import\Repositories\AbstractRepository;
+use TechDivision\Import\Dbal\Repositories\AbstractRepository;
 
 /**
  * Repository implementation to load EAV attribute option swatch data.

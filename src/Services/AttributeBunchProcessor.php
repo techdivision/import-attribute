@@ -20,8 +20,9 @@
 
 namespace TechDivision\Import\Attribute\Services;
 
-use TechDivision\Import\Actions\ActionInterface;
-use TechDivision\Import\Connection\ConnectionInterface;
+use TechDivision\Import\Loaders\LoaderInterface;
+use TechDivision\Import\Dbal\Actions\ActionInterface;
+use TechDivision\Import\Dbal\Connection\ConnectionInterface;
 use TechDivision\Import\Repositories\EavEntityTypeRepositoryInterface;
 use TechDivision\Import\Repositories\EavAttributeOptionValueRepositoryInterface;
 use TechDivision\Import\Attribute\Repositories\AttributeRepositoryInterface;
@@ -30,7 +31,6 @@ use TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterfac
 use TechDivision\Import\Attribute\Repositories\EntityAttributeRepositoryInterface;
 use TechDivision\Import\Attribute\Repositories\CatalogAttributeRepositoryInterface;
 use TechDivision\Import\Attribute\Repositories\AttributeOptionSwatchRepositoryInterface;
-use TechDivision\Import\Loaders\LoaderInterface;
 
 /**
  * The attribute bunch processor implementation.
@@ -47,7 +47,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * A connection to use.
      *
-     * @var \TechDivision\Import\Connection\ConnectionInterface
+     * @var \TechDivision\Import\Dbal\Connection\ConnectionInterface
      */
     protected $connection;
 
@@ -110,49 +110,49 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * The attribute action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $attributeAction;
 
     /**
      * The attribute label action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $attributeLabelAction;
 
     /**
      * The attribute option action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $attributeOptionAction;
 
     /**
      * The attribute option value action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $attributeOptionValueAction;
 
     /**
      * The attribute option swatch action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $attributeOptionSwatchAction;
 
     /**
      * The attribute action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $catalogAttributeAction;
 
     /**
      * The entity attribute action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $entityAttributeAction;
 
@@ -166,7 +166,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
-     * @param \TechDivision\Import\Connection\ConnectionInterface                                  $connection                        The connection to use
+     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                                  $connection                        The connection to use
      * @param \TechDivision\Import\Attribute\Repositories\AttributeRepositoryInterface             $attributeRepository               The attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeLabelRepositoryInterface        $attributeLabelRepository          The attribute label repository instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterface       $attributeOptionRepository         The attribute repository instance
@@ -175,13 +175,13 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepositoryInterface      $catalogAttributeRepository        The catalog attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepositoryInterface       $entityAttributeRepository         The entity attribute repository instance
      * @param \TechDivision\Import\Repositories\EavEntityTypeRepositoryInterface                   $entityTypeRepository              The entity type repository instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $attributeAction                   The attribute action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $attributeLabelAction              The attribute label action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $attributeOptionAction             The attribute option action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $attributeOptionValueAction        The attribute option value action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $attributeOptionSwatchAction       The attribute option swatch action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $catalogAttributeAction            The catalog attribute action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $entityAttributeAction             The entity attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeAction                   The attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeLabelAction              The attribute label action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeOptionAction             The attribute option action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeOptionValueAction        The attribute option value action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeOptionSwatchAction       The attribute option swatch action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $catalogAttributeAction            The catalog attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $entityAttributeAction             The entity attribute action instance
      * @param \TechDivision\Import\Loaders\LoaderInterface                                         $rawEntityLoader                   The raw entity loader instance
      */
     public function __construct(
@@ -247,7 +247,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the passed connection.
      *
-     * @param \TechDivision\Import\Connection\ConnectionInterface $connection The connection to set
+     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface $connection The connection to set
      *
      * @return void
      */
@@ -259,7 +259,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the connection.
      *
-     * @return \TechDivision\Import\Connection\ConnectionInterface The connection instance
+     * @return \TechDivision\Import\Dbal\Connection\ConnectionInterface The connection instance
      */
     public function getConnection()
     {
@@ -489,7 +489,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the attribute action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $attributeAction The attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $attributeAction The attribute action instance
      *
      * @return void
      */
@@ -501,7 +501,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute action instance
      */
     public function getAttributeAction()
     {
@@ -511,7 +511,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the attribute label action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $attributeLabelAction The attribute label action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $attributeLabelAction The attribute label action instance
      *
      * @return void
      */
@@ -523,7 +523,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the attribute label action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute label action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute label action instance
      */
     public function getAttributeLabelAction()
     {
@@ -533,7 +533,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the attribute option action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $attributeOptionAction The attribute option action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $attributeOptionAction The attribute option action instance
      *
      * @return void
      */
@@ -545,7 +545,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the attribute option action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute option action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute option action instance
      */
     public function getAttributeOptionAction()
     {
@@ -555,7 +555,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the attribute option value action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $attributeOptionValueAction The attribute option value action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $attributeOptionValueAction The attribute option value action instance
      *
      * @return void
      */
@@ -567,7 +567,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the attribute option value action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute option value action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute option value action instance
      */
     public function getAttributeOptionValueAction()
     {
@@ -577,7 +577,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the attribute option swatch action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $attributeOptionSwatchAction The attribute option swatch action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $attributeOptionSwatchAction The attribute option swatch action instance
      *
      * @return void
      */
@@ -589,7 +589,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the attribute option swatch action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute option swatch action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute option swatch action instance
      */
     public function getAttributeOptionSwatchAction()
     {
@@ -599,7 +599,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the catalog attribute action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $catalogAttributeAction The catalog attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $catalogAttributeAction The catalog attribute action instance
      *
      * @return void
      */
@@ -611,7 +611,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the catalog attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The catalog attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The catalog attribute action instance
      */
     public function getCatalogAttributeAction()
     {
@@ -621,7 +621,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Set's the entity attribute action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $entityAttributeAction The entity attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $entityAttributeAction The entity attribute action instance
      *
      * @return void
      */
@@ -633,7 +633,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Return's the entity attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The entity attribute action instance
      */
     public function getEntityAttributeAction()
     {

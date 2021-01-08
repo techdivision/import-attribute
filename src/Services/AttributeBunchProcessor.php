@@ -166,7 +166,7 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
     /**
      * Initialize the processor with the necessary assembler and repository instances.
      *
-     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                                  $connection                        The connection to use
+     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                             $connection                        The connection to use
      * @param \TechDivision\Import\Attribute\Repositories\AttributeRepositoryInterface             $attributeRepository               The attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeLabelRepositoryInterface        $attributeLabelRepository          The attribute label repository instance
      * @param \TechDivision\Import\Attribute\Repositories\AttributeOptionRepositoryInterface       $attributeOptionRepository         The attribute repository instance
@@ -175,13 +175,13 @@ class AttributeBunchProcessor implements AttributeBunchProcessorInterface
      * @param \TechDivision\Import\Attribute\Repositories\CatalogAttributeRepositoryInterface      $catalogAttributeRepository        The catalog attribute repository instance
      * @param \TechDivision\Import\Attribute\Repositories\EntityAttributeRepositoryInterface       $entityAttributeRepository         The entity attribute repository instance
      * @param \TechDivision\Import\Repositories\EavEntityTypeRepositoryInterface                   $entityTypeRepository              The entity type repository instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeAction                   The attribute action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeLabelAction              The attribute label action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeOptionAction             The attribute option action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeOptionValueAction        The attribute option value action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $attributeOptionSwatchAction       The attribute option swatch action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $catalogAttributeAction            The catalog attribute action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $entityAttributeAction             The entity attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $attributeAction                   The attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $attributeLabelAction              The attribute label action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $attributeOptionAction             The attribute option action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $attributeOptionValueAction        The attribute option value action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $attributeOptionSwatchAction       The attribute option swatch action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $catalogAttributeAction            The catalog attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $entityAttributeAction             The entity attribute action instance
      * @param \TechDivision\Import\Loaders\LoaderInterface                                         $rawEntityLoader                   The raw entity loader instance
      */
     public function __construct(

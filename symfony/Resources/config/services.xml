@@ -170,37 +170,37 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
 
-        <service id="import_attribute.action.attribute" class="TechDivision\Import\Dbal\Actions\GenericIdentifierAction">
+        <service id="import_attribute.action.attribute" class="TechDivision\Import\Dbal\Collection\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute.action.processor.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.delete"/>
         </service>
-        <service id="import_attribute.action.attribute.label" class="TechDivision\Import\Dbal\Actions\GenericAction">
+        <service id="import_attribute.action.attribute.label" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.attribute.label.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.label.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.label.delete"/>
         </service>
-        <service id="import_attribute.action.attribute.option" class="TechDivision\Import\Dbal\Actions\GenericIdentifierAction">
+        <service id="import_attribute.action.attribute.option" class="TechDivision\Import\Dbal\Collection\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute.action.processor.attribute.option.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.delete"/>
         </service>
-        <service id="import_attribute.action.attribute.option.value" class="TechDivision\Import\Dbal\Actions\GenericAction">
+        <service id="import_attribute.action.attribute.option.value" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.delete"/>
         </service>
-        <service id="import_attribute.action.attribute.option.swatch" class="TechDivision\Import\Dbal\Actions\GenericAction">
+        <service id="import_attribute.action.attribute.option.swatch" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.delete"/>
         </service>
-        <service id="import_attribute.action.catalog.attribute" class="TechDivision\Import\Dbal\Actions\GenericAction">
+        <service id="import_attribute.action.catalog.attribute" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.delete"/>
         </service>
-        <service id="import_attribute.action.entity.attribute" class="TechDivision\Import\Dbal\Actions\GenericAction">
+        <service id="import_attribute.action.entity.attribute" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.entity.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.entity.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.entity.attribute.delete"/>

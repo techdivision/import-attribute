@@ -81,67 +81,157 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
         </service>
 
-        <service id="import_attribute.action.processor.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeCreateProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.attribute.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeUpdateProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeDeleteProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.attribute.label.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelCreateProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.attribute.label.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelUpdateProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.attribute.label.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeLabelDeleteProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.attribute.option.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionCreateProcessor">
+        <service id="import_attribute.action.processor.attribute.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
             <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::CREATE_ATTRIBUTE</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionUpdateProcessor">
+        <service id="import_attribute.action.processor.attribute.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
             <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionDeleteProcessor">
+        <service id="import_attribute.action.processor.attribute.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.value.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueCreateProcessor">
+        <service id="import_attribute.action.processor.attribute.label.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::CREATE_ATTRIBUTE_LABEL</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.value.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueUpdateProcessor">
+        <service id="import_attribute.action.processor.attribute.label.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_LABEL</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.value.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionValueDeleteProcessor">
+        <service id="import_attribute.action.processor.attribute.label.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_LABEL</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.swatch.create" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchCreateProcessor">
+        <service id="import_attribute.action.processor.attribute.option.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::CREATE_ATTRIBUTE_OPTION</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.swatch.update" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchUpdateProcessor">
+        <service id="import_attribute.action.processor.attribute.option.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION</argument>
+            </argument>
         </service>
-        <service id="import_attribute.action.processor.attribute.option.swatch.delete" class="TechDivision\Import\Attribute\Actions\Processors\AttributeOptionSwatchDeleteProcessor">
+        <service id="import_attribute.action.processor.attribute.option.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_OPTION</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.value.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_VALUE</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.value.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_VALUE</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.value.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_OPTION_VALUE</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.swatch.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::CREATE_ATTRIBUTE_OPTION_SWATCH</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.swatch.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_OPTION_SWATCH</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.attribute.option.swatch.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_SWATCH</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.entity.attribute.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::CREATE_ENTITY_ATTRIBUTE</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.entity.attribute.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ENTITY_ATTRIBUTE</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.entity.attribute.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ENTITY_ATTRIBUTE</argument>
+            </argument>
+        </service>
+        <service id="import_attribute.action.processor.catalog.attribute.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_CATALOG_ATTRIBUTE</argument>
+            </argument>
         </service>
         <service id="import_attribute.action.processor.catalog.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeCreateProcessor">
             <argument type="service" id="connection"/>
@@ -153,54 +243,40 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
             <argument type="service" id="import.util.sql.sanitizers"/>
         </service>
-        <service id="import_attribute.action.processor.catalog.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\CatalogAttributeDeleteProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.entity.attribute.create" class="TechDivision\Import\Attribute\Actions\Processors\EntityAttributeCreateProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.entity.attribute.update" class="TechDivision\Import\Attribute\Actions\Processors\EntityAttributeUpdateProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
-        <service id="import_attribute.action.processor.entity.attribute.delete" class="TechDivision\Import\Attribute\Actions\Processors\EntityAttributeDeleteProcessor">
-            <argument type="service" id="connection"/>
-            <argument type="service" id="import_attribute.repository.sql.statement"/>
-        </service>
 
-        <service id="import_attribute.action.attribute" class="TechDivision\Import\Actions\GenericIdentifierAction">
+        <service id="import_attribute.action.attribute" class="TechDivision\Import\Dbal\Collection\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute.action.processor.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.delete"/>
+            <argument type="constant">TechDivision\Import\Attribute\Utils\MemberNames::ATTRIBUTE_ID</argument>
         </service>
-        <service id="import_attribute.action.attribute.label" class="TechDivision\Import\Actions\GenericAction">
+        <service id="import_attribute.action.attribute.option" class="TechDivision\Import\Dbal\Collection\Actions\GenericIdentifierAction">
+            <argument type="service" id="import_attribute.action.processor.attribute.option.create"/>
+            <argument type="service" id="import_attribute.action.processor.attribute.option.update"/>
+            <argument type="service" id="import_attribute.action.processor.attribute.option.delete"/>
+            <argument type="constant">TechDivision\Import\Attribute\Utils\MemberNames::OPTION_ID</argument>
+        </service>
+        <service id="import_attribute.action.attribute.label" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.attribute.label.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.label.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.label.delete"/>
         </service>
-        <service id="import_attribute.action.attribute.option" class="TechDivision\Import\Actions\GenericIdentifierAction">
-            <argument type="service" id="import_attribute.action.processor.attribute.option.create"/>
-            <argument type="service" id="import_attribute.action.processor.attribute.option.update"/>
-            <argument type="service" id="import_attribute.action.processor.attribute.option.delete"/>
-        </service>
-        <service id="import_attribute.action.attribute.option.value" class="TechDivision\Import\Actions\GenericAction">
+        <service id="import_attribute.action.attribute.option.value" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.value.delete"/>
         </service>
-        <service id="import_attribute.action.attribute.option.swatch" class="TechDivision\Import\Actions\GenericAction">
+        <service id="import_attribute.action.attribute.option.swatch" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.create"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.update"/>
             <argument type="service" id="import_attribute.action.processor.attribute.option.swatch.delete"/>
         </service>
-        <service id="import_attribute.action.catalog.attribute" class="TechDivision\Import\Actions\GenericAction">
+        <service id="import_attribute.action.catalog.attribute" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.catalog.attribute.delete"/>
         </service>
-        <service id="import_attribute.action.entity.attribute" class="TechDivision\Import\Actions\GenericAction">
+        <service id="import_attribute.action.entity.attribute" class="TechDivision\Import\Dbal\Collection\Actions\GenericAction">
             <argument type="service" id="import_attribute.action.processor.entity.attribute.create"/>
             <argument type="service" id="import_attribute.action.processor.entity.attribute.update"/>
             <argument type="service" id="import_attribute.action.processor.entity.attribute.delete"/>

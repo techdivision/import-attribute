@@ -1,3 +1,13 @@
+# Version 22.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add #PAC-292: Validate attibute code when importing EAV attributes
+
 # Version 21.0.0
 
 ## Bugfixes

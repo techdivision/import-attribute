@@ -23,7 +23,7 @@ namespace TechDivision\Import\Attribute\Actions\Processors;
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
-use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
+use TechDivision\Import\Dbal\Collection\Actions\Processors\AbstractBaseProcessor;
 
 /**
  * The EAV catalog attribute update processor implementation.
@@ -34,14 +34,13 @@ use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CatalogAttributeUpdateProcessor extends AbstractUpdateProcessor
+class CatalogAttributeUpdateProcessor extends AbstractBaseProcessor
 {
 
     /**
      * Return's the array with the SQL statements that has to be prepared.
      *
      * @return array The SQL statements to be prepared
-     * @see \TechDivision\Import\Actions\Processors\AbstractBaseProcessor::getStatements()
      */
     protected function getStatements()
     {

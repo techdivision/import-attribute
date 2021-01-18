@@ -22,7 +22,7 @@ namespace TechDivision\Import\Attribute\Actions\Processors;
 
 use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
-use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
+use TechDivision\Import\Dbal\Collection\Actions\Processors\AbstractBaseProcessor;
 
 /**
  * The EAV catalog attribute create processor implementation.
@@ -33,7 +33,7 @@ use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class CatalogAttributeCreateProcessor extends AbstractCreateProcessor
+class CatalogAttributeCreateProcessor extends AbstractBaseProcessor
 {
 
     /**

@@ -68,6 +68,12 @@ class ClearAttributeObserver extends AbstractAttributeImportObserver
 
         // try to load the EAV attribute with the code found in the CSV file
         $attribute = $this->loadAttributeByEntityTypeIdAndAttributeCode($this->getEntityTypeId(), $attributeCode);
+        if (!$attribute) {
+            $this->getSubject()
+                ->getSystemLogger()
+                ->debug(sprintf('Attribute with code "%s" can\'t be loaded!', $attributeCode));
+            return;
+        }
 
         // delete the EAV attribute with the code found in the CSV file
         $this->deleteAttribute(array(MemberNames::ATTRIBUTE_ID => $attribute[MemberNames::ATTRIBUTE_ID]));

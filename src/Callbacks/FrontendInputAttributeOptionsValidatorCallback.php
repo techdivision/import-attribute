@@ -48,20 +48,23 @@ class FrontendInputAttributeOptionsValidatorCallback extends AbstractValidatorCa
     {
 
         // load the atribute options
-        $optionsValues = $this->getSubject()->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, null, array($this->getSubject(), 'explode'));
+        $optionsValues = $this->getSubject()
+            ->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, null, array($this->getSubject(), 'explode'));
 
         // query whether or not the passed value IS empty
         if ($optionsValues === '' || $optionsValues === null) {
             return;
         }
 
-        if (!in_array($attributeValue, [FrontendInputTypes::SELECT, FrontendInputTypes::MULTISELECT]) {
+        if (!in_array($attributeValue, [FrontendInputTypes::SELECT, FrontendInputTypes::MULTISELECT])) {
             // throw an exception if the value is NOT in the array
             throw new \InvalidArgumentException(
-                sprintf('Found invalid value "%s" for attribute code "%s". "select" or "multiselect" required',
+                sprintf(
+                    'Found invalid value "%s" for attribute code "%s". "select" or "multiselect" required',
                     $attributeValue,
                     $this->getSubject()->getValue(ColumnKeys::ATTRIBUTE_CODE)
-            ));
+                )
+            );
         }
     }
 }

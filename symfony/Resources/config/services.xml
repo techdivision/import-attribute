@@ -382,6 +382,9 @@
             <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
+        <service id="import_attribute.callback.array.validator.frontend.input.options" class="TechDivision\Import\Attribute\Callbacks\FrontendInputAttributeOptionsValidatorCallback">
+            <argument type="service" id="import.loader.custom.validations"/>
+        </service>
 
         <!--
          | The DI configuration for the composite observers of the validation operation.

@@ -382,8 +382,10 @@
             <argument>%array_validator.nullable.false%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
-        <service id="import_attribute.callback.array.validator.frontend.input.options" class="TechDivision\Import\Attribute\Callbacks\FrontendInputAttributeOptionsValidatorCallback">
-            <argument type="service" id="import.loader.custom.validations"/>
+        <service id="import_attribute.callback.attribute.option.values.frontend.input.type.validator" class="TechDivision\Import\Attribute\Callbacks\AttributeOptionValuesFrontendInputTypeValidatorCallback">
+            <argument type="service" id="import_attribute.loader.frontend.input.type"/>
+            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.true%</argument>
         </service>
 
         <!--
@@ -566,6 +568,7 @@
             </call>
         </service>
 
+        <service id="import_attribute.loader.frontend.input.type" class="TechDivision\Import\Attribute\Loaders\FrontendInputTypeLoader"/>
         <service id="import_attribute.loader.raw.entity" class="TechDivision\Import\Attribute\Loaders\RawEntityLoader">
             <argument type="service" id="connection"/>
             <argument type="service" id="import.loader.column.metadata"/>

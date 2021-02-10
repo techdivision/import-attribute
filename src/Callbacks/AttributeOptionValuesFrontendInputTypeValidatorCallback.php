@@ -21,8 +21,7 @@
 namespace TechDivision\Import\Attribute\Callbacks;
 
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
-use TechDivision\Import\Callbacks\AbstractValidatorCallback;
-use TechDivision\Import\Utils\FrontendInputTypes;
+use TechDivision\Import\Callbacks\ArrayValidatorCallback;
 
 /**
  * A callback implementation that validates the a list of attribute set names.
@@ -33,7 +32,7 @@ use TechDivision\Import\Utils\FrontendInputTypes;
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */
-class FrontendInputAttributeOptionsValidatorCallback extends AbstractValidatorCallback
+class AttributeOptionValuesFrontendInputTypeValidatorCallback extends ArrayValidatorCallback
 {
 
     /**
@@ -43,28 +42,36 @@ class FrontendInputAttributeOptionsValidatorCallback extends AbstractValidatorCa
      * @param string|null $attributeValue The attribute value to be validated
      *
      * @return mixed The modified value
+     * @throws \InvalidArgumentException Is thrown, if the attribute has option values but is not of frontend input type `select` or `multiselect`
      */
     public function handle($attributeCode = null, $attributeValue = null)
     {
 
-        // load the atribute options
-        $optionsValues = $this->getSubject()
-            ->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, null, array($this->getSubject(), 'explode'));
-
-        // query whether or not the passed value IS empty
-        if ($optionsValues === '' || $optionsValues === null) {
+        // query whether or not the passed value
+        // IS empty and empty values are allowed
+        if ($this->isNullable($attributeValue)) {
             return;
         }
 
-        if (!in_array($attributeValue, [FrontendInputTypes::SELECT, FrontendInputTypes::MULTISELECT])) {
-            // throw an exception if the value is NOT in the array
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Found invalid value "%s" for attribute code "%s". "select" or "multiselect" required',
-                    $attributeValue,
-                    $this->getSubject()->getValue(ColumnKeys::ATTRIBUTE_CODE)
-                )
-            );
+        // the validations for the attribute with the given code
+        $validations = $this->getValidations();
+
+        // load the frontend input type
+        $frontendInputType = $this->getSubject()->getValue(ColumnKeys::FRONTEND_INPUT);
+
+        // query whether or not the column `frontend_input` contains one of the allowed values
+        if (in_array($frontendInputType, $validations[$attributeCode])) {
+            return;
         }
+
+        // throw an exception if the value is NOT in the array
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Found invalid frontend input type "%s" for attribute code "%s", must be one of "%s" as attribute option values are available',
+                $frontendInputType,
+                $this->getSubject()->getValue(ColumnKeys::ATTRIBUTE_CODE),
+                implode(',', $validations)
+            )
+        );
     }
 }

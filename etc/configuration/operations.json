@@ -49,10 +49,8 @@
                       "attribute_set_name": [ "import_attribute.callback.attribute.set.name.validator" ],
                       "attribute_group_name": [ "import_attribute.callback.attribute.group.name.validator" ],
                       "backend_type": [ "import_attribute.callback.array.validator.backend.type" ],
-                      "frontend_input": [
-                        "import_attribute.callback.array.validator.frontend.input",
-                        "import_attribute.callback.array.validator.frontend.input.options"
-                      ]
+                      "frontend_input": [ "import_attribute.callback.array.validator.frontend.input" ],
+                      "attribute_option_values": [ "import_attribute.callback.attribute.option.values.frontend.input.type.validator" ]
                     }
                   ]
                 }

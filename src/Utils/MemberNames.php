@@ -75,6 +75,13 @@ class MemberNames extends \TechDivision\Import\Utils\MemberNames
     const FRONTEND_LABEL = 'frontend_label';
 
     /**
+     * Name for the member 'frontend_input'.
+     *
+     * @var string
+     */
+    const FRONTEND_INPUT = 'frontend_input';
+
+    /**
      * Name for the member 'source_model'.
      *
      * @var string

@@ -9,6 +9,7 @@
         "validate": [
           "general/general/global-data",
           "general/general/move-files",
+          "general/eav_attribute/collect-data",
           "general/eav_attribute/validate"
         ],
         "delete": [
@@ -19,6 +20,7 @@
         "replace": [
           "general/general/global-data",
           "general/general/move-files",
+          "general/eav_attribute/collect-data",
           "general/eav_attribute/validate",
           "general/eav_attribute/replace",
           "general/eav_attribute/replace.options",
@@ -28,6 +30,7 @@
         "add-update": [
           "general/general/global-data",
           "general/general/move-files",
+          "general/eav_attribute/collect-data",
           "general/eav_attribute/validate",
           "general/eav_attribute/add-update",
           "general/eav_attribute/add-update.options",

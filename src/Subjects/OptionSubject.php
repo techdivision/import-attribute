@@ -20,12 +20,11 @@
 
 namespace TechDivision\Import\Attribute\Subjects;
 
-use TechDivision\Import\Utils\BackendTypeKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Attribute\Utils\ConfigurationKeys;
-use TechDivision\Import\Subjects\FileUploadTrait;
-use TechDivision\Import\Subjects\FileUploadSubjectInterface;
 use TechDivision\Import\Subjects\CastValueSubjectInterface;
+use TechDivision\Import\Subjects\FileUploadSubjectInterface;
+use TechDivision\Import\Subjects\FileUploadTrait;
+use TechDivision\Import\Utils\BackendTypeKeys;
 use TechDivision\Import\Utils\FileUploadConfigurationKeys;
 
 /**
@@ -84,12 +83,13 @@ class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInt
         // initialize media directory => can be absolute or relative
         if ($this->getConfiguration()->hasParam(FileUploadConfigurationKeys::MEDIA_DIRECTORY)) {
             try {
-                $this->setMediaDir($this->resolvePath($this->getConfiguration()->getParam(FileUploadConfigurationKeys::MEDIA_DIRECTORY)));
+                $this->setMediaDir($this->resolvePath($this->getConfiguration()
+                    ->getParam(FileUploadConfigurationKeys::MEDIA_DIRECTORY)));
             } catch (\InvalidArgumentException $iae) {
                 // only if we wanna copy images we need directories
                 if ($this->hasCopyImages()) {
                     $this->getSystemLogger()->debug($iae->getMessage());
-                }              
+                }
             }
         }
 

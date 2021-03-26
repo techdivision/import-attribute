@@ -7,6 +7,10 @@
 ## Features
 
 * Add #PAC-292: Validate attibute code when importing EAV attributes
+* PAC-96: Use new constands for FileUploadConfiguration
+    * https://github.com/techdivision/import/issues/181
+* PAC-361: Don't check file system if copy-images defined as false
+    * https://github.com/techdivision/import-cli-simple/issues/262
 
 # Version 21.0.0
 

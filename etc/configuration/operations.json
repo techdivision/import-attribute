@@ -61,7 +61,7 @@
                       "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
                       "frontend_input": [ "text", "select", "textarea", "multiselect", "boolean", "date", "gallery", "price", "media_image", "weight" ],
                       "attribute_option_values": {
-                        "frontend_input": [ 
+                       "frontend_input": [
                           "select", "multiselect", "boolean"
                         ]
                       }
@@ -83,7 +83,7 @@
                       "attribute_group_name": [ "import_attribute.callback.attribute.group.name.validator" ],
                       "backend_type": [ "import_attribute.callback.array.validator.backend.type" ],
                       "frontend_input": [ "import_attribute.callback.array.validator.frontend.input" ],
-                      "attribute_option_values": [ "import_attribute.callback.attribute.option.values.frontend.input.type.validator" ]
+                      "attribute_option_values": [ "import_attribute.callback.attribute.option.values.frontend.input.type.validator", "import_attribute.callback.array.option.value.validator" ]
                     }
                   ]
                 }

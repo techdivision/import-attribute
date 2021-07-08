@@ -61,7 +61,7 @@
                       "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
                       "frontend_input": [ "text", "select", "textarea", "multiselect", "boolean", "date", "gallery", "price", "media_image", "weight" ],
                       "attribute_option_values": {
-                       "frontend_input": [
+                        "frontend_input": [
                           "select", "multiselect", "boolean"
                         ]
                       }

@@ -397,6 +397,11 @@
             <argument>%array_validator.nullable.true%</argument>
             <argument>%array_validator.nullable.true%</argument>
         </service>
+        <service id="import_attribute.callback.array.option.value.validator" class="TechDivision\Import\Callbacks\EmptyValueValidatorCallback">
+            <argument type="service" id="import.loader.custom.validations"/>
+            <argument>%array_validator.nullable.false%</argument>
+            <argument>%array_validator.nullable.false%</argument>
+        </service>
 
         <!--
          | The DI configuration for the composite observers of the validation operation.

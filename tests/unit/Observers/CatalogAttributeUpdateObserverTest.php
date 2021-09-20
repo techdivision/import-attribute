@@ -92,7 +92,7 @@ class CatalogAttributeUpdateObserverTest extends TestCase
      * @return void
      * @see \PHPUnit\Framework\TestCase::setUp()
      */
-    protected function setUp()
+    protected function setUp(): void
     {
 
         // mock the attribute bunch processor

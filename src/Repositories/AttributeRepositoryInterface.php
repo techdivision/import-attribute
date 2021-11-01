@@ -14,7 +14,7 @@
 
 namespace TechDivision\Import\Attribute\Repositories;
 
-use TechDivision\Import\Repositories\RepositoryInterface;
+use TechDivision\Import\Dbal\Repositories\RepositoryInterface;
 
 /**
  * Interface for repository implementations to load EAV attribute data.

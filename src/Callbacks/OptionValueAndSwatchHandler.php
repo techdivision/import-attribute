@@ -16,7 +16,7 @@ namespace TechDivision\Import\Attribute\Callbacks;
 
 use Doctrine\Common\Collections\Collection;
 use TechDivision\Import\SystemLoggerTrait;
-use TechDivision\Import\Utils\EntityStatus;
+use TechDivision\Import\Dbal\Utils\EntityStatus;
 use TechDivision\Import\Configuration\ConfigurationInterface;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;

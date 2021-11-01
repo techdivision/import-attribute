@@ -14,7 +14,7 @@
 
 namespace TechDivision\Import\Attribute\Actions\Processors;
 
-use TechDivision\Import\Utils\EntityStatus;
+use TechDivision\Import\Dbal\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Utils\SqlStatementKeys;
 use TechDivision\Import\Dbal\Collection\Actions\Processors\AbstractBaseProcessor;

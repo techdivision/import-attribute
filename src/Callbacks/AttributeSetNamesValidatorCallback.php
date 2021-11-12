@@ -48,6 +48,14 @@ class AttributeSetNamesValidatorCallback extends IndexedArrayValidatorCallback
         // load the validations for the column
         $validations = $this->getValidations($this->getSubject()->getValue(ColumnKeys::ENTITY_TYPE_CODE));
 
+
+        if (!is_array($values) || count($values) == 0) {
+            // throw an exception if the values is NOT an array
+            throw new \InvalidArgumentException(
+                sprintf('Found invalid Values "%s" for column "%s"', $values, $attributeCode)
+            );
+        }
+
         // iterate over the values and validate them
         foreach ($values as $value) {
             // query whether or not the value is valid

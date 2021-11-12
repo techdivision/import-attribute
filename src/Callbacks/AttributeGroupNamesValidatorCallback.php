@@ -79,8 +79,12 @@ class AttributeGroupNamesValidatorCallback extends IndexedArrayValidatorCallback
             // load the validations for the attribute set with the given name
             $validations = $this->getValidations($attributeSetName, $subject->getValue(ColumnKeys::ENTITY_TYPE_CODE));
 
+            $attributeGroupName = null;
+            if (isset($attributeGroupNames[$key])) {
+                $attributeGroupName = $attributeGroupNames[$key];
+            }
             // query whether or not the value is valid
-            if (isset($attributeGroupNames[$key]) && in_array($attributeGroupName = $attributeGroupNames[$key], $validations)) {
+            if (in_array($attributeGroupName, $validations)) {
                 continue;
             }
 

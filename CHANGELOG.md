@@ -6,11 +6,13 @@
 
 ## Features
 
+* Refactoring deprecated classes. see https://github.com/techdivision/import-cli-simple/blob/master/UPGRADE-4.0.0.md
 * Add #PAC-292: Validate attibute code when importing EAV attributes
 * PAC-96: Use new constands for FileUploadConfiguration
     * https://github.com/techdivision/import/issues/181
 * PAC-361: Don't check file system if copy-images defined as false
     * https://github.com/techdivision/import-cli-simple/issues/262
+* PAC-324: Append empty value validator for attribut_option_values
 
 # Version 21.0.0
 

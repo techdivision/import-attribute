@@ -19,7 +19,7 @@ use TechDivision\Import\Attribute\Utils\SwatchTypes;
  *
  * @author    Marcus Döllerer <m.doellerer@techdivision.com>
  * @copyright 2020 TechDivision GmbH <info@techdivision.com>
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @license   https://opensource.org/licenses/MIT
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
  */

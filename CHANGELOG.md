@@ -2,7 +2,7 @@
 
 ## Bugfixes
 
-* None
+* PAC-328: Missing specification of attribute_set_name and attribute_set_group leads to PHP warning
 
 ## Features
 

@@ -59,7 +59,35 @@
                     "custom-validations" : {
                       "attribute_code": [ "/^[A-z][\\w]*$/" ],
                       "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
-                      "frontend_input": [ "text", "select", "textarea", "multiselect", "boolean", "date", "gallery", "price", "media_image", "weight" ],
+                      "frontend_input" : {
+                        "multiselect": {
+                          "backend_type": ["varchar"]
+                        },
+                        "select": {
+                          "backend_type": ["varchar","int"]
+                        },
+                        "text": {
+                          "backend_type": ["varchar", "text"]
+                        },
+                        "textarea": {
+                          "backend_type": ["text"]
+                        },
+                        "date": {
+                          "backend_type": ["datetime"]
+                        },
+                        "datetime": {
+                          "backend_type": ["datetime"]
+                        },
+                        "price": {
+                          "backend_type": ["decimal"]
+                        },
+                        "media_image": {
+                          "backend_type": ["varchar"]
+                        },
+                        "weee": {
+                          "backend_type": ["static"]
+                        }
+                      },
                       "attribute_option_values": {
                         "frontend_input": [
                           "select", "multiselect", "boolean"
@@ -82,7 +110,9 @@
                       "attribute_set_name": [ "import_attribute.callback.attribute.set.name.validator" ],
                       "attribute_group_name": [ "import_attribute.callback.attribute.group.name.validator" ],
                       "backend_type": [ "import_attribute.callback.array.validator.backend.type" ],
-                      "frontend_input": [ "import_attribute.callback.array.validator.frontend.input" ],
+                      "frontend_input": [
+                        "import_attribute.callback.attribute.relation.frontend.input.type.to.backend.type.validator"
+                      ],
                       "attribute_option_values": [
                         "import_attribute.callback.attribute.option.values.frontend.input.type.validator",
                         "import_attribute.callback.array.option.value.validator"

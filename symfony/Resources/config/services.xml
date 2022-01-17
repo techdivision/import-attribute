@@ -30,6 +30,11 @@
         </service>
         <service id="import_attribute.loader.frontend.input" class="TechDivision\Import\Attribute\Loaders\AttributeValueLoader">
             <argument type="service" id="import.loader.registry.custom.columns"/>
+            <argument type="constant">\TechDivision\Import\Attribute\Utils\MemberNames::FRONTEND_INPUT</argument>
+        </service>
+        <service id="import_attribute.loader.backend.type" class="TechDivision\Import\Attribute\Loaders\AttributeValueLoader">
+            <argument type="service" id="import.loader.registry.custom.columns"/>
+            <argument type="constant">\TechDivision\Import\Attribute\Utils\MemberNames::BACKEND_TYPE</argument>
         </service>
 
         <service id="import_attribute.entity.merger.empty.columns.attribute.option" class="TechDivision\Import\Observers\EntityMergers\CleanUpColumnsEntityMerger">
@@ -402,7 +407,12 @@
             <argument>%array_validator.nullable.true%</argument>
             <argument>%array_validator.nullable.false%</argument>
         </service>
-
+        <service id="import_attribute.callback.attribute.relation.frontend.input.type.to.backend.type.validator" class="TechDivision\Import\Attribute\Callbacks\AttributeRelationFrontendInputTypeToBackendTypeValidatorCallback">
+            <argument type="service" id="import.loader.custom.validations"/>
+            <argument type="service" id="import_attribute.loader.backend.type"/>
+            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.true%</argument>
+        </service>
         <!--
          | The DI configuration for the composite observers of the validation operation.
          |-->

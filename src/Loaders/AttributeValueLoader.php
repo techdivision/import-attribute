@@ -15,7 +15,6 @@
 namespace TechDivision\Import\Attribute\Loaders;
 
 use TechDivision\Import\Loaders\LoaderInterface;
-use TechDivision\Import\Attribute\Utils\MemberNames;
 
 /**
  * Generic loader for product values.
@@ -49,7 +48,7 @@ class AttributeValueLoader implements LoaderInterface
      * @param \TechDivision\Import\Loaders\LoaderInterface $registryLoader The registry loader instance
      * @param string                                       $columnName     The column name to load the values for
      */
-    public function __construct(LoaderInterface $registryLoader, $columnName = MemberNames::FRONTEND_INPUT)
+    public function __construct(LoaderInterface $registryLoader, $columnName)
     {
 
         // initialize the column name and the registry loader

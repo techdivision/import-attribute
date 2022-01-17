@@ -5,8 +5,8 @@
  *
  * PHP version 7
  *
- * @author    Martin Eisenführer <m.eisenfuehrer@techdivision.com>
- * @copyright 2021 TechDivision GmbH <info@techdivision.com>
+ * @author    MET <met@techdivision.com>
+ * @copyright 20212 TechDivision GmbH <info@techdivision.com>
  * @license   https://opensource.org/licenses/MIT
  * @link      https://github.com/techdivision/import-attribute
  * @link      http://www.techdivision.com
@@ -92,7 +92,7 @@ class AttributeRelationFrontendInputTypeToBackendTypeValidatorCallback extends I
      * @param string|null $attributeValue The attribute value to be validated
      *
      * @return mixed The modified value
-     * @throws \InvalidArgumentException Is thrown, if the attribute has option values but is not of frontend input type `select` or `multiselect`
+     * @throws \InvalidArgumentException Is thrown, if the attribute has frontend input values but is not of with backend type from configuration
      */
     public function handle($attributeCode = null, $attributeValue = null)
     {

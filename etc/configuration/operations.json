@@ -84,6 +84,9 @@
                         "media_image": {
                           "backend_type": ["varchar"]
                         },
+                        "boolean": {
+                          "backend_type": ["int"]
+                        },
                         "weee": {
                           "backend_type": ["static"]
                         }

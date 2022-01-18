@@ -50,7 +50,6 @@ class AttributeValueLoader implements LoaderInterface
      */
     public function __construct(LoaderInterface $registryLoader, $columnName)
     {
-
         // initialize the column name and the registry loader
         $this->columnName = $columnName;
         $this->registryLoader = $registryLoader;

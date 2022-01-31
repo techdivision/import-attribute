@@ -57,7 +57,7 @@
                   ],
                   "params" : {
                     "custom-validations" : {
-                      "attribute_code": [ "/^[A-z][\\w]*$/" ],
+                      "attribute_code": [ "/^[A-z0-9_][\\w]*$/"],
                       "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
                       "frontend_input" : {
                         "multiselect": {

@@ -13,6 +13,9 @@
 * PAC-361: Don't check file system if copy-images defined as false
     * https://github.com/techdivision/import-cli-simple/issues/262
 * PAC-324: Append empty value validator for attribut_option_values
+* New validator callbacks
+    * Relation between fontend_input and backent_type
+    * Improve regex for attriute code like Magento allowed
 
 # Version 21.0.0
 

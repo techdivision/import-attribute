@@ -62,7 +62,7 @@ class AttributeRelationFrontendInputTypeToBackendTypeValidatorCallback extends A
                         'Found invalid backend_type "%s" for attribute "%s" with frontend Type "%s", must be one of "%s" as backend_type',
                         $backendType,
                         $this->getSubject()->getValue(ColumnKeys::ATTRIBUTE_CODE),
-                        $attributeCode,
+                        $attributeValue,
                         implode(',', $backendTypeValidation[ColumnKeys::BACKEND_TYPE])
                     );
 

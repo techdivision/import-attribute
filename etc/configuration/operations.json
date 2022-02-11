@@ -61,7 +61,7 @@
                       "backend_type": [ "static", "varchar", "int", "text", "datetime", "decimal" ],
                       "frontend_input" : {
                         "multiselect": {
-                          "backend_type": ["varchar"]
+                          "backend_type": ["varchar", "text"]
                         },
                         "select": {
                           "backend_type": ["varchar","int"]

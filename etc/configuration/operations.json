@@ -67,7 +67,7 @@
                           "backend_type": ["varchar","int"]
                         },
                         "text": {
-                          "backend_type": ["varchar", "text"]
+                          "backend_type": ["varchar", "text", "int", "decimal"]
                         },
                         "textarea": {
                           "backend_type": ["text"]

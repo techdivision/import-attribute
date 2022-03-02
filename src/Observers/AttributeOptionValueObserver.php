@@ -14,6 +14,7 @@
 
 namespace TechDivision\Import\Attribute\Observers;
 
+use TechDivision\Import\Utils\RegistryKeys;
 use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
@@ -60,7 +61,35 @@ class AttributeOptionValueObserver extends AbstractAttributeImportObserver
         $this->prepareStoreViewCode();
 
         // prepare and insert the attribute option value
-        $this->persistAttributeOptionValue($this->initializeAttribute($this->prepareAttributes()));
+        try {
+            $this->persistAttributeOptionValue($this->initializeAttribute($this->prepareAttributes()));
+        } catch (\Exception $e) {
+            // prepare a log message
+            $message = sprintf(
+                'For attribute code "%s" the are an error on value update! Message: %s',
+                $this->getValue(ColumnKeys::ATTRIBUTE_CODE),
+                $e->getMessage()
+            );
+            $this->getSubject()
+                ->getSystemLogger()
+                ->error($this->getSubject()->appendExceptionSuffix($message));
+            // log a error if debug mode has been enabled and the file is NOT available
+            if (!$this->getSubject()->isStrictMode()) {
+                $this->mergeStatus(
+                    array(
+                        RegistryKeys::NO_STRICT_VALIDATIONS => array(
+                            basename($this->getFilename()) => array(
+                                $this->getLineNumber() => array(
+                                    MemberNames::VALUE =>  $message
+                                )
+                            )
+                        )
+                    )
+                );
+                return;
+            }
+            throw $e;
+        }
     }
 
     /**

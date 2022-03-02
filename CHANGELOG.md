@@ -16,6 +16,7 @@
 * New validator callbacks
     * Relation between fontend_input and backent_type
     * Improve regex for attriute code like Magento allowed
+* Use isStrictMode on option value persisting 
 
 # Version 21.0.0
 

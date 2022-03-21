@@ -67,7 +67,7 @@ class AttributeValueLoader implements LoaderInterface
         $collectedColumns = $this->getRegistryLoader()->load();
 
         // query whether or not values for the configured column name are available
-        if (is_array($collectedColumns[$this->columnName])) {
+        if (isset($collectedColumns[$this->columnName]) && is_array($collectedColumns[$this->columnName])) {
             return $collectedColumns[$this->columnName];
         }
 

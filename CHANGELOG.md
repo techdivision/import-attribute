@@ -3,6 +3,7 @@
 ## Bugfixes
 
 * PAC-328: Missing specification of attribute_set_name and attribute_set_group leads to PHP warning
+* Update composer with php Version >=^7.3
 
 ## Features
 

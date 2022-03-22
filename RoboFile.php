@@ -122,7 +122,7 @@ class RoboFile extends \Robo\Tasks
     {
         // prepare the patterns for the files that has to be ignored
         $ignore = array(
-            $this->properties['vendor.dir'].'/techdivision/import-attribute-set/src/Utils',
+            $this->properties['src.dir'].'/Utils',
         );
 
         // run the copy past detector

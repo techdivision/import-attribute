@@ -411,7 +411,7 @@
             <argument type="service" id="import.loader.custom.validations"/>
             <argument type="service" id="import_attribute.loader.backend.type"/>
             <argument>%array_validator.nullable.true%</argument>
-            <argument>%array_validator.nullable.true%</argument>
+            <argument>%array_validator.nullable.false%</argument>
         </service>
         <!--
          | The DI configuration for the composite observers of the validation operation.

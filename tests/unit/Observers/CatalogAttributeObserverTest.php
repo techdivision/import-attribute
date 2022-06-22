@@ -115,7 +115,8 @@ class CatalogAttributeObserverTest extends TestCase
         $mockSubject->expects($this->once())
                     ->method('getRow')
                     ->willReturn($row);
-        $mockSubject->expects($this->exactly(25))
+
+        $mockSubject->expects($this->exactly(26))
                     ->method('hasHeader')
                     ->withConsecutive(
                         array(ColumnKeys::ATTRIBUTE_CODE),

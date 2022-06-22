@@ -1,3 +1,11 @@
+# Version 22.0.1
+
+## Bugfixes 
+* Fix import swatch attribute with `additional_data`  
+
+## Features
+* None
+
 # Version 22.0.0
 
 ## Bugfixes

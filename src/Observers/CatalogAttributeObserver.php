@@ -159,49 +159,55 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         // iterate over the possible columns and handle the data
         foreach ($columnNames as $columnName) {
             // reverse map the table column name to the CSV column name
-            $columnName = isset($this->reverseHeaderMappings[$columnName]) ? $this->reverseHeaderMappings[$columnName] : $columnName;
-
-            // query whether or not, the column is available in the CSV file
+            $columnName = isset($this->reverseHeaderMappings[$columnName]) ? $this->reverseHeaderMappings[$columnName]
+                : $columnName;
             if ($this->getSubject()->hasHeader($columnName)) {
-                // custom handling for the additional_data column
-                if ($columnName === ColumnKeys::ADDITIONAL_DATA) {
-                    // load the raw additional data
-                    $explodedAdditionalData = $this->getValue(ColumnKeys::ADDITIONAL_DATA, array(), array($this->getSubject(), 'explode'));
+                // query whether or not a column contains a value
+                if ($this->hasValue($columnName)) {
+                    $attr[$columnName] = $this->getValue($columnName);
+                }
+            }
+        }
+        
+        // query whether or not, the column is available in the CSV file
+        if ($this->getSubject()->hasHeader(ColumnKeys::ADDITIONAL_DATA)) {
+            $columnName = ColumnKeys::ADDITIONAL_DATA;
+            // custom handling for the additional_data column
+            // load the raw additional data
+            $explodedAdditionalData = $this->getValue($columnName, array(), array($this->getSubject(), 'explode'));
 
-                    // query whether or not additional data has been set
-                    if (sizeof($explodedAdditionalData) > 0) {
-                        // load and extract the additional data
-                        $additionalData = array();
-                        foreach ($explodedAdditionalData as $value) {
-                            list ($key, $val) = $this->getSubject()->explode($value, '=');
-                            $additionalData[$key] = $val;
-                        }
+            // query whether or not additional data has been set
+            if (sizeof($explodedAdditionalData) > 0) {
+                // load and extract the additional data
+                $additionalData = array();
+                foreach ($explodedAdditionalData as $value) {
+                    list ($key, $val) = $this->getSubject()->explode($value, '=');
+                    $additionalData[$key] = $val;
+                }
 
-                        // set the additional data
-                        $attr[$columnName] = $additionalData;
+                // set the additional data
+                $attr[$columnName] = $additionalData;
 
-                        // query whether or not the attribute is a text or a visual swatch
-                        if ($this->isSwatchType($additionalData)) {
-                            // load the attribute option values for the custom store views
-                            $attributeOptionValues = $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), array($this, 'explode'));
-                            $attributeOptionSwatch = $this->getSubject()->explode($this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SWATCH), $this->getSubject()->getMultipleValueDelimiter());
+                // query whether or not the attribute is a text or a visual swatch
+                if ($this->isSwatchType($additionalData)) {
+                    // load the attribute option values for the custom store views
+                    $attributeOptionValues =
+                        $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES, array(), array($this, 'explode'));
+                    $attributeOptionSwatch = $this->getSubject()->explode(
+                        $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_SWATCH),
+                        $this->getSubject()->getMultipleValueDelimiter()
+                    );
 
-                            // query whether or not the size of the option values equals the size of the swatch values
-                            if (($sizeOfSwatchValues = sizeof($attributeOptionSwatch)) !== ($sizeOfOptionValues = sizeof($attributeOptionValues))) {
-                                throw new \Exception(
-                                    sprintf(
-                                        'Size of option values "%d" doesn\'t equals size of swatch values "%d"',
-                                        $sizeOfOptionValues,
-                                        $sizeOfSwatchValues
-                                    )
-                                );
-                            }
-                        }
-                    }
-                } else {
-                    // query whether or not a column contains a value
-                    if ($this->hasValue($columnName)) {
-                        $attr[$columnName] = $this->getValue($columnName);
+                    // query whether or not the size of the option values equals the size of the swatch values
+                    if (($sizeOfSwatchValues = sizeof($attributeOptionSwatch)) !== ($sizeOfOptionValues =
+                            sizeof($attributeOptionValues))) {
+                        throw new \Exception(
+                            sprintf(
+                                'Size of option values "%d" doesn\'t equals size of swatch values "%d"',
+                                $sizeOfOptionValues,
+                                $sizeOfSwatchValues
+                            )
+                        );
                     }
                 }
             }

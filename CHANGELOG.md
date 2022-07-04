@@ -1,3 +1,12 @@
+# Version 22.0.2
+
+## Bugfixes
+* Fix import swatch attribute : 
+  * Calling the wrong sql-statements for the processor config
+
+## Features
+* None
+
 # Version 22.0.1
 
 ## Bugfixes 

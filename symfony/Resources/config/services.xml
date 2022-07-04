@@ -199,7 +199,7 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
             <argument type="service" id="import.util.sql.sanitizers"/>
             <argument type="collection">
-                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_OPTION_SWATCH</argument>
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_SWATCH</argument>
             </argument>
         </service>
         <service id="import_attribute.action.processor.attribute.option.swatch.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
@@ -207,7 +207,7 @@
             <argument type="service" id="import_attribute.repository.sql.statement"/>
             <argument type="service" id="import.util.sql.sanitizers"/>
             <argument type="collection">
-                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_OPTION_SWATCH</argument>
+                <argument type="constant">TechDivision\Import\Attribute\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_OPTION_SWATCH</argument>
             </argument>
         </service>
         <service id="import_attribute.action.processor.entity.attribute.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">

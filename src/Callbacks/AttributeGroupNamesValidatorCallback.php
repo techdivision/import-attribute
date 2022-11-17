@@ -90,7 +90,7 @@ class AttributeGroupNamesValidatorCallback extends IndexedArrayValidatorCallback
 
             // throw an exception if the value is NOT in the array
             throw new \InvalidArgumentException(
-                sprintf('Found invalid attribute group name "%s"', $attributeGroupName)
+                sprintf('Found invalid attribute group name "%s" for attribute set "%s"', $attributeGroupName, $attributeSetName)
             );
         }
     }

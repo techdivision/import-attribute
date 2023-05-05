@@ -61,7 +61,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      *
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $entityMergers;
+    protected $entityMerger;
 
     /**
      * Array with virtual column name mappings (this is a temporary
@@ -168,7 +168,7 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
                 }
             }
         }
-        
+
         // query whether or not, the column is available in the CSV file
         if ($this->getSubject()->hasHeader(ColumnKeys::ADDITIONAL_DATA)) {
             $columnName = ColumnKeys::ADDITIONAL_DATA;

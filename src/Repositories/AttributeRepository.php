@@ -35,7 +35,7 @@ class AttributeRepository extends AbstractRepository implements AttributeReposit
      *
      * @var \PDOStatement
      */
-    protected $attributeByEntityTypeIdAndAttributeCodeStmt;
+    protected $attributeByEntityTypeAndAttributeCodeStmt;
 
     /**
      * Initializes the repository's prepared statements.

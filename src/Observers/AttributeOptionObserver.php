@@ -56,7 +56,7 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
      *
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $entityMergers;
+    protected $entityMerger;
 
     /**
      * Initialize the dedicated column.

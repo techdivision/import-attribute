@@ -45,7 +45,54 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
      *
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $entityMergers;
+    protected $entityMerger;
+
+    /**
+     * The attribute ID.
+     */
+    protected $attributeId;
+
+    /**
+     * The entity type code.
+     *
+     * @var string
+     */
+    protected $entityTypeCode;
+
+    /**
+     * The entity type ID.
+     *
+     * @var integer
+     */
+    protected $entityTypeId;
+
+    /**
+     * The sort order.
+     *
+     * @var integer
+     */
+    protected $sortOrder;
+
+    /**
+     * The attribute set ID.
+     *
+     * @var integer
+     */
+    protected $attributeSetId;
+
+    /**
+     * The attribute set name.
+     *
+     * @var string
+     */
+    protected $attributeSetName;
+
+    /**
+     * The attribute group ID.
+     *
+     * @var string
+     */
+    protected $attributeGroupName;
 
     /**
      * Initializes the observer with the passed subject instance.
@@ -117,6 +164,7 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
             $this->persistEntityAttribute($entityAttribute);
         }
     }
+
 
     /**
      * Merge's and return's the entity with the passed attributes and set's the

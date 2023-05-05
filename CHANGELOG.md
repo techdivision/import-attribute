@@ -1,3 +1,13 @@
+# Version 22.0.3
+
+## Bugfixes
+* Fix EntityLoader initialization of default values 
+* Start fix php8.2 deprecated warnings
+  
+## Features
+
+* None
+
 # Version 22.0.2
 
 ## Bugfixes

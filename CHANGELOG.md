@@ -1,3 +1,9 @@
+# Version 22.0.4
+
+## Feature
+
+* Implement check of store related option values to avoid saving of erroneous mappings
+
 # Version 22.0.3
 
 ## Bugfixes

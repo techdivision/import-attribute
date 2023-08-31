@@ -15,6 +15,7 @@
 namespace TechDivision\Import\Attribute\Observers;
 
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
+use TechDivision\Import\Utils\RegistryKeys;
 
 /**
  * Observer that exports the attribute options to an additional CSV file for further processing.
@@ -59,11 +60,20 @@ class AttributeOptionValueExportObserver extends AbstractAttributeExportObserver
             return $this->explode($value, $this->getMultipleFieldDelimiter());
         });
 
+        $adminValueArtefacts = $this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId());
+
+        // validate the admin values with the option values
+        if (!$this->isValidateAdminValuesWithStoreOptionValues($adminValueArtefacts, $attributeOptionValues)) {
+            // Skip the export if the store values are not valid
+            return;
+        }
+
         // iterate over the attribute option values and export them
         foreach ($attributeOptionValues as $key => $attributeOptionValue) {
-            // load the artefacts with the admin store values
-            $adminValueArtefacts = $this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId());
-
+            // query whether or not the attribute option value is available
+            if (!isset($adminValueArtefacts[$key]) || empty($attributeOptionValue) || empty($adminValueArtefacts[$key])) {
+                continue;
+            }
             // initialize and add the new artefact
             $artefacts[] = $this->newArtefact(
                 array(
@@ -93,5 +103,49 @@ class AttributeOptionValueExportObserver extends AbstractAttributeExportObserver
     protected function getArtefactType()
     {
         return AttributeOptionValueExportObserver::ARTEFACT_TYPE;
+    }
+
+    /**
+     * @param array $adminValueArtefacts   attribute option values from admin row
+     * @param array $attributeOptionValues attribute option values for the custom store views
+     * @return bool
+     * @throws \Exception
+     */
+    protected function isValidateAdminValuesWithStoreOptionValues(array $adminValueArtefacts, $attributeOptionValues): bool
+    {
+        if (count($adminValueArtefacts) != count($attributeOptionValues)) {
+            $origin = array();
+            foreach ($adminValueArtefacts as $originalData) {
+                $origin[] = $originalData[ColumnKeys::VALUE];
+            }
+            $message =
+                sprintf(
+                    "Store '%s' related number of options of attribute '%s' must be identical to the global definition (%d vs. %d). Global: '%s' vs. Store: '%s'",
+                    $this->getStoreViewCode(),
+                    $this->getValue(ColumnKeys::ATTRIBUTE_CODE),
+                    count($adminValueArtefacts),
+                    count($attributeOptionValues),
+                    implode(',', $origin),
+                    $this->getValue(ColumnKeys::ATTRIBUTE_OPTION_VALUES),
+                );
+            if (!$this->getSubject()->isStrictMode()) {
+                $this->getSystemLogger()->warning($message);
+                $this->getSubject()->mergeStatus(
+                    array(
+                        RegistryKeys::NO_STRICT_VALIDATIONS => array(
+                            basename($this->getSubject()->getFilename()) => array(
+                                $this->getSubject()->getLineNumber() => array(
+                                    ColumnKeys::ATTRIBUTE_OPTION_VALUES => $message
+                                )
+                            )
+                        )
+                    )
+                );
+                return false;
+            } else {
+                throw new \InvalidArgumentException($message);
+            }
+        }
+        return true;
     }
 }

@@ -1,3 +1,9 @@
+# Version 22.0.5
+
+## Bugfixes
+
+* Fix exception if no attribute values are defined on store level
+
 # Version 22.0.4
 
 ## Feature

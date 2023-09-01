@@ -60,16 +60,17 @@ class AttributeOptionValueExportObserver extends AbstractAttributeExportObserver
             return $this->explode($value, $this->getMultipleFieldDelimiter());
         });
 
-        $adminValueArtefacts = $this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId());
-
         // validate the admin values with the option values
         if (count($attributeOptionValues) === 0 || !$this->isValidateAdminValuesWithStoreOptionValues($adminValueArtefacts, $attributeOptionValues)) {
             // Skip the export if the store values are not valid
             return;
         }
 
+        $adminValueArtefacts = $this->getArtefactsByTypeAndEntityId(AttributeOptionExportObserver::ARTEFACT_TYPE, $this->getLastEntityId());
+
         // iterate over the attribute option values and export them
         foreach ($attributeOptionValues as $key => $attributeOptionValue) {
+
             // query whether or not the attribute option value is available
             if (!isset($adminValueArtefacts[$key]) || empty($attributeOptionValue) || empty($adminValueArtefacts[$key])) {
                 continue;

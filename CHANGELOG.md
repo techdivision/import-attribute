@@ -1,3 +1,9 @@
+# Version 22.0.6
+
+## Bugfixes
+
+* Fix exception if no attribute values are defined on admin row
+
 # Version 22.0.5
 
 ## Bugfixes

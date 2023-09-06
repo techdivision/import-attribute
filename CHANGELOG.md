@@ -1,8 +1,8 @@
-# Version 22.0.6
+# Version 22.0.7
 
 ## Bugfixes
 
-* Fix exception if no attribute values are defined on admin row
+* Fix passing parameters for method `isValidateAdminValuesWithStoreOptionValues`
 
 # Version 22.0.5
 

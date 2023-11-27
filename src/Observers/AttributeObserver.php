@@ -98,23 +98,27 @@ class AttributeObserver extends AbstractAttributeImportObserver
 
         // return the prepared product
         return $this->initializeEntity(
-            array(
-                MemberNames::ENTITY_TYPE_ID  => $entityTypeId,
-                MemberNames::ATTRIBUTE_CODE  => $attributeCode,
-                MemberNames::ATTRIBUTE_MODEL => $attributeModel,
-                MemberNames::BACKEND_MODEL   => $backendModel,
-                MemberNames::BACKEND_TYPE    => $backendType,
-                MemberNames::BACKEND_TABLE   => $backendTable,
-                MemberNames::FRONTEND_MODEL  => $frontendModel,
-                MemberNames::FRONTEND_INPUT  => $frontendInput,
-                MemberNames::FRONTEND_LABEL  => $frontendLabel,
-                MemberNames::FRONTEND_CLASS  => $frontendClass,
-                MemberNames::SOURCE_MODEL    => $sourceModel,
-                MemberNames::IS_REQUIRED     => $isRequired,
-                MemberNames::IS_USER_DEFINED => $isUserDefined,
-                MemberNames::DEFAULT_VALUE   => null,
-                MemberNames::IS_UNIQUE       => $isUnique,
-                MemberNames::NOTE            => $note
+            array_merge(
+                array(
+                    MemberNames::ENTITY_TYPE_ID  => $entityTypeId,
+                    MemberNames::ATTRIBUTE_CODE  => $attributeCode,
+                    MemberNames::ATTRIBUTE_MODEL => $attributeModel,
+                    MemberNames::BACKEND_MODEL   => $backendModel,
+                    MemberNames::BACKEND_TYPE    => $backendType,
+                    MemberNames::BACKEND_TABLE   => $backendTable,
+                    MemberNames::FRONTEND_MODEL  => $frontendModel,
+                    MemberNames::FRONTEND_INPUT  => $frontendInput,
+                    MemberNames::FRONTEND_LABEL  => $frontendLabel,
+                    MemberNames::FRONTEND_CLASS  => $frontendClass,
+                    MemberNames::SOURCE_MODEL    => $sourceModel,
+                    MemberNames::IS_REQUIRED     => $isRequired,
+                    MemberNames::IS_USER_DEFINED => $isUserDefined,
+                    MemberNames::DEFAULT_VALUE   => null,
+                    MemberNames::IS_UNIQUE       => $isUnique,
+                    MemberNames::NOTE            => $note
+                ),
+                $this->additionalAttributeFields()
+
             )
         );
     }
@@ -200,5 +204,13 @@ class AttributeObserver extends AbstractAttributeImportObserver
     protected function getEntityType($entityTypeCode)
     {
         return $this->getSubject()->getEntityType($entityTypeCode);
+    }
+
+    /**
+     * @return array
+     */
+    protected function additionalAttributeFields(): array
+    {
+        return [];
     }
 }

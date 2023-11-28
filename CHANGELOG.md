@@ -1,3 +1,9 @@
+# Version 22.0.8
+
+## Feature
+
+* Extend Attribute Observer with new method to add additional fields.
+
 # Version 22.0.7
 
 ## Bugfixes

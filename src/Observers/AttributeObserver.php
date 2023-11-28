@@ -118,7 +118,6 @@ class AttributeObserver extends AbstractAttributeImportObserver
                     MemberNames::NOTE            => $note
                 ),
                 $this->additionalAttributeFields()
-
             )
         );
     }

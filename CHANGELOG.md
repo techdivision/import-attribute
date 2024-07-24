@@ -1,3 +1,13 @@
+# Version 23.0.8
+
+## Features
+
+### PHP 8.1 Compatibility
+
+* Update dependencies
+* Add PHP ">=8.1" support
+* Remove PHP 7.3 support
+
 # Version 22.0.8
 
 ## Feature

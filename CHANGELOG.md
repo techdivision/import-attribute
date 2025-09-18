@@ -1,3 +1,11 @@
+# Version 23.1.0
+
+## Features
+
+### PHP 8.4 Compatibility
+
+* Add PHP 8.4 support
+
 # Version 23.0.0
 
 ## Features

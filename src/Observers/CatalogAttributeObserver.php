@@ -76,15 +76,15 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
-     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface       $entityMerger            The entity merger instance
+     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface|null       $entityMerger            The entity merger instance
      * @param \TechDivision\Import\Loaders\LoaderInterface|null                        $headerMappingLoader     The loader for the virtual mappings
      * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
     public function __construct(
         AttributeBunchProcessorInterface $attributeBunchProcessor,
-        EntityMergerInterface $entityMerger = null,
-        LoaderInterface $headerMappingLoader = null,
-        StateDetectorInterface $stateDetector = null
+        ?EntityMergerInterface $entityMerger = null,
+        ?LoaderInterface $headerMappingLoader = null,
+        ?StateDetectorInterface $stateDetector = null
     ) {
 
         // initialize the bunch processor and the entity merger instance

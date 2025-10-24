@@ -69,15 +69,15 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
-     * @param \TechDivision\Import\Observers\AttributeLoaderInterface                  $attributeLoader         The attribute loader instance
-     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface       $entityMerger            The entity merger instance
+     * @param \TechDivision\Import\Observers\AttributeLoaderInterface|null                  $attributeLoader         The attribute loader instance
+     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface|null       $entityMerger            The entity merger instance
      * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
     public function __construct(
         AttributeBunchProcessorInterface $attributeBunchProcessor,
-        AttributeLoaderInterface $attributeLoader = null,
-        EntityMergerInterface $entityMerger = null,
-        StateDetectorInterface $stateDetector = null
+        ?AttributeLoaderInterface $attributeLoader = null,
+        ?EntityMergerInterface $entityMerger = null,
+        ?StateDetectorInterface $stateDetector = null
     ) {
 
             // initialize the bunch processor, the attribute loader and the entity merger instance

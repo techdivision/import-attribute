@@ -298,7 +298,7 @@ class OptionValueAndSwatchHandler implements OptionValueAndSwatchHandlerInterfac
 
         // try to load the option with the highest sort order and raise it by one if available
         if ($attributeOption = $this->loadAttributeOptionByAttributeIdAndHighestSortOrder($attributeId = $attribute[MemberNames::ATTRIBUTE_ID])) {
-            $sortOrder = (integer) $attributeOption[MemberNames::SORT_ORDER] + 1;
+            $sortOrder = (int)$attributeOption[MemberNames::SORT_ORDER] + 1;
         }
 
         // return the prepared attribute option

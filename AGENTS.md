@@ -87,6 +87,48 @@ AttributeOptionObserver::handle($row): void
 - Beachte Attribute-Optionen bei Imports
 - Erwäge Attribute-Validierung
 
+## Häufige Use Cases
+
+### CSV-Beispiel: EAV Attribute Import
+```csv
+code,label,frontend_label,attribute_type,input_type
+custom_color,Custom Color,Color,varchar,select
+custom_size,Custom Size,Size,varchar,select
+custom_brand,Brand Name,Brand,text,text
+```
+
+### Szenarien
+1. **Multi-Language Attributes**: Attribute mit Übersetzungen aus Excel
+2. **Custom Product Attributes**: Spezialisierte Attributes für Produktkategorien
+3. **Attribute-Options**: Selectable-Options wie Farben, Größen
+4. **Dropdown-Population**: Tausende von Attribute-Options
+
+## Performance-Überlegungen
+
+- **Attribute-Lookup**: Code-basierte Suche kostet ~2-5ms pro Attribute
+- **Options-Insert**: Batch-Inserts für Options sind 10x schneller als Individual
+- **EAV-Structure**: EAV speichert jedes Attribut separat - mehr Writes als Columns
+- **Optimal für**: 100-1.000 Attributes mit bis zu 10.000 Options
+- **Index-Overhead**: Attribute-Indexes benötigen ~20-30% extra Storage
+
+## Verwandte Module
+
+- **import-attribute-set**: Nutzt Attributes für Attribute-Sets
+- **import-converter-customer-attribute**: Konvertiert Customer Attributes
+- **import-converter-product-attribute**: Konvertiert Product Attributes  
+- **import-attribute** ← **diese Datei**
+
+## Troubleshooting & FAQ
+
+**Q: "Attribute code already exists" Fehler**
+- A: Attributes sind eindeutig per Code. Nutze Update-Mode statt Create, oder andere Codes.
+
+**Q: Attribute-Options werden nicht importiert**
+- A: Options müssen nach Attribute-Erstellung importiert werden. Attribute muss existieren in DB.
+
+**Q: "Unsupported attribute type" Fehler**
+- A: Nur standard Magento Types unterstützt: `varchar`, `text`, `int`, `decimal`, `static`. Custom Types nicht möglich.
+
 ## Bekannte Einschränkungen
 
 - **EAV-Only**: Nur EAV Attribute unterstützt

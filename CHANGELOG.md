@@ -1,3 +1,9 @@
+# Version 23.3.0
+
+## Features
+
+* Add state detection to observers for "import:attributes", ensuring changes are only persisted when necessary
+
 # Version 23.2.0
 
 ## Features

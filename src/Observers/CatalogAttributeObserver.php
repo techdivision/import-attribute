@@ -114,8 +114,13 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
             return;
         }
 
-        // initialize and persist the EAV catalog attribute
-        $this->persistCatalogAttribute($this->initializeAttribute($this->prepareAttributes()));
+        // initialize the EAV catalog attribute
+        $catalogAttribute = $this->initializeAttribute($this->prepareAttributes());
+
+        // query whether or not the EAV catalog attribute has changed and has to be persisted
+        if ($this->hasChanges($catalogAttribute)) {
+            $this->persistCatalogAttribute($catalogAttribute);
+        }
     }
 
     /**
@@ -131,11 +136,11 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
      */
     protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
     {
-        return array_merge(
-            $entity,
-            $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr,
-            array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $attr, $changeSetName))
-        );
+        // merge the entity with the (optionally cleaned-up) attributes first, so the
+        // state detector compares against the actually persisted values and NOT
+        // against raw/default values of columns that have not been touched by the CSV
+        $merged = array_merge($entity, $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr);
+        return array_merge($merged, array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $merged, $changeSetName)));
     }
 
     /**

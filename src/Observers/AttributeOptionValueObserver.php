@@ -19,6 +19,7 @@ use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Observers\StateDetectorInterface;
 
 /**
  * Observer that create's the attribute option values found in the additional CSV file.
@@ -43,10 +44,16 @@ class AttributeOptionValueObserver extends AbstractAttributeImportObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
-    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
-    {
+    public function __construct(
+        AttributeBunchProcessorInterface $attributeBunchProcessor,
+        ?StateDetectorInterface $stateDetector = null
+    ) {
         $this->attributeBunchProcessor = $attributeBunchProcessor;
+
+        // pass the state detector to the parent method
+        parent::__construct($stateDetector);
     }
 
     /**
@@ -62,7 +69,13 @@ class AttributeOptionValueObserver extends AbstractAttributeImportObserver
 
         // prepare and insert the attribute option value
         try {
-            $this->persistAttributeOptionValue($this->initializeAttribute($this->prepareAttributes()));
+            // initialize the attribute option value
+            $attributeOptionValue = $this->initializeAttribute($this->prepareAttributes());
+
+            // query whether or not the attribute option value has changed and has to be persisted
+            if ($this->hasChanges($attributeOptionValue)) {
+                $this->persistAttributeOptionValue($attributeOptionValue);
+            }
         } catch (\Exception $e) {
             // prepare a log message
             $message = sprintf(

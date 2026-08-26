@@ -160,8 +160,11 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
             // prepare the EAV entity attribue values
             $entityAttribute = $this->initializeAttribute($this->prepareAttributes());
 
-            // insert the EAV entity attribute
-            $this->persistEntityAttribute($entityAttribute);
+            // query whether or not the EAV entity attribute has changed and has to be persisted
+            if ($this->hasChanges($entityAttribute)) {
+                // insert the EAV entity attribute
+                $this->persistEntityAttribute($entityAttribute);
+            }
         }
     }
 
@@ -179,11 +182,11 @@ class EntityAttributeObserver extends AbstractAttributeImportObserver
      */
     protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
     {
-        return array_merge(
-            $entity,
-            $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr,
-            array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $attr, $changeSetName))
-        );
+        // merge the entity with the (optionally cleaned-up) attributes first, so the
+        // state detector compares against the actually persisted values and NOT
+        // against raw/default values of columns that have not been touched by the CSV
+        $merged = array_merge($entity, $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr);
+        return array_merge($merged, array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $merged, $changeSetName)));
     }
 
     /**

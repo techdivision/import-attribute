@@ -17,7 +17,9 @@ namespace TechDivision\Import\Attribute\Observers;
 use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
+use TechDivision\Import\Attribute\Utils\SwatchTypes;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Dbal\Utils\EntityStatus;
 use TechDivision\Import\Observers\StateDetectorInterface;
 
 /**
@@ -70,10 +72,36 @@ class AttributeOptionSwatchObserver extends AbstractAttributeImportObserver
         if ($attr = $this->prepareAttributes()) {
             // query whether or not the attribute option swatch has changed and has to be persisted
             $initialized = $this->initializeAttribute($attr);
-            if ($this->hasChanges($initialized)) {
+            if ($this->shouldPersist($initialized)) {
                 $this->persistAttributeOptionSwatch($initialized);
             }
         }
+    }
+
+    /**
+     * Queries whether or not the swatch has to be persisted. For existing image swatches, the decision is deferred
+     * entirely to AttributeOptionSwatchFileUploadObserver, since comparing the raw CSV filename reference (which is all
+     * this observer has access to) against the already-uploaded DB path here would always appear "changed" and defeat
+     * the diff - the file upload observer compares against the actually uploaded, stable target path instead.
+     *
+     * @param array $entity The (merged) entity to query
+     *
+     * @return boolean TRUE if the entity has to be persisted here, else FALSE
+     */
+    protected function shouldPersist(array $entity): bool
+    {
+        // nothing to do, if nothing has changed at all
+        if (!$this->hasChanges($entity)) {
+            return false;
+        }
+
+        // for existing (= status update) image swatches, defer to the file upload observer
+        if ($entity[EntityStatus::MEMBER_NAME] === EntityStatus::STATUS_UPDATE && isset($entity[MemberNames::TYPE])
+            && (int)$entity[MemberNames::TYPE] === SwatchTypes::IMAGE) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

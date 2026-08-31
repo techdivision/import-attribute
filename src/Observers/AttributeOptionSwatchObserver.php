@@ -18,6 +18,7 @@ use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Observers\StateDetectorInterface;
 
 /**
  * Observer that create's the attribute option swatchs found in the additional CSV file.
@@ -42,10 +43,16 @@ class AttributeOptionSwatchObserver extends AbstractAttributeImportObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
-    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
-    {
+    public function __construct(
+        AttributeBunchProcessorInterface $attributeBunchProcessor,
+        ?StateDetectorInterface $stateDetector = null
+    ) {
         $this->attributeBunchProcessor = $attributeBunchProcessor;
+
+        // pass the state detector to the parent method
+        parent::__construct($stateDetector);
     }
 
     /**
@@ -61,7 +68,11 @@ class AttributeOptionSwatchObserver extends AbstractAttributeImportObserver
 
         // prepare and insert the attribute option swatch
         if ($attr = $this->prepareAttributes()) {
-            $this->persistAttributeOptionSwatch($this->initializeAttribute($attr));
+            // query whether or not the attribute option swatch has changed and has to be persisted
+            $initialized = $this->initializeAttribute($attr);
+            if ($this->hasChanges($initialized)) {
+                $this->persistAttributeOptionSwatch($initialized);
+            }
         }
     }
 

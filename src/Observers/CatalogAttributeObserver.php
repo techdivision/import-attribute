@@ -140,7 +140,55 @@ class CatalogAttributeObserver extends AbstractAttributeImportObserver
         // state detector compares against the actually persisted values and NOT
         // against raw/default values of columns that have not been touched by the CSV
         $merged = array_merge($entity, $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr);
-        return array_merge($merged, array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $merged, $changeSetName)));
+
+        // additional_data is the only non-scalar diff column across all ChangeSet tables -
+        // the generic array_diff_assoc()-based computer can't compare arrays/objects correctly
+        // (casts them to the literal string "Array", or fatals on stdClass vs. array) - normalize
+        // BOTH sides to a canonical JSON string for the comparison only, $merged itself keeps the
+        // array/object form untouched (serializeAdditionalData() still runs on it afterwards)
+        $entityForDiff = $entity;
+        $mergedForDiff = $merged;
+        if (array_key_exists(MemberNames::ADDITIONAL_DATA, $entityForDiff)) {
+            $entityForDiff[MemberNames::ADDITIONAL_DATA] = $this->normalizeAdditionalDataForDiff($entityForDiff[MemberNames::ADDITIONAL_DATA]);
+        }
+        if (array_key_exists(MemberNames::ADDITIONAL_DATA, $mergedForDiff)) {
+            $mergedForDiff[MemberNames::ADDITIONAL_DATA] = $this->normalizeAdditionalDataForDiff($mergedForDiff[MemberNames::ADDITIONAL_DATA]);
+        }
+
+        return array_merge($merged, array(EntityStatus::MEMBER_NAME => $this->detectState($entityForDiff, $mergedForDiff, $changeSetName)));
+    }
+
+    /**
+     * Normalizes an additional_data value (string|array|stdClass|null) into a canonical JSON
+     * string with sorted keys, so it can be compared as a plain scalar by the generic
+     * array_diff_assoc()-based ChangeSet computer.
+     *
+     * @param mixed $value The raw additional_data value (array, stdClass, JSON string or null)
+     *
+     * @return string|null The canonical JSON representation, or null if the value is null
+     */
+    protected function normalizeAdditionalDataForDiff($value)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_string($value)) {
+            // already a JSON string (e.g. untouched raw DB value) - decode/re-encode
+            // as well, so key-order differences don't cause false positives
+            $decoded = json_decode($value, true);
+            $value = is_array($decoded) ? $decoded : $value;
+        } elseif (is_object($value)) {
+            $value = (array) $value;
+        }
+
+        if (is_array($value)) {
+            ksort($value);
+            return json_encode($value);
+        }
+
+        // not array/object/JSON-string - leave as-is (defensive fallback)
+        return $value;
     }
 
     /**

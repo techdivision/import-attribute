@@ -76,13 +76,42 @@ class OptionSubject extends AbstractAttributeSubject implements OptionSubjectInt
 
         // initialize media directory => can be absolute or relative
         if ($this->getConfiguration()->hasParam(FileUploadConfigurationKeys::MEDIA_DIRECTORY)) {
+            $mediaDirectoryConfigValue = $this->getConfiguration()->getParam(
+                FileUploadConfigurationKeys::MEDIA_DIRECTORY
+            );
             try {
-                $this->setMediaDir($this->resolvePath($this->getConfiguration()
-                    ->getParam(FileUploadConfigurationKeys::MEDIA_DIRECTORY)));
+                $this->setMediaDir($this->resolvePath($mediaDirectoryConfigValue));
             } catch (\InvalidArgumentException $iae) {
                 // only if we wanna copy images we need directories
                 if ($this->hasCopyImages()) {
-                    $this->getSystemLogger()->debug($iae->getMessage());
+                    // media-directory is always a WRITE target (unlike images-file-directory, which is a READ source
+                    // and must genuinely pre-exist) - so unlike resolvePath()'s default behaviour, it's safe and
+                    // correct to create it on demand here, instead of silently ending up with a null media dir.
+                    //
+                    // IMPORTANT: only use the absolute, cwd-prefixed form for the mkdir()/isDir() filesystem check
+                    // itself - setMediaDir() must still receive the ORIGINAL (typically relative) config value, exactly
+                    // like resolvePath() itself would have returned on success. FileUploadTrait::uploadFile()
+                    // unconditionally does ltrim($this->getMediaDir(), '/') - passing an absolute, leading-slash path
+                    // here would have that leading slash stripped there, turning it into a bogus cwd-relative path
+                    // (e.g. "pub/..." becomes "Volumes/workspace/.../pub/..." and gets re-prepended with getcwd() a
+                    // second time by sprintf('%s/%s', ...)).
+                    $absoluteMediaDirectory = $this->getFilesystemAdapter()->isDir($mediaDirectoryConfigValue)
+                        ? $mediaDirectoryConfigValue
+                        : getcwd() . DIRECTORY_SEPARATOR . ltrim(
+                            $mediaDirectoryConfigValue,
+                            '/'
+                        );
+                    // isDir()-check immediately before mkdir() mirrors the existing pattern in
+                    // FileUploadTrait::uploadFile() - reduces (but doesn't fully eliminate) a "mkdir(): File exists"
+                    // warning when parallel bunch processes race to create the same missing directory
+                    if (!$this->getFilesystemAdapter()->isDir($absoluteMediaDirectory)) {
+                        $this->getFilesystemAdapter()->mkdir($absoluteMediaDirectory);
+                    }
+
+                    $this->setMediaDir($mediaDirectoryConfigValue);
+                    $this->getSystemLogger()->debug(
+                        sprintf('Created missing media directory "%s"', $absoluteMediaDirectory)
+                    );
                 }
             }
         }

@@ -3,6 +3,7 @@
 ## Features
 
 * Add state detection to observers for "import:attributes", ensuring changes are only persisted when necessary
+* Handle media directory creation on demand to prevent invalid paths during file uploads and enhance error handling consistency
 
 # Version 23.2.0
 

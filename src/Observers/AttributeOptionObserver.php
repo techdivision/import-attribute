@@ -108,8 +108,14 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
         // prepare the attribue values
         $attributeOption = $this->initializeAttribute($this->prepareDynamicAttributes());
 
-        // insert the attribute option and set the option ID
-        $this->setLastOptionId($this->persistAttributeOption($attributeOption));
+        // query whether or not the attribute option has changed and has to be persisted
+        if ($this->hasChanges($attributeOption)) {
+            // insert the attribute option and set the option ID
+            $this->setLastOptionId($this->persistAttributeOption($attributeOption));
+        } else {
+            // make the ID available for subsequent observers, even if nothing has been persisted
+            $this->setLastOptionId($attributeOption[MemberNames::OPTION_ID]);
+        }
     }
 
     /**
@@ -125,11 +131,11 @@ class AttributeOptionObserver extends AbstractAttributeImportObserver implements
      */
     protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
     {
-        return array_merge(
-            $entity,
-            $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr,
-            array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $attr, $changeSetName))
-        );
+        // merge the entity with the (optionally cleaned-up) attributes first, so the
+        // state detector compares against the actually persisted values and NOT
+        // against raw/default values of columns that have not been touched by the CSV
+        $merged = array_merge($entity, $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr);
+        return array_merge($merged, array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $merged, $changeSetName)));
     }
 
     /**

@@ -18,6 +18,7 @@ use TechDivision\Import\Utils\StoreViewCodes;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Observers\StateDetectorInterface;
 
 /**
  * Observer that create's the EAV attribute label.
@@ -42,10 +43,16 @@ class AttributeLabelObserver extends AbstractAttributeImportObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
-    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
-    {
+    public function __construct(
+        AttributeBunchProcessorInterface $attributeBunchProcessor,
+        ?StateDetectorInterface $stateDetector = null
+    ) {
         $this->attributeBunchProcessor = $attributeBunchProcessor;
+
+        // pass the state detector to the parent method
+        parent::__construct($stateDetector);
     }
 
     /**
@@ -66,8 +73,14 @@ class AttributeLabelObserver extends AbstractAttributeImportObserver
 
         // query whether or not an value for the attribute label is available
         if ($attributeLabel = $this->prepareAttributes()) {
-            // prepare and persist the attribue label
-            $this->persistAttributeLabel($this->initializeAttribute($attributeLabel));
+            // initialize the attribute label
+            $attributeLabel = $this->initializeAttribute($attributeLabel);
+
+            // query whether or not the attribute label has changed and has to be persisted
+            if ($this->hasChanges($attributeLabel)) {
+                // prepare and persist the attribue label
+                $this->persistAttributeLabel($attributeLabel);
+            }
         }
     }
 

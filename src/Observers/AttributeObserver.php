@@ -18,6 +18,7 @@ use TechDivision\Import\Utils\BackendTypeKeys;
 use TechDivision\Import\Attribute\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface;
+use TechDivision\Import\Observers\StateDetectorInterface;
 
 /**
  * Observer that create's the EAV attribute itself.
@@ -42,10 +43,16 @@ class AttributeObserver extends AbstractAttributeImportObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeBunchProcessor The attribute bunch processor instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector           The state detector instance to use
      */
-    public function __construct(AttributeBunchProcessorInterface $attributeBunchProcessor)
-    {
+    public function __construct(
+        AttributeBunchProcessorInterface $attributeBunchProcessor,
+        ?StateDetectorInterface $stateDetector = null
+    ) {
         $this->attributeBunchProcessor = $attributeBunchProcessor;
+
+        // pass the state detector to the parent method
+        parent::__construct($stateDetector);
     }
 
     /**
@@ -64,8 +71,14 @@ class AttributeObserver extends AbstractAttributeImportObserver
         // prepare the attribue values
         $attribute = $this->initializeAttribute($this->prepareAttributes());
 
-        // insert the entity and set the entity ID
-        $this->setLastAttributeId($this->persistAttribute($attribute));
+        // query whether or not the attribute has changed and has to be persisted
+        if ($this->hasChanges($attribute)) {
+            // insert the entity and set the entity ID
+            $this->setLastAttributeId($this->persistAttribute($attribute));
+        } else {
+            // make the ID available for subsequent observers, even if nothing has been persisted
+            $this->setLastAttributeId($attribute[MemberNames::ATTRIBUTE_ID]);
+        }
     }
 
     /**

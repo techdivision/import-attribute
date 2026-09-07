@@ -219,6 +219,7 @@
                   },
                   "params": {
                     "copy-images": false,
+                    "override-images": true,
                     "media-directory" : "pub/media/attribute/swatch",
                     "images-file-directory" : "var/importexport/media/attribute/swatch",
                     "clean-up-empty-columns": []
@@ -316,6 +317,7 @@
                   },
                   "params": {
                     "copy-images": false,
+                    "override-images": true,
                     "media-directory" : "pub/media/attribute/swatch",
                     "images-file-directory" : "var/importexport/media/attribute/swatch",
                     "clean-up-empty-columns": []
